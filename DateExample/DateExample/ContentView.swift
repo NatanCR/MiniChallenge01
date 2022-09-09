@@ -31,7 +31,7 @@ struct ContentView: View {
         VStack {
             DatePicker("Data inicio", selection: $dataInicio, displayedComponents: [.date])
             DatePicker("Data fim", selection: $dataFinal, displayedComponents: [.date])
-            Text("RESULTADO: \(resultado)")
+            Text("RESULTADO: \(resultado.day!)")
            // Text(resultado, format: Date.FormatStyle().year().month().day())
         }
     }

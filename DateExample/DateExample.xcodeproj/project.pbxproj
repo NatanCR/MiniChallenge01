@@ -11,6 +11,8 @@
 		4E79E18C28BD2E190015CD43 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79E18B28BD2E190015CD43 /* ContentView.swift */; };
 		4E79E18E28BD2E1D0015CD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */; };
 		4E79E19128BD2E1D0015CD43 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E79E19028BD2E1D0015CD43 /* Preview Assets.xcassets */; };
+		51AE11FA28CBBD9F00F1EEED /* Listas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AE11F928CBBD9F00F1EEED /* Listas.swift */; };
+		51AE11FC28CBBDB800F1EEED /* CelulaCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		4E79E18B28BD2E190015CD43 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E79E19028BD2E1D0015CD43 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		51AE11F928CBBD9F00F1EEED /* Listas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listas.swift; sourceTree = "<group>"; };
+		51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaCustom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			children = (
 				4E79E18928BD2E190015CD43 /* DateExampleApp.swift */,
 				4E79E18B28BD2E190015CD43 /* ContentView.swift */,
+				51AE11F928CBBD9F00F1EEED /* Listas.swift */,
+				51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */,
 				4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */,
 				4E79E18F28BD2E1D0015CD43 /* Preview Content */,
 			);
@@ -138,6 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E79E18C28BD2E190015CD43 /* ContentView.swift in Sources */,
+				51AE11FA28CBBD9F00F1EEED /* Listas.swift in Sources */,
+				51AE11FC28CBBDB800F1EEED /* CelulaCustom.swift in Sources */,
 				4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
