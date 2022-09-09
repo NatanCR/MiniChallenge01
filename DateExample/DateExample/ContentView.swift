@@ -8,32 +8,71 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var dataInicio: Date = Date()
-    @State var dataFinal: Date = Date()
-
     
-    var resultado: DateComponents {
-        return Calendar.current.dateComponents([.day,.hour,.minute], from: dataInicio, to: dataFinal)
-    }
-    
-    func dateComponent() -> Date? {
-        var comps = DateComponents()
-        comps.day = resultado.day
-        comps.hour = resultado.hour
-        comps.minute = resultado.minute
-        
-        return Calendar.current.date(from: comps)
-    }
+    @State var dataInicio = Date()
+    @State var dataFinal = Date()
     
     var body: some View {
-        let data = dateComponent()
-        
-        VStack {
-            DatePicker("Data inicio", selection: $dataInicio, displayedComponents: [.date])
-            DatePicker("Data fim", selection: $dataFinal, displayedComponents: [.date])
-            Text("RESULTADO: \(resultado)")
-           // Text(resultado, format: Date.FormatStyle().year().month().day())
+        NavigationView {
+            ZStack {
+                VStack(alignment: .center) {
+                    Spacer()
+                    VStack {
+                        Text("Data Inicial")
+                            .font(.title)
+                        DatePicker("", selection: $dataInicio, displayedComponents: [.date,.hourAndMinute])
+                            .labelsHidden()
+                        
+                    }.padding(.vertical)
+                    VStack {
+                        Text("Data Final")
+                            .font(.title)
+                        DatePicker("", selection: $dataFinal, displayedComponents: [.date])
+                            .labelsHidden()
+                    }.padding(.vertical)
+                    Spacer()
+                    VStack {
+                        Text("Resultado:")
+                            .labelsHidden()
+                            .font(.title3)
+                        Text("Faltam \(resultado.day!) dias corridos")
+                            .labelsHidden()
+                            .font(.title3)
+                    }.padding(.vertical)
+                    VStack {
+                        Text("\(resultado.hour!) horas \(resultado.minute!) minutos \(resultado.second!) segundos para a data \(dataFinal, style: .date) ")
+                            .labelsHidden()
+                            .font(.title3)
+                            .padding(.horizontal)
+                    }
+                    Spacer()
+                    //                    NavigationLink {
+                    //                        ResultadoView(resultadoDate: resultado)
+                    //                    } label: {
+                    //                            Text("Calcular")
+                    //                                .padding()
+                    //                                .foregroundColor(.black)
+                    //                                .background(.brown)
+                    //                                .cornerRadius(20)
+                    //                                .font(.largeTitle)
+                    //                        }
+                }
+                
+            }
+            .navigationBarTitle("Contador de dias")
+            
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: ResultadoView(resultadoDate: resultado), label: {
+                        Text("Salvar")
+                    })
+                }
+            }
         }
+    }
+    
+    var resultado: DateComponents {
+        return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: dataInicio, to: dataFinal)
     }
 }
 
@@ -42,19 +81,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
-//formatação da data de hoje usando Date e DateFormatter
-//    func dataResultado() -> String {
-//        let date = Date()
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium
-//        dateFormatter.timeStyle = .none
-//
-//        return dateFormatter.string(from: date)
-//    }
-
-//    static let stackDateFormat: DateFormatter = {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd MM yyy"
-//        return formatter
-//    }()
