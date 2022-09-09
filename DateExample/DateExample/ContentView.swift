@@ -20,7 +20,7 @@ struct ContentView: View {
                     VStack {
                         Text("Data Inicial")
                             .font(.title)
-                        DatePicker("", selection: $dataInicio, displayedComponents: [.date,.hourAndMinute])
+                        DatePicker("", selection: $dataInicio, displayedComponents: [.date])
                             .labelsHidden()
                         
                     }.padding(.vertical)
@@ -46,16 +46,6 @@ struct ContentView: View {
                             .padding(.horizontal)
                     }
                     Spacer()
-                    //                    NavigationLink {
-                    //                        ResultadoView(resultadoDate: resultado)
-                    //                    } label: {
-                    //                            Text("Calcular")
-                    //                                .padding()
-                    //                                .foregroundColor(.black)
-                    //                                .background(.brown)
-                    //                                .cornerRadius(20)
-                    //                                .font(.largeTitle)
-                    //                        }
                 }
                 
             }
