@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct DateExampleApp: App {
+    
     var body: some Scene {
+        
+        let dados = Model()
+        
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(dados)
         }
     }
 }
