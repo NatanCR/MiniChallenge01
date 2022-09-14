@@ -92,7 +92,7 @@ struct ContentView: View {
                 .navigationBarTitle("Contador de dias")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: Resultado(dataFinalSalvar: dataFinal, resultadoDate: resultado), label: {
+                        NavigationLink(destination: Resultado(dataFinalSalvar: dataFinal, resultadoDate: resultado, anotacao: "abelha"), label: {
                             Text("Salvar")
                         })
                     }

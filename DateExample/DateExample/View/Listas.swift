@@ -11,7 +11,7 @@ struct Listas: View {
             }else{
                 List(lista.anotacoes) { anotacao in
                     NavigationLink(destination: DetalhesView(titulo: anotacao.titulo, anotacao: anotacao.anotacoes, dataFinal: anotacao.dataFinal)) {
-                        CustomRow(anotacoes: anotacao)
+                        CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
                     }
                 }
             }
