@@ -40,7 +40,6 @@ class Dados: Codable, Identifiable{
         self.anotacoes = anotacoes
         self.dataFinal = datafinal
     }
-
 //    enum CodingKeys: CodingKey {
 //        case titulo
 //        case anotacoes

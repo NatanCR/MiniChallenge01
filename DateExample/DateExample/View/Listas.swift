@@ -5,13 +5,15 @@ struct Listas: View {
     @EnvironmentObject var lista: Model
     
     var body: some View {
-        
-        if lista.anotacoes.count == 0{
-            Text ("Você não possui nenhum registro")
-        
-        }else{
-            List(lista.anotacoes) { anotacao in
-                CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+        NavigationView {
+            if lista.anotacoes.count == 0{
+                Text ("Você não possui nenhum registro")
+            }else{
+                List(lista.anotacoes) { anotacao in
+                    NavigationLink(destination: DetalhesView(titulo: anotacao.titulo, anotacao: anotacao.anotacoes, dataFinal: anotacao.dataFinal)) {
+                        CustomRow(anotacoes: anotacao)
+                    }
+                }
             }
         }
     }
