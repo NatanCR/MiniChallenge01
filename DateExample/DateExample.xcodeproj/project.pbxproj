@@ -62,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				4E79E18928BD2E190015CD43 /* DateExampleApp.swift */,
-				4E79E18B28BD2E190015CD43 /* ContentView.swift */,
 				881BD2E328CE682200E9F02E /* ViewModel */,
 				881BD2E228CE67FF00E9F02E /* View */,
 				881BD2E128CE67DC00E9F02E /* Model */,
@@ -91,6 +90,7 @@
 		881BD2E228CE67FF00E9F02E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4E79E18B28BD2E190015CD43 /* ContentView.swift */,
 				881BD2E428CE6B3500E9F02E /* MainView.swift */,
 				51AE11F928CBBD9F00F1EEED /* Listas.swift */,
 				881BD2DF28CE633500E9F02E /* Resultado.swift */,

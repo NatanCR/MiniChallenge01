@@ -10,23 +10,32 @@ struct Listas: View {
             Text ("Você não possui nenhum registro")
         
         }else{
-            
             List(lista.anotacoes) { anotacao in
-                HStack {
-                    Text("")
-                        .font(.system(size: 30))
-                        .foregroundColor(.black)
-                        .padding(.all)
-                    VStack(alignment: .leading){
-                        Text(anotacao.titulo)
-                            .font(.system(size: 27))
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text(anotacao.anotacoes)
-                            .fontWeight(.light)
-                    }
-                }
+                CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
             }
         }
     }
-}
+    
+    
+    func conversorDataString(dataSalva: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "pt-br")
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        let data = dateFormatter.string(from: dataSalva)
+        return data
+    }
+    
+    
+    var dataInicio: Date = Date()
+    var dataFinal: Date = Date().advanced(by: 60)
+    
+    var dia: Double {
+        return 86400.0
+    }
+    
+    var resultado: DateComponents {
+        Calendar.current.dateComponents([.day,.hour,.minute], from: dataInicio, to: dataFinal)
+    }
+   
+    }
+    
