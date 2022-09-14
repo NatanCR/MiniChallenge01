@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E370E5328D0EA12006C0D60 /* DetalhesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E370E5228D0EA12006C0D60 /* DetalhesView.swift */; };
 		4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79E18928BD2E190015CD43 /* DateExampleApp.swift */; };
 		4E79E18C28BD2E190015CD43 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79E18B28BD2E190015CD43 /* ContentView.swift */; };
 		4E79E18E28BD2E1D0015CD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E370E5228D0EA12006C0D60 /* DetalhesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalhesView.swift; sourceTree = "<group>"; };
 		4E79E18628BD2E190015CD43 /* DateExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E79E18928BD2E190015CD43 /* DateExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExampleApp.swift; sourceTree = "<group>"; };
 		4E79E18B28BD2E190015CD43 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				881BD2E428CE6B3500E9F02E /* MainView.swift */,
 				51AE11F928CBBD9F00F1EEED /* Listas.swift */,
 				881BD2DF28CE633500E9F02E /* Resultado.swift */,
+				4E370E5228D0EA12006C0D60 /* DetalhesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			files = (
 				881BD2DE28CE62F800E9F02E /* Model.swift in Sources */,
 				881BD2E528CE6B3500E9F02E /* MainView.swift in Sources */,
+				4E370E5328D0EA12006C0D60 /* DetalhesView.swift in Sources */,
 				4E79E18C28BD2E190015CD43 /* ContentView.swift in Sources */,
 				51AE11FA28CBBD9F00F1EEED /* Listas.swift in Sources */,
 				881BD2E028CE633500E9F02E /* Resultado.swift in Sources */,

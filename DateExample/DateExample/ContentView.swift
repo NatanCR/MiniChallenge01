@@ -55,7 +55,7 @@ struct ContentView: View {
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: Resultado(dataFinalSalvar: dataFinal, resultadoDate: resultado), label: {
+                    NavigationLink(destination: Resultado(dataFinalSalvar: dataFinal, resultadoDate: resultado, anotacao: "Anotacao de teste casjnka hjvcs cs hvchjs cahsvchas casyvsac ascvasjh scascsbjcasc gsachas c sahgcsa sacgasc asvcyasc sacasvb"), label: {
                         Text("Salvar")
                     })
                 }
