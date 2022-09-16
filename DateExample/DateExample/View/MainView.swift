@@ -12,11 +12,11 @@ struct MainView: View {
         TabView {
             ContentView()
                 .tabItem {
-                    Label("Calcular", systemImage: "calendar")
+                    Label("Calcular", systemImage: "calendar.circle")
                 }
             Listas()
                 .tabItem {
-                    Label("Lista", systemImage: "list.dash")
+                    Label("Lista", systemImage: "rectangle.grid.1x2")
                 }
         }
     }
