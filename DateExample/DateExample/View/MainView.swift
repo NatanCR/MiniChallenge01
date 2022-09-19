@@ -14,7 +14,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Calcular", systemImage: "calendar.circle")
                 }
-            Listas()
+            ListaView()
                 .tabItem {
                     Label("Lista", systemImage: "rectangle.grid.1x2")
                 }

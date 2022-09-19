@@ -16,9 +16,7 @@ struct ContentView: View{
         NavigationView {
             ZStack {
                 VStack(alignment: .center) {
-                    
                     Text("Quanto tempo falta para seu evento?")
-                    
                     VStack {
                         Text("Data Inicial")
                             .font(.title)
@@ -26,8 +24,8 @@ struct ContentView: View{
                                    in: Date.distantPast...dataFinal,
                                    displayedComponents: [.date])
                         .labelsHidden()
-                        
-                    }.padding(.vertical)
+                    }
+                    .padding(.vertical)
                     VStack {
                         Text("Data Final")
                             .font(.title)
@@ -35,7 +33,8 @@ struct ContentView: View{
                                    in: dataInicio...Date.distantFuture,
                                    displayedComponents: [.date])
                         .labelsHidden()
-                    }.padding(.vertical)
+                    }
+                    .padding(.vertical)
                         .onAppear {
                             dataInicio = Date()
                             dataFinal = Date()
@@ -43,7 +42,6 @@ struct ContentView: View{
                     
                     LazyVGrid(columns: grid, spacing: 30) {
                         ZStack {
-                            
                             VStack{
                                 Text("\(CalcularDatas.calcularDiasCorridos(totalDias: resultado.day ?? 0))")
                                     .labelsHidden()
@@ -85,7 +83,6 @@ struct ContentView: View{
                                     .labelsHidden()
                                     .font(.title3)
                             }
-                            
                         }
                     }
                     
@@ -93,7 +90,7 @@ struct ContentView: View{
                 .navigationBarTitle("Contador de dias")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: Resultado(dataFinalSalvar: dataFinal, resultadoDate: resultado, anotacao: ""), label: {
+                        NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal), label: {
                             Text("Adicionar Evento")
                         })
                     }

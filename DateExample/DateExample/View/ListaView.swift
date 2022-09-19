@@ -1,11 +1,13 @@
 import SwiftUI
 
-struct Listas: View {
+struct ListaView: View {
     
     @EnvironmentObject var lista: Model
     @State var procuraTexto = ""
     @State var modeloEditar: EditMode = .inactive
-    
+    @State var segmentSelection: Dados.ID? = nil
+    @State var condicao = false 
+
     var body: some View {
         NavigationView {
             if lista.anotacoes.count == 0{
@@ -13,18 +15,37 @@ struct Listas: View {
             }else{
                 VStack {
                     List {
-                        ForEach(eventos, id: \.id) { anotacao in
-                            NavigationLink(destination: DetalhesView(id: anotacao.id, titulo: anotacao.titulo, anotacao: anotacao.anotacoes, dataFinal: anotacao.dataFinal)) {
-                                CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                        if modeloEditar == .inactive {
+                            ForEach(eventos, id: \.id) { anotacao in
+                                NavigationLink(destination: DetalhesView(id: anotacao.id, titulo: anotacao.titulo, anotacao: anotacao.anotacoes, dataFinal: anotacao.dataFinal)) {
+                                    CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                                }
                             }
+                            .onDelete(perform: remover)
+                        } else {
+                            ForEach(eventos, id: \.id) { anotacao in
+                                NavigationLink(destination: ResultadoView(dataFinalSalvar: anotacao.dataFinal, titulo: anotacao.titulo, anotacao: anotacao.anotacoes, modoEditar: true, id: anotacao.id),
+                                               tag: anotacao.id,
+                                               selection: self.$segmentSelection) {
+                                    CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                                }
+                                .onTapGesture(perform: { self.segmentSelection = anotacao.id })
+                            }
+                            .onDelete(perform: remover)
                         }
-                        .onDelete(perform: remover)
-                    }.environment(\.editMode, $modeloEditar)
-                        .navigationBarItems(trailing: botaoEditar)
+                    }
+                    .environment(\.editMode, $modeloEditar)
+                    .navigationBarItems(trailing: botaoEditar)
                 }
                 .navigationTitle("Listas de eventos")
                 .searchable(text: $procuraTexto)
             }
+        }
+    }
+    
+    private var tapGesture: some Gesture {
+        TapGesture().onEnded {
+            print("testat")
         }
     }
     

@@ -7,20 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E2A352F28D8DBCA008E5C15 /* Notificacoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */; };
 		4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79E18928BD2E190015CD43 /* DateExampleApp.swift */; };
 		4E79E18E28BD2E1D0015CD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */; };
 		4E79E19128BD2E1D0015CD43 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E79E19028BD2E1D0015CD43 /* Preview Assets.xcassets */; };
 		4EE96FD028D3A66100523FCE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FCF28D3A66100523FCE /* ContentView.swift */; };
 		4EE96FD428D3A73A00523FCE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FD328D3A73A00523FCE /* Model.swift */; };
 		4EE96FDB28D3A8D300523FCE /* DetalhesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FD828D3A8D200523FCE /* DetalhesView.swift */; };
-		4EE96FDC28D3A8D300523FCE /* Listas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FD928D3A8D300523FCE /* Listas.swift */; };
-		4EE96FDF28D3A8E100523FCE /* Resultado.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FDD28D3A8E100523FCE /* Resultado.swift */; };
+		4EE96FDC28D3A8D300523FCE /* ListaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FD928D3A8D300523FCE /* ListaView.swift */; };
+		4EE96FDF28D3A8E100523FCE /* ResultadoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FDD28D3A8E100523FCE /* ResultadoView.swift */; };
 		4EE96FE028D3A8E100523FCE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FDE28D3A8E100523FCE /* MainView.swift */; };
 		4EE96FE228D3A93A00523FCE /* CalcularDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FE128D3A93900523FCE /* CalcularDatas.swift */; };
 		51AE11FC28CBBDB800F1EEED /* CelulaCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificacoes.swift; sourceTree = "<group>"; };
 		4E79E18628BD2E190015CD43 /* DateExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E79E18928BD2E190015CD43 /* DateExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExampleApp.swift; sourceTree = "<group>"; };
 		4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -28,8 +30,8 @@
 		4EE96FCF28D3A66100523FCE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4EE96FD328D3A73A00523FCE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Model.swift; path = DateExample/Model/Model.swift; sourceTree = SOURCE_ROOT; };
 		4EE96FD828D3A8D200523FCE /* DetalhesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetalhesView.swift; sourceTree = "<group>"; };
-		4EE96FD928D3A8D300523FCE /* Listas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listas.swift; sourceTree = "<group>"; };
-		4EE96FDD28D3A8E100523FCE /* Resultado.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resultado.swift; sourceTree = "<group>"; };
+		4EE96FD928D3A8D300523FCE /* ListaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaView.swift; sourceTree = "<group>"; };
+		4EE96FDD28D3A8E100523FCE /* ResultadoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultadoView.swift; sourceTree = "<group>"; };
 		4EE96FDE28D3A8E100523FCE /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4EE96FE128D3A93900523FCE /* CalcularDatas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcularDatas.swift; sourceTree = "<group>"; };
 		51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaCustom.swift; sourceTree = "<group>"; };
@@ -96,9 +98,9 @@
 			children = (
 				4EE96FCF28D3A66100523FCE /* ContentView.swift */,
 				4EE96FDE28D3A8E100523FCE /* MainView.swift */,
-				4EE96FDD28D3A8E100523FCE /* Resultado.swift */,
+				4EE96FDD28D3A8E100523FCE /* ResultadoView.swift */,
 				4EE96FD828D3A8D200523FCE /* DetalhesView.swift */,
-				4EE96FD928D3A8D300523FCE /* Listas.swift */,
+				4EE96FD928D3A8D300523FCE /* ListaView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -106,6 +108,7 @@
 		881BD2E328CE682200E9F02E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */,
 				4EE96FE128D3A93900523FCE /* CalcularDatas.swift */,
 				51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */,
 			);
@@ -182,12 +185,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EE96FDC28D3A8D300523FCE /* Listas.swift in Sources */,
+				4EE96FDC28D3A8D300523FCE /* ListaView.swift in Sources */,
 				4EE96FE028D3A8E100523FCE /* MainView.swift in Sources */,
 				4EE96FD028D3A66100523FCE /* ContentView.swift in Sources */,
 				51AE11FC28CBBDB800F1EEED /* CelulaCustom.swift in Sources */,
+				4E2A352F28D8DBCA008E5C15 /* Notificacoes.swift in Sources */,
 				4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */,
-				4EE96FDF28D3A8E100523FCE /* Resultado.swift in Sources */,
+				4EE96FDF28D3A8E100523FCE /* ResultadoView.swift in Sources */,
 				4EE96FE228D3A93A00523FCE /* CalcularDatas.swift in Sources */,
 				4EE96FDB28D3A8D300523FCE /* DetalhesView.swift in Sources */,
 				4EE96FD428D3A73A00523FCE /* Model.swift in Sources */,
