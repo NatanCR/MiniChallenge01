@@ -11,23 +11,25 @@ import SwiftUI
 
 struct ResultadoView: View {
     
-    @State private var alertasIndex = 0
-    
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var model: Model
-    
     @State var dataFinalSalvar = Date()
-    var resultado: DateComponents {
-        return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: dataFinalSalvar)
-    }
+    @State private var alertasIndex = 0
     @State var titulo: String = ""
     @State var anotacao: String = ""
     @State var modoEditar = false
     @State var id: UUID?
     @State var dataLembrete = Date()
     @State var ativaLembrete = false
+    @State var ativaCalendario = false
+
     
-    @Environment(\.dismiss) private var dismiss
-    let altura = UIScreen.main.bounds.size.height
+    private let altura = UIScreen.main.bounds.size.height
+    private var resultado: DateComponents {
+        return Calendar.current.dateComponents([.day,.hour,.minute,.second],
+                                               from: Date(),
+                                               to: dataFinalSalvar)
+    }
     
     var body: some View {
         VStack {
@@ -39,21 +41,29 @@ struct ResultadoView: View {
                 Form {
                     Section(){
                         TextField("Título", text: $titulo)
-                        
-                            
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                         }
                         if ativaLembrete == true {
                             HStack {
                                 Spacer()
-                                DatePicker("", selection: $dataLembrete, displayedComponents: [.date, .hourAndMinute])
+                                DatePicker("", selection: $dataLembrete,
+                                           displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
+                                    .fixedSize()
                                 Spacer()
                             }
                         }
                         
                     }
+                    if !modoEditar{
+                        Section(header: Text("Adicionar evento ao Calendário")){
+                            Toggle(isOn: $ativaCalendario) {
+                                Text("Calendario")
+                            }
+                        }
+                    }
+                    
                     Section(header: Text("Notas")){
                         TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
@@ -67,27 +77,32 @@ struct ResultadoView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
                     if modoEditar == false {
-                        model.salvar(tituloSalvo: titulo, anotacoesSalvo: anotacao, dataFinalSalvo: dataFinalSalvar, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: UUID())
-//                        Notificacoes.criarLembrete(date: dataLembrete, titulo: titulo, dataEvento: CalcularDatas.dateToString(indice: 0, date: dataFinalSalvar), id: UUID())
+                        model.salvar(tituloSalvo: titulo,
+                                     anotacoesSalvo: anotacao,
+                                     dataFinalSalvo: dataFinalSalvar,
+                                     dataLembrete: dataLembrete,
+                                     ativaLembrete: ativaLembrete,
+                                     idLembrete: UUID())
+                        if ativaCalendario{
+                            AdicionarCalendario.requestAccessToCalendar(dataFinalSalvar: resultado.day!,
+                                                                    anotacao: anotacao,
+                                                                    titulo: titulo)
+                        }
                         Notificacoes.permissao()
+                        
                     } else {
                         for i in 0..<model.anotacoes.count {
                             if id == model.anotacoes[i].id {
-                                model.editarEvento(titulo: titulo, anotacao: anotacao, id: id!, dataFinalSalvar: dataFinalSalvar, idLembrete: UUID(), dataLembrete: dataLembrete, ativaLembrete: ativaLembrete)
+                                model.editarEvento(titulo: titulo,
+                                                   anotacao: anotacao,
+                                                   id: model.anotacoes[i].id,
+                                                   dataFinalSalvar: dataFinalSalvar,
+                                                   idLembrete: model.anotacoes[i].idLembrete,
+                                                   dataLembrete: dataLembrete,
+                                                   ativaLembrete: ativaLembrete)
                             }
                         }
-                        
-//                        for i in 0..<model.anotacoes.count{
-//                            if id == model.anotacoes[i].id{
-//                                model.anotacoes[i].titulo = titulo
-//                                model.anotacoes[i].anotacoes = anotacao
-//                                model.anotacoes[i].dataFinal = dataFinalSalvar
-//                                if let valoresCodificados = try? JSONEncoder().encode(model.anotacoes) {
-//                                    UserDefaults.standard.set(valoresCodificados, forKey: "listaDados")
-//                                }
-//                            }
-                        }
-//                    }
+                    }
                     dismiss()
                 } label: {
                     Text("Salvar")

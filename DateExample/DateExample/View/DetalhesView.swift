@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetalhesView: View {
     
+    var lembrete: Date?
     var id: UUID
     var titulo: String
     var anotacao: String
@@ -60,7 +61,13 @@ struct DetalhesView: View {
                 }.padding(.vertical, 30)
                 VStack {
                     Text("Alerta").padding()
-                    Text("Me avisar 1 semana antes")
+                    
+                    if lembrete != nil{
+                        Text("Me lembrar \(converterData(date: lembrete))")
+                    }else{
+                        Text("Não foi agendado")
+                    }
+                    
                 }
                 
             }
@@ -69,4 +76,19 @@ struct DetalhesView: View {
         .navigationTitle(titulo)
         Spacer()
     }
+    
+    
+    func converterData (date: Date?) -> String {
+        if date != nil{
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "pt_BR")
+            dateFormatter.dateFormat = "EEEE\nd MMMM yyyy - HH:mm"
+            return dateFormatter.string(from: date!)
+        }
+        return "Sem data marcada"
+    }
+    
+    
+    
+    
 }

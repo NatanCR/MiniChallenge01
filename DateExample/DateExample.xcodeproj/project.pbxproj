@@ -19,6 +19,7 @@
 		4EE96FE028D3A8E100523FCE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FDE28D3A8E100523FCE /* MainView.swift */; };
 		4EE96FE228D3A93A00523FCE /* CalcularDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE96FE128D3A93900523FCE /* CalcularDatas.swift */; };
 		51AE11FC28CBBDB800F1EEED /* CelulaCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */; };
+		88C189AC28D9F42B004A9F8E /* AdicionarCalendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189AB28D9F42B004A9F8E /* AdicionarCalendario.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		4EE96FDE28D3A8E100523FCE /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4EE96FE128D3A93900523FCE /* CalcularDatas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcularDatas.swift; sourceTree = "<group>"; };
 		51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelulaCustom.swift; sourceTree = "<group>"; };
+		88C189AB28D9F42B004A9F8E /* AdicionarCalendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdicionarCalendario.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */,
 				4EE96FE128D3A93900523FCE /* CalcularDatas.swift */,
 				51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */,
+				88C189AB28D9F42B004A9F8E /* AdicionarCalendario.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				4E2A352F28D8DBCA008E5C15 /* Notificacoes.swift in Sources */,
 				4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */,
 				4EE96FDF28D3A8E100523FCE /* ResultadoView.swift in Sources */,
+				88C189AC28D9F42B004A9F8E /* AdicionarCalendario.swift in Sources */,
 				4EE96FE228D3A93A00523FCE /* CalcularDatas.swift in Sources */,
 				4EE96FDB28D3A8D300523FCE /* DetalhesView.swift in Sources */,
 				4EE96FD428D3A73A00523FCE /* Model.swift in Sources */,

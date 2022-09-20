@@ -17,17 +17,33 @@ struct ListaView: View {
                     List {
                         if modeloEditar == .inactive {
                             ForEach(eventos, id: \.id) { anotacao in
-                                NavigationLink(destination: DetalhesView(id: anotacao.id, titulo: anotacao.titulo, anotacao: anotacao.anotacoes, dataFinal: anotacao.dataFinal)) {
-                                    CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                                NavigationLink(destination: DetalhesView(lembrete: anotacao.dataLembrete ?? nil,
+                                                                         id: anotacao.id,
+                                                                         titulo: anotacao.titulo,
+                                                                         anotacao: anotacao.anotacoes,
+                                                                         dataFinal: anotacao.dataFinal)) {
+                                    
+                                    CustomRow(titulo: anotacao.titulo,
+                                              dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                                    
                                 }
                             }
                             .onDelete(perform: remover)
+                            
                         } else {
                             ForEach(eventos, id: \.id) { anotacao in
-                                NavigationLink(destination: ResultadoView(dataFinalSalvar: anotacao.dataFinal, titulo: anotacao.titulo, anotacao: anotacao.anotacoes, modoEditar: true, id: anotacao.id),
+                                NavigationLink(destination: ResultadoView(dataFinalSalvar: anotacao.dataFinal,
+                                                                          titulo: anotacao.titulo,
+                                                                          anotacao: anotacao.anotacoes,
+                                                                          modoEditar: true,
+                                                                          id: anotacao.id),
+                                               
                                                tag: anotacao.id,
                                                selection: self.$segmentSelection) {
-                                    CustomRow(titulo: anotacao.titulo, dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                                    
+                                    CustomRow(titulo: anotacao.titulo,
+                                              dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
+                                    
                                 }
                                 .onTapGesture(perform: { self.segmentSelection = anotacao.id })
                             }
@@ -45,7 +61,6 @@ struct ListaView: View {
     
     private var tapGesture: some Gesture {
         TapGesture().onEnded {
-            print("testat")
         }
     }
     
@@ -85,17 +100,6 @@ struct ListaView: View {
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         let data = dateFormatter.string(from: dataSalva)
         return data
-    }
-    
-    var dataInicio: Date = Date()
-    var dataFinal: Date = Date().advanced(by: 60)
-    
-    var dia: Double {
-        return 86400.0
-    }
-    
-    var resultado: DateComponents {
-        Calendar.current.dateComponents([.day,.hour,.minute], from: dataInicio, to: dataFinal)
     }
     
 }
