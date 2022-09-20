@@ -62,18 +62,20 @@ struct DetalhesView: View {
                     }else{
                         Text("Nenhuma nota")
                     }
-                }.padding(.vertical, 30)
+                }
+                .padding(.vertical, 30)
                 VStack {
                     Text("Notificação").padding()
-                    
                     if lembrete != nil{
                         Text("Me lembrar \(converterData(date: lembrete))")
+                            .font(.system(size: 20,
+                                          weight: .regular,
+                                          design: .rounded))
+                            .multilineTextAlignment(.center)
                     }else{
                         Text("Nenhuma")
                     }
-                    
                 }
-                
             }
             Spacer()
         }
@@ -91,8 +93,4 @@ struct DetalhesView: View {
         }
         return "Sem data marcada"
     }
-    
-    
-    
-    
 }

@@ -22,7 +22,6 @@ struct ResultadoView: View {
     @State var dataLembrete: Date
     @State var ativaLembrete = false
     @State var ativaCalendario = false
-
     
     private let altura = UIScreen.main.bounds.size.height
     private var resultado: DateComponents {
@@ -41,6 +40,9 @@ struct ResultadoView: View {
                 Form {
                     Section(){
                         TextField("Título", text: $titulo)
+                            .onReceive(titulo.publisher.collect()) {
+                                    titulo = String($0.prefix(20))
+                            }
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                         }
@@ -54,14 +56,11 @@ struct ResultadoView: View {
                                 Spacer()
                             }
                         }
-                        
                     }
                     if !modoEditar{
-                        
                             Toggle(isOn: $ativaCalendario) {
                                 Text("Adicionar ao Calendario")
                             }
-                        
                     }
                     
                     Section(header: Text("Notas")){

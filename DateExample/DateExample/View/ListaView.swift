@@ -57,7 +57,7 @@ struct ListaView: View {
                     }
                 }
                 .navigationTitle("Seus eventos")
-                .searchable(text: $procuraTexto)
+                .searchable(text: $procuraTexto, prompt: "Pesquisar")
             }
         }
     }
