@@ -36,7 +36,7 @@ struct ListaView: View {
                                                                           titulo: anotacao.titulo,
                                                                           anotacao: anotacao.anotacoes,
                                                                           modoEditar: true,
-                                                                          id: anotacao.id),
+                                                                          id: anotacao.id, dataLembrete: anotacao.dataLembrete ?? Date(), ativaLembrete: anotacao.ativaLembrete),
                                                
                                                tag: anotacao.id,
                                                selection: self.$segmentSelection) {
@@ -52,8 +52,11 @@ struct ListaView: View {
                     }
                     .environment(\.editMode, $modeloEditar)
                     .navigationBarItems(trailing: botaoEditar)
+                    .onAppear {
+                        modeloEditar = .inactive
+                    }
                 }
-                .navigationTitle("Listas de eventos")
+                .navigationTitle("Seus eventos")
                 .searchable(text: $procuraTexto)
             }
         }

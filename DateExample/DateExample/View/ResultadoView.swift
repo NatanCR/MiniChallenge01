@@ -19,7 +19,7 @@ struct ResultadoView: View {
     @State var anotacao: String = ""
     @State var modoEditar = false
     @State var id: UUID?
-    @State var dataLembrete = Date()
+    @State var dataLembrete: Date
     @State var ativaLembrete = false
     @State var ativaCalendario = false
 
@@ -47,21 +47,21 @@ struct ResultadoView: View {
                         if ativaLembrete == true {
                             HStack {
                                 Spacer()
-                                DatePicker("", selection: $dataLembrete,
-                                           displayedComponents: [.date, .hourAndMinute])
-                                    .labelsHidden()
-                                    .fixedSize()
+                                    DatePicker("", selection: $dataLembrete,
+                                               displayedComponents: [.date, .hourAndMinute])
+                                        .labelsHidden()
+                                        .fixedSize()
                                 Spacer()
                             }
                         }
                         
                     }
                     if !modoEditar{
-                        Section(header: Text("Adicionar evento ao Calendário")){
+                        
                             Toggle(isOn: $ativaCalendario) {
-                                Text("Calendario")
+                                Text("Adicionar ao Calendario")
                             }
-                        }
+                        
                     }
                     
                     Section(header: Text("Notas")){
@@ -71,7 +71,7 @@ struct ResultadoView: View {
                 }
             }
         }
-        .navigationBarTitle("Salvar Data")
+        .navigationBarTitle("Adicionar Evento")
         
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

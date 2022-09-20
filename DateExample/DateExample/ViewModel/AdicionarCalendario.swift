@@ -18,8 +18,6 @@ class AdicionarCalendario{
                 return
             }
             
-            //            isGranted = granted
-            
             if granted {
                 guard let calendar = store.defaultCalendarForNewEvents else { return }
                 let event = EKEvent(eventStore: store)
@@ -40,38 +38,5 @@ class AdicionarCalendario{
             }
         }
     }
-    
-//    func fetchEventsFromCalendar() {
-//        store.requestAccess(to: .event) { granted, error in
-//            if let error = error {
-//                print(error)
-//                return
-//            }
-//
-//            if !granted {
-//                print("Acesso não permitido")
-//                return
-//            }
-//
-//            let calendars = store.calendars(for: .event)
-//            var calendar = store.calendar(withIdentifier: "Calendar")
-//
-//            for i in calendars {
-//                if i.title == "Calendar" {
-//                    calendar = i
-//                }
-//            }
-//
-//            let oneMonthAgo = Date(timeIntervalSinceNow: -30*24*3600)
-//            let oneMonthAfter = Date(timeIntervalSinceNow: 30*24*3600)
-//            let predicate =  store.predicateForEvents(withStart: oneMonthAgo, end: oneMonthAfter, calendars: [calendar!])
-//            let events = store.events(matching: predicate)
-//            for event in events {
-//                print(event.title ?? "SEM TÍTULO")
-//                print(event.startDate ?? Date())
-//                print(event.endDate ?? Date())
-//            }
-//        }
-//    }
 }
 

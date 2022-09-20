@@ -57,15 +57,19 @@ struct DetalhesView: View {
             VStack {
                 VStack {
                     Text("Notas").padding()
-                    Text(anotacao)
+                    if anotacao != "" {
+                        Text(anotacao)
+                    }else{
+                        Text("Nenhuma nota")
+                    }
                 }.padding(.vertical, 30)
                 VStack {
-                    Text("Alerta").padding()
+                    Text("Notificação").padding()
                     
                     if lembrete != nil{
                         Text("Me lembrar \(converterData(date: lembrete))")
                     }else{
-                        Text("Não foi agendado")
+                        Text("Nenhuma")
                     }
                     
                 }

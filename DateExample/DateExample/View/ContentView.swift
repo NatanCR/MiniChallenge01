@@ -18,7 +18,7 @@ struct ContentView: View{
         NavigationView {
             ZStack {
                 VStack(alignment: .center) {
-                    Text("Quanto tempo falta para o seu evento?")
+                    Text("Quanto tempo\nfalta para o seu evento?")
                         .font(.system(size: 20,
                                       weight: .bold,
                                       design: .rounded))
@@ -100,21 +100,17 @@ struct ContentView: View{
 
                                 Text("Dias de Semana")
                                     .font(.system(size: 15))
-
                                     .foregroundColor(.gray)
-
                             }
                         }
                         ZStack{
                             VStack{
                                 Text("\(CalcularDatas.calcularFinaisSemana(totalDias: resultado.day ?? 0, diaInicio: dataInicio))")
                                     .font(.system(size: 30, weight: .regular, design: .default))
-
                                 
                                 Text("Finais de Semana")
                                     .font(.system(size: 15))
                                     .foregroundColor(.gray)
-
                             }
                         }
                     }
@@ -122,16 +118,15 @@ struct ContentView: View{
                     Spacer()
                     
                 }
-                .navigationBarTitle("Contador de dias")
+                .navigationBarTitle("Contador")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal), label: {
-                            Text("Adicionar Evento")
+                        NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {
+                            Text("Adicionar")
                         })
                     }
                 }
             }
-            
         }
     }
 }
