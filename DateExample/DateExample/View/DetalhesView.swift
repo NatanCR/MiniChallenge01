@@ -14,8 +14,6 @@ struct DetalhesView: View {
     var titulo: String
     var anotacao: String
     var dataFinal: Date
-    var dataLembrete: Date?
-    var ativaLembrete: Bool
     @State private var opcoes = false
     var resultado: DateComponents {
         return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: dataFinal)
@@ -25,84 +23,55 @@ struct DetalhesView: View {
     var body: some View {
         VStack {
             Text("Tempo restante \npara seu evento")
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
                 .padding(.vertical, 30)
             LazyVGrid(columns: grid, spacing: 30) {
                 
                 ZStack {
                     VStack {
                         Text("\(resultado.day!)")
-                            .font(.system(size: 30, weight: .semibold, design: .rounded))
                         Text("Dias corridos")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
                 ZStack {
                     VStack {
                         Text("\(CalcularDatas.calcularSemanas(dataInicio: Date(), totalDias: resultado.day ?? 0))")
-                            .font(.system(size: 30, weight: .semibold, design: .rounded))
                         Text("Semanas")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
                 
                 ZStack {
                     VStack {
                         Text("\(CalcularDatas.calcularDiasUteis(totalDias: resultado.day ?? 0, dataInicio: Date()))")
-                            .font(.system(size: 30, weight: .semibold, design: .rounded))
                         Text("Dias da semana")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
                 ZStack {
                     VStack {
                         Text("\(CalcularDatas.calcularFinaisSemana(totalDias: resultado.day ?? 0, diaInicio: Date()))")
-                            .font(.system(size: 30, weight: .semibold, design: .rounded))
                         Text("Finais de Semana")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
             }
             Spacer()
             VStack {
                 VStack {
-                    Text("Notas")
-                        .font(.system(size: 19, weight: .semibold, design: .rounded))
                     if anotacao != "" {
                         Text(anotacao)
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
-                            .multilineTextAlignment(.center)
                     }else{
                         Text("Nenhuma nota")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
                 .padding(.vertical, 30)
                 VStack {
-                    Text("Notificação")
-                        .font(.system(size: 19, weight: .semibold, design: .rounded))
-                    if dataLembrete != nil{
-                        Text("Me lembrar \(converterData(date: dataLembrete))")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.center)
                     }else{
                         Text("Nenhuma")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
             }
             Spacer()
         }
-        .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .navigationTitle(titulo)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal, titulo: titulo, anotacao: anotacao, id: id, dataLembrete: dataLembrete ?? Date(), ativaLembrete: ativaLembrete), label: {
-                    Text("Editar")
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
-                })
-            }
-        }
         Spacer()
     }
     

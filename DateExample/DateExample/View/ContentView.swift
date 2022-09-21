@@ -107,7 +107,6 @@ struct ContentView: View{
                     Spacer()
                     
                 }
-                .background(Color.init(red: 0.77, green: 0.84, blue: 0.90, opacity: 1.00))
                 .navigationBarTitle("Contador")
                 .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                 .toolbar {

@@ -39,7 +39,6 @@ struct ResultadoView: View {
                     .font(.system(size: 19, weight: .regular, design: .rounded))
                     
             }
-            .padding(.init(top: 50, leading: 165, bottom: 5, trailing: 165))
             .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
             VStack {
                 Form {
