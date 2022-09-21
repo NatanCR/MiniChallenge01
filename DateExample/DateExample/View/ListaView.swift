@@ -12,16 +12,15 @@ struct ListaView: View {
         NavigationView {
             if lista.anotacoes.count == 0{
                 Text ("Você não possui nenhum registro")
+                    .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
             }else{
                 VStack {
                     List {
-                        if modeloEditar == .inactive {
                             ForEach(eventos, id: \.id) { anotacao in
-                                NavigationLink(destination: DetalhesView(lembrete: anotacao.dataLembrete ?? nil,
-                                                                         id: anotacao.id,
+                                NavigationLink(destination: DetalhesView(id: anotacao.id,
                                                                          titulo: anotacao.titulo,
                                                                          anotacao: anotacao.anotacoes,
-                                                                         dataFinal: anotacao.dataFinal)) {
+                                                                         dataFinal: anotacao.dataFinal, dataLembrete: anotacao.dataLembrete ?? nil, ativaLembrete: anotacao.ativaLembrete)) {
                                     
                                     CustomRow(titulo: anotacao.titulo,
                                               dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
@@ -29,41 +28,16 @@ struct ListaView: View {
                                 }
                             }
                             .onDelete(perform: remover)
-                            
-                        } else {
-                            ForEach(eventos, id: \.id) { anotacao in
-                                NavigationLink(destination: ResultadoView(dataFinalSalvar: anotacao.dataFinal,
-                                                                          titulo: anotacao.titulo,
-                                                                          anotacao: anotacao.anotacoes,
-                                                                          modoEditar: true,
-                                                                          id: anotacao.id, dataLembrete: anotacao.dataLembrete ?? Date(), ativaLembrete: anotacao.ativaLembrete),
-                                               
-                                               tag: anotacao.id,
-                                               selection: self.$segmentSelection) {
-                                    
-                                    CustomRow(titulo: anotacao.titulo,
-                                              dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
-                                    
-                                }
-                                .onTapGesture(perform: { self.segmentSelection = anotacao.id })
-                            }
-                            .onDelete(perform: remover)
-                        }
                     }
-                    .environment(\.editMode, $modeloEditar)
-                    .navigationBarItems(trailing: botaoEditar)
+                    .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                     .onAppear {
                         modeloEditar = .inactive
+                        UITableView.appearance().backgroundColor = .clear
                     }
                 }
                 .navigationTitle("Seus eventos")
                 .searchable(text: $procuraTexto, prompt: "Pesquisar")
             }
-        }
-    }
-    
-    private var tapGesture: some Gesture {
-        TapGesture().onEnded {
         }
     }
     
@@ -74,18 +48,6 @@ struct ListaView: View {
             return lista.anotacoes.filter {
                 $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
-        }
-    }
-    
-    private var botaoEditar: some View {
-        return Button {
-            if modeloEditar == .inactive {
-                modeloEditar = .active
-            } else {
-                modeloEditar = .inactive
-            }
-        } label: {
-            Text(modeloEditar == .inactive ? "Editar" : "OK")
         }
     }
     

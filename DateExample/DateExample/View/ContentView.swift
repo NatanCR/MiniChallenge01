@@ -32,10 +32,6 @@ struct ContentView: View{
                             .frame(width: 250, height: 200)
                             .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
                         
-//                        RoundedRectangle(cornerRadius: 50)
-//                            .strokeBorder()
-//                            .frame(width: 250, height: 200)
-//                            
                         VStack{
                             
                             VStack {
@@ -102,7 +98,6 @@ struct ContentView: View{
                             VStack{
                                 Text("\(CalcularDatas.calcularFinaisSemana(totalDias: resultado.day ?? 0, diaInicio: dataInicio))")
                                     .font(.system(size: 30, weight: .regular, design: .rounded))
-                                
                                 Text("Finais de Semana")
                                     .font(.system(size: 17, weight: .regular, design: .rounded))
                             }
@@ -112,7 +107,7 @@ struct ContentView: View{
                     Spacer()
                     
                 }
-                .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
+                .background(Color.init(red: 0.77, green: 0.84, blue: 0.90, opacity: 1.00))
                 .navigationBarTitle("Contador")
                 .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                 .toolbar {

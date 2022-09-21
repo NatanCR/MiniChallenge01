@@ -10,6 +10,11 @@ import SwiftUI
 struct NavAppearanceModifier: ViewModifier {
     init(backgroundColor: UIColor, foregroundColor: UIColor, tintColor: UIColor?, hideSeparator: Bool) {
         let navBarAppearance = UINavigationBarAppearance()
+        let design = UIFontDescriptor.SystemDesign.rounded
+        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                                             .withDesign(design)!
+        let font = UIFont.init(descriptor: descriptor, size: 48)
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : font]
         navBarAppearance.titleTextAttributes = [.foregroundColor: foregroundColor]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: foregroundColor]
         navBarAppearance.backgroundColor = backgroundColor

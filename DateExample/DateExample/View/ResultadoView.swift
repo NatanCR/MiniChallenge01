@@ -17,8 +17,8 @@ struct ResultadoView: View {
     @State private var alertasIndex = 0
     @State var titulo: String = ""
     @State var anotacao: String = ""
-    @State var modoEditar = false
     @State var id: UUID?
+    @State var modoEditar = false
     @State var dataLembrete: Date
     @State var ativaLembrete = false
     @State var ativaCalendario = false
@@ -39,7 +39,7 @@ struct ResultadoView: View {
                     .font(.system(size: 19, weight: .regular, design: .rounded))
                     
             }
-            .padding(.init(top: 50, leading: 141, bottom: 5, trailing: 141))
+            .padding(.init(top: 50, leading: 165, bottom: 5, trailing: 165))
             .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
             VStack {
                 Form {
@@ -74,7 +74,6 @@ struct ResultadoView: View {
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .foregroundColor(Color.gray)){
-                        //mostrar para cecilia
                         TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
                     }

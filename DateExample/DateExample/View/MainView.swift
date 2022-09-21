@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct MainView: View {
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor.init(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00)
+    }
     var body: some View {
         TabView {
             ContentView()
                 .tabItem {
-                    Label("Calcular",
-                          systemImage: "calendar.circle")
-                }
+                    Image(systemName: "calendar.circle")                }
             ListaView()
                 .tabItem {
-                    Label("Lista",
-                          systemImage: "rectangle.grid.1x2")
-                }
-            
-        }.navigationAppearance(backgroundColor: .systemPink, foregroundColor: .blue, tintColor: .gray
-                               , hideSeparator: false)
+                    Image(systemName: "rectangle.grid.1x2")
+            }
+        }
+        .accentColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
     }
 }
