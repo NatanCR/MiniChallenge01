@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E16F64E28DB718A00A91EA2 /* AparenciaTituloNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E16F64D28DB718A00A91EA2 /* AparenciaTituloNav.swift */; };
 		4E2A352F28D8DBCA008E5C15 /* Notificacoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */; };
 		4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E79E18928BD2E190015CD43 /* DateExampleApp.swift */; };
 		4E79E18E28BD2E1D0015CD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E79E18D28BD2E1D0015CD43 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E16F64D28DB718A00A91EA2 /* AparenciaTituloNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AparenciaTituloNav.swift; sourceTree = "<group>"; };
 		4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificacoes.swift; sourceTree = "<group>"; };
 		4E79E18628BD2E190015CD43 /* DateExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E79E18928BD2E190015CD43 /* DateExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExampleApp.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				4EE96FE128D3A93900523FCE /* CalcularDatas.swift */,
 				51AE11FB28CBBDB800F1EEED /* CelulaCustom.swift */,
 				88C189AB28D9F42B004A9F8E /* AdicionarCalendario.swift */,
+				4E16F64D28DB718A00A91EA2 /* AparenciaTituloNav.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				4EE96FD028D3A66100523FCE /* ContentView.swift in Sources */,
 				51AE11FC28CBBDB800F1EEED /* CelulaCustom.swift in Sources */,
 				4E2A352F28D8DBCA008E5C15 /* Notificacoes.swift in Sources */,
+				4E16F64E28DB718A00A91EA2 /* AparenciaTituloNav.swift in Sources */,
 				4E79E18A28BD2E190015CD43 /* DateExampleApp.swift in Sources */,
 				4EE96FDF28D3A8E100523FCE /* ResultadoView.swift in Sources */,
 				88C189AC28D9F42B004A9F8E /* AdicionarCalendario.swift in Sources */,

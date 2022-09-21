@@ -20,6 +20,8 @@ struct MainView: View {
                     Label("Lista",
                           systemImage: "rectangle.grid.1x2")
                 }
-        }
+            
+        }.navigationAppearance(backgroundColor: .systemPink, foregroundColor: .blue, tintColor: .gray
+                               , hideSeparator: false)
     }
 }
