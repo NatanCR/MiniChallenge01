@@ -25,7 +25,7 @@ struct ContentView: View{
                         .multilineTextAlignment(.center)
                         .padding(.top, 40)
                         .padding(.bottom, 50)
-
+                    
                     ZStack{
                         
                         RoundedRectangle(cornerRadius: 50)
@@ -44,7 +44,7 @@ struct ContentView: View{
                                 DatePicker("", selection: $dataInicio,
                                            in: Date.distantPast...dataFinal,
                                            displayedComponents: [.date])
-                                .labelsHidden()
+                                    .labelsHidden()
                                 
                             }
                             VStack {
@@ -56,7 +56,7 @@ struct ContentView: View{
                                 DatePicker("", selection: $dataFinal,
                                            in: dataInicio...Date.distantFuture,
                                            displayedComponents: [.date])
-                                .labelsHidden()
+                                    .labelsHidden()
                             }
                             .onAppear {
                                 dataInicio = Date()
@@ -89,7 +89,7 @@ struct ContentView: View{
                             VStack{
                                 Text("\(CalcularDatas.calcularDiasUteis(totalDias: resultado.day ?? 0, dataInicio: dataInicio))")
                                     .font(.system(size: 30, weight: .regular, design: .rounded))
-
+                                
                                 Text("Dias de Semana")
                                     .font(.system(size: 17, weight: .regular, design: .rounded))
                             }
@@ -104,9 +104,9 @@ struct ContentView: View{
                         }
                     }
                     .padding([.top, .leading, .trailing],30)
-                    Spacer()
-                    
+                    Spacer() 
                 }
+                .background(Color.init(red: 0.77, green: 0.84, blue: 0.90, opacity: 1.00))
                 .navigationBarTitle("Contador")
                 .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                 .toolbar {

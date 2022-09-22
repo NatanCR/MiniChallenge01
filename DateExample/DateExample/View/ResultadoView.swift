@@ -37,9 +37,7 @@ struct ResultadoView: View {
                     .font(.system(size: 19, weight: .regular, design: .rounded))
                 Text("\(resultado.day ?? 0) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
-                    
             }
-            .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
             VStack {
                 Form {
                     Section(){
@@ -80,12 +78,12 @@ struct ResultadoView: View {
                 .onAppear {
                   UITableView.appearance().backgroundColor = .clear
                 }
-                .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00)) // Segunda cor
+                 // Segunda cor
 //                                 (red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00)) Primeira cor
 //                                  UIColor(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00) Terceira cor
-                .padding(.top, -10)
             }
         }
+        .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Adicionar Evento")
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .toolbar {
