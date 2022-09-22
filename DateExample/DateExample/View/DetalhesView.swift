@@ -95,6 +95,14 @@ struct DetalhesView: View {
         }
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .navigationTitle(titulo)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal, titulo: titulo, anotacao: anotacao, id: id, modoEditar: true, dataLembrete: dataLembrete ?? Date(), ativaLembrete: ativaLembrete), label: {
+                    Text("Editar")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                })
+            }
+        }
         Spacer()
     }
     
