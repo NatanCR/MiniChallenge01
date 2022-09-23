@@ -6,13 +6,12 @@
 //
 
 import Foundation
-
 import SwiftUI
 
-struct ResultadoView: View {
+struct AdicionarEventoView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var model: Model
+    @EnvironmentObject var model: EventoViewModel
     @State var dataFinalSalvar = Date()
     @State private var alertasIndex = 0
     @State var titulo: String = ""
@@ -90,27 +89,27 @@ struct ResultadoView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
                     if modoEditar == false {
-                        model.salvar(tituloSalvo: titulo,
+                        model.adicionarNovo(tituloSalvo: titulo,
                                      anotacoesSalvo: anotacao,
                                      dataFinalSalvo: dataFinalSalvar,
                                      dataLembrete: dataLembrete,
                                      ativaLembrete: ativaLembrete,
                                      idLembrete: UUID())
                         if ativaCalendario{
-                            AdicionarCalendario.requestAccessToCalendar(dataFinalSalvar: resultado.day!,
+                            Calendario.adicionarEvento(dataFinalSalvar: resultado.day!,
                                                                     anotacao: anotacao,
                                                                     titulo: titulo)
                         }
                         Notificacoes.permissao()
                         
                     } else {
-                        for i in 0..<model.anotacoes.count {
-                            if id == model.anotacoes[i].id {
-                                model.editarEvento(titulo: titulo,
+                        for i in 0..<model.eventos.count {
+                            if id == model.eventos[i].id {
+                                model.editarDados(titulo: titulo,
                                                    anotacao: anotacao,
-                                                   id: model.anotacoes[i].id,
+                                                   id: model.eventos[i].id,
                                                    dataFinalSalvar: dataFinalSalvar,
-                                                   idLembrete: model.anotacoes[i].idLembrete,
+                                                   idLembrete: model.eventos[i].idLembrete,
                                                    dataLembrete: dataLembrete,
                                                    ativaLembrete: ativaLembrete)
                             }

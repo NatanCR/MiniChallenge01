@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct DateExampleApp: App {
-    let dados = Model()
+    @ObservedObject var dados = EventoViewModel()
     var body: some Scene {
         WindowGroup {
             MainView()

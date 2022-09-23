@@ -1,62 +1,60 @@
+
+
+
+
+
 import SwiftUI
 
 struct ListaView: View {
     
-    @EnvironmentObject var lista: Model
+    @EnvironmentObject var evento: EventoViewModel
     @State var procuraTexto = ""
-    @State var modeloEditar: EditMode = .inactive
     @State var segmentSelection: Dados.ID? = nil
-    @State var condicao = false 
-
-    var body: some View {
-        NavigationView {
-            if lista.anotacoes.count == 0{
-                Text ("Você não possui nenhum registro")
-                    .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-            }else{
-                VStack {
-                    List {
-                            ForEach(eventos, id: \.id) { anotacao in
-                                NavigationLink(destination: DetalhesView(id: anotacao.id, titulo: anotacao.titulo,anotacao: anotacao.anotacoes,dataFinal: anotacao.dataFinal, ativaLembrete: anotacao.ativaLembrete)) {
-                                    
-                                    CustomRow(titulo: anotacao.titulo,
-                                              dataFinal: conversorDataString(dataSalva: anotacao.dataFinal))
-                                    
-                                }
-                            }
-                            .onDelete(perform: remover)
-                    }
-                    .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
-                    .onAppear {
-                        modeloEditar = .inactive
-                        UITableView.appearance().backgroundColor = .clear
-                    }
-                }
-                
-                .navigationTitle("Seus eventos")
-                .searchable(text: $procuraTexto, prompt: "Pesquisar")
-            }
-        }
-        .background(Color(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
-    }
+    @State var condicao = false
     
-    private var eventos: [Dados] {
+    private var eventosFiltrados: [Dados] {
         if procuraTexto.isEmpty {
-            return lista.anotacoes
+            return evento.eventos
         } else {
-            return lista.anotacoes.filter {
+            return evento.eventos.filter {
                 $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
         }
     }
     
-    func remover(at offsets: IndexSet) {
-        lista.anotacoes.remove(atOffsets: offsets)
-        if let valoresCodificados = try? JSONEncoder().encode(lista.anotacoes) {
-            UserDefaults.standard.set(valoresCodificados, forKey: "listaDados")
-            return
+    var body: some View {
+        NavigationView {
+            
+            if evento.eventos.count == 0{
+                Text ("Você não possui nenhum registro")
+                    .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+            }else{
+                VStack {
+                    
+                    List {
+                        ForEach($evento.eventos, id: \.id) { $anotacao in
+                            NavigationLink {
+                                DetalhesView(agenda: $anotacao)//
+                                    .environmentObject(evento)
+                            } label: {
+                                CelulaLista(dados: $anotacao)
+                            }
+                        }
+                        .onDelete(perform: evento.remover)
+                    }
+                    .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
+                    .onAppear {
+                        UITableView.appearance().backgroundColor = .clear
+                    }
+                }
+                .navigationTitle("Seus eventos")
+                .searchable(text: $procuraTexto, prompt: "Pesquisar")
+                
+            }
         }
+        .background(Color(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
     }
+    
     
     func conversorDataString(dataSalva: Date) -> String {
         let dateFormatter = DateFormatter()

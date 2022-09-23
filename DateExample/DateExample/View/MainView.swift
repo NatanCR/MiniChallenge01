@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct MainView: View {
+    @ObservedObject var eventos = EventoViewModel()
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor.init(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00)
     }
+    
     var body: some View {
         TabView {
-            ContentView()
+            HomeView()
+                .environmentObject(eventos)
                 .tabItem {
                     Image(systemName: "calendar.circle")
                 }
+            
             ListaView()
+                .environmentObject(eventos)
                 .tabItem {
                     Image(systemName: "rectangle.grid.1x2")
                 }

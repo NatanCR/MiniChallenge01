@@ -8,9 +8,9 @@
 import SwiftUI
 import EventKit
 
-class AdicionarCalendario{
+class Calendario{
     
-    static public func requestAccessToCalendar(dataFinalSalvar: Int, anotacao: String, titulo: String) {
+    static public func adicionarEvento(dataFinalSalvar: Int, anotacao: String, titulo: String) {
         let store = EKEventStore()
         store.requestAccess(to: .event) { granted, error in
             if let error = error {

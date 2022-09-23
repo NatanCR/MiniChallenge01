@@ -1,9 +1,19 @@
+//
+//  HomeView.swift
+//  DateExample
+//
+//  Created by Bruno Lafayette on 11/09/22.
+//
+
 import SwiftUI
 
-struct ContentView: View{
+struct HomeView: View {
     
-    @State var dataInicio = Date()
-    @State var dataFinal = Date()
+    @EnvironmentObject var eventos: EventoViewModel
+    
+    @State private var dataInicio = Date()
+    @State private var dataFinal = Date()
+    
     private var resultado: DateComponents {
         Calendar.current.dateComponents([.day,.hour,.minute,.second],
                                         from: dataInicio,
@@ -46,6 +56,7 @@ struct ContentView: View{
                                            displayedComponents: [.date])
                                     .labelsHidden()
                                 
+                                
                             }
                             VStack {
                                 Text("Data Final")
@@ -57,6 +68,7 @@ struct ContentView: View{
                                            in: dataInicio...Date.distantFuture,
                                            displayedComponents: [.date])
                                     .labelsHidden()
+                                    .id(dataFinal)
                             }
                             .onAppear {
                                 dataInicio = Date()
@@ -111,7 +123,7 @@ struct ContentView: View{
                 .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {
+                        NavigationLink(destination: AdicionarEventoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {
                             Text("Adicionar")
                                 .font(.system(size: 17, weight: .semibold, design: .rounded))
                         })

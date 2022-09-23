@@ -9,22 +9,18 @@ import SwiftUI
 
 struct DetalhesView: View {
     
+    @EnvironmentObject var lista: EventoViewModel
+    @Binding var agenda: Dados
     
-    @State var id: UUID
-    @State var titulo: String
-    @State var anotacao: String
-    @State var dataFinal: Date
-    @State var dataLembrete: Date?
-    @State var ativaLembrete: Bool
-    @State var modoEditar = false
     var resultado: DateComponents {
-        return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: dataFinal)
+        return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: agenda.dataFinal)
     }
     private let grid = [GridItem(.adaptive(minimum: 150))]
     
     var body: some View {
         VStack {
             Spacer()
+            
             Text("Tempo restante \npara seu evento")
                 .font(.system(size: 17, weight: .semibold, design: .rounded))
             LazyVGrid(columns: grid, spacing: 30) {
@@ -68,8 +64,8 @@ struct DetalhesView: View {
                 VStack {
                     Text("Notas")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))
-                    if anotacao != "" {
-                        Text(anotacao)
+                    if agenda.anotacoes != "" {
+                        Text(agenda.anotacoes)
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.center)
                     }else{
@@ -81,8 +77,8 @@ struct DetalhesView: View {
                 VStack{
                     Text("Notificação")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))
-                    if dataLembrete != nil{
-                        Text("Me lembrar \(converterData(date: dataLembrete))")
+                    if agenda.dataLembrete != nil{
+                        Text("Me lembrar \(converterDataDetalhes(date: agenda.dataLembrete))")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.center)
                     }else{
@@ -93,21 +89,29 @@ struct DetalhesView: View {
             }
             Spacer()
         }
+        Spacer()
+        
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-        .navigationTitle(titulo)
+        .navigationTitle(agenda.titulo)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ResultadoView(dataFinalSalvar: dataFinal, titulo: titulo, anotacao: anotacao, id: id, modoEditar: true, dataLembrete: dataLembrete ?? Date(), ativaLembrete: ativaLembrete), label: {
+                NavigationLink {
+                    EdicaoView(lista: $agenda,
+                               titulo: agenda.titulo,
+                               idLembrete: agenda.idLembrete,
+                               dataLembrete: agenda.dataLembrete ?? Date(),
+                               ativaLembrete: agenda.ativaLembrete)
+                    .environmentObject(lista)
+                } label: {
                     Text("Editar")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
-                })
+                }
             }
         }
-        Spacer()
     }
     
     
-    func converterData (date: Date?) -> String {
+    func converterDataDetalhes (date: Date?) -> String {
         if date != nil{
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "pt_BR")
@@ -116,4 +120,5 @@ struct DetalhesView: View {
         }
         return "Sem data marcada"
     }
+
 }
