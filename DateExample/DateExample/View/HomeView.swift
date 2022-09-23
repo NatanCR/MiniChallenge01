@@ -28,14 +28,16 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 VStack(alignment: .center) {
-                    Text("Quanto tempo\nfalta para o seu evento?")
+                    Text("Quanto tempo")
                         .font(.system(size: 20,
                                       weight: .bold,
                                       design: .rounded))
-                        .multilineTextAlignment(.center)
+                        
                         .padding(.top, 40)
-                        .padding(.bottom, 50)
-                    
+                    Text("falta para o seu evento?")
+                        .font(.system(size: 20,
+                                      weight: .bold,
+                                      design: .rounded))
                     ZStack{
                         
                         RoundedRectangle(cornerRadius: 50)
@@ -43,7 +45,6 @@ struct HomeView: View {
                             .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
                         
                         VStack{
-                            
                             VStack {
                                 Text("Data Inicial")
                                     .font(.system(size: 20,
@@ -51,13 +52,9 @@ struct HomeView: View {
                                                   design: .default))
                                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                                 
-                                DatePicker("", selection: $dataInicio,
-                                           in: Date.distantPast...dataFinal,
-                                           displayedComponents: [.date])
-                                    .labelsHidden()
-                                
-                                
+                                Text(CalcularDatas.conversorDataString(dataParaConversao: Date(), recebeData: "dataHome"))
                             }
+                            .padding()
                             VStack {
                                 Text("Data Final")
                                     .font(.system(size: 20,
@@ -76,7 +73,7 @@ struct HomeView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 40)
+                    
                     
                     LazyVGrid(columns: grid, spacing: 30) {
                         ZStack {

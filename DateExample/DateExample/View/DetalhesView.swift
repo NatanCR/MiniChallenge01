@@ -19,10 +19,14 @@ struct DetalhesView: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            
-            Text("Tempo restante \npara seu evento")
+            Text(CalcularDatas.conversorDataString(dataParaConversao: agenda.dataFinal))
+                .font(.system(size: 17, weight: .regular, design: .rounded))
+                .padding(.vertical, 30)
+            Text("Tempo restante")
                 .font(.system(size: 17, weight: .semibold, design: .rounded))
+            Text("para seu evento")
+                .font(.system(size: 17, weight: .semibold, design: .rounded))
+            
             LazyVGrid(columns: grid, spacing: 30) {
                 ZStack {
                     VStack {
@@ -89,15 +93,18 @@ struct DetalhesView: View {
             }
             Spacer()
         }
+        .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         Spacer()
         
-        .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .navigationTitle(agenda.titulo)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
                     EdicaoView(lista: $agenda,
+                               dataFinalSalvar: agenda.dataFinal,
                                titulo: agenda.titulo,
+                               anotacao: agenda.anotacoes,
+                               id: agenda.id,
                                idLembrete: agenda.idLembrete,
                                dataLembrete: agenda.dataLembrete ?? Date(),
                                ativaLembrete: agenda.ativaLembrete)

@@ -21,6 +21,7 @@ struct AdicionarEventoView: View {
     @State var dataLembrete: Date
     @State var ativaLembrete = false
     @State var ativaCalendario = false
+    @State var mostrarAlerta = false
     
     private let altura = UIScreen.main.bounds.size.height
     private var resultado: DateComponents {
@@ -37,6 +38,7 @@ struct AdicionarEventoView: View {
                 Text("\(resultado.day ?? 0) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
             }
+            .padding()
             VStack {
                 Form {
                     Section(){
@@ -55,7 +57,8 @@ struct AdicionarEventoView: View {
                                     DatePicker("", selection: $dataLembrete,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
-                                        .fixedSize()
+//                                        .fixedSize()
+                                        .id(dataLembrete)
                                 Spacer()
                             }
                         }
@@ -85,10 +88,20 @@ struct AdicionarEventoView: View {
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Adicionar Evento")
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+        .alert(isPresented: $mostrarAlerta) {
+            if titulo == ""{
+                
+                return Alert(title: Text("Atenção"), message: Text("Insira um título ao evento para salvar"), dismissButton: .default(Text("Ok")))
+            }else{
+                return Alert(title: Text("Atenção"), message: Text("A data de notificação não pode ser superior a data do evento"), dismissButton: .default(Text("Ok")))
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
-                    if modoEditar == false {
+                    if titulo == "" || dataLembrete > dataFinalSalvar{
+                        self.mostrarAlerta.toggle()
+                    } else {
                         model.adicionarNovo(tituloSalvo: titulo,
                                      anotacoesSalvo: anotacao,
                                      dataFinalSalvo: dataFinalSalvar,
@@ -101,21 +114,9 @@ struct AdicionarEventoView: View {
                                                                     titulo: titulo)
                         }
                         Notificacoes.permissao()
-                        
-                    } else {
-                        for i in 0..<model.eventos.count {
-                            if id == model.eventos[i].id {
-                                model.editarDados(titulo: titulo,
-                                                   anotacao: anotacao,
-                                                   id: model.eventos[i].id,
-                                                   dataFinalSalvar: dataFinalSalvar,
-                                                   idLembrete: model.eventos[i].idLembrete,
-                                                   dataLembrete: dataLembrete,
-                                                   ativaLembrete: ativaLembrete)
-                            }
-                        }
-                    }
-                    dismiss()
+                        dismiss()
+                }
+                    
                 } label: {
                     Text("Salvar")
                 }

@@ -1,8 +1,3 @@
-
-
-
-
-
 import SwiftUI
 
 struct ListaView: View {
@@ -42,27 +37,25 @@ struct ListaView: View {
                         }
                         .onDelete(perform: evento.remover)
                     }
-                    .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
+
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
                     }
+                    .searchable(text: $procuraTexto, prompt: "Pesquisar")
+                    .padding(.top, 1)
+                    .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
+                
                 .navigationTitle("Seus eventos")
-                .searchable(text: $procuraTexto, prompt: "Pesquisar")
+                
                 
             }
         }
-        .background(Color(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
+//        .background(Color(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
     }
     
     
-    func conversorDataString(dataSalva: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "pt-br")
-        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
-        let data = dateFormatter.string(from: dataSalva)
-        return data
-    }
+    
     
 }
 

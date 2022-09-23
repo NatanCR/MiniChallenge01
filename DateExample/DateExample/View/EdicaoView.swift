@@ -13,14 +13,15 @@ struct EdicaoView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var evento: EventoViewModel
     @Binding var lista: Dados
-    @State var dataLembreteOp = Date()
-    @State var dataFinalSalvar = Date()
-    @State var titulo: String = ""
-    @State var anotacao: String = ""
-    @State var id: UUID?
-    @State var idLembrete: UUID?
+    @State var dataFinalSalvar: Date
+    @State var titulo: String
+    @State var anotacao: String
+    @State var id: UUID
+    @State var idLembrete: UUID
     @State var dataLembrete: Date
     @State var ativaLembrete: Bool
+    @State var mostrarAlerta = false
+
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -54,10 +55,11 @@ struct EdicaoView: View {
                         if ativaLembrete{
                             HStack {
                                 Spacer()
-                                DatePicker("", selection: $dataLembreteOp,
+                                DatePicker("", selection: $dataLembrete,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
-                                        .fixedSize()
+//                                        .fixedSize()
+                                        .id(dataLembrete)
                                 Spacer()
                             }
                         }
@@ -66,7 +68,7 @@ struct EdicaoView: View {
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .foregroundColor(Color.gray)){
-                                    TextEditor(text: $lista.anotacoes)
+                                    TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
                     }
                 }
@@ -79,17 +81,31 @@ struct EdicaoView: View {
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Editar Evento")
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+        .alert(isPresented: $mostrarAlerta) {
+            if titulo == ""{
+                
+                return Alert(title: Text("Atenção"), message: Text("Insira um título ao evento para salvar"), dismissButton: .default(Text("Ok")))
+            }else{
+                return Alert(title: Text("Atenção"), message: Text("A data de notificação não pode ser superior a data do evento"), dismissButton: .default(Text("Ok")))
+            }
+        }
+        
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
+                    if titulo == "" || dataLembrete > dataFinalSalvar{
+                        self.mostrarAlerta.toggle()
+                    } else {
                     evento.editarDados(titulo: titulo,
                                        anotacao: anotacao,
                                        id: lista.id,
                                        dataFinalSalvar: dataFinalSalvar,
-                                       idLembrete: idLembrete!,
+                                       idLembrete: idLembrete,
                                        dataLembrete: dataLembrete,
                                        ativaLembrete: ativaLembrete)
                 dismiss()
+                }
                 } label: {
                     Text("Salvar")
                 }
