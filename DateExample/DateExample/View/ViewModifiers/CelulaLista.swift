@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CelulaLista: View {
-    @Binding var dados: Dados
+    @State var dados: Dados
     
     var body: some View {
         HStack {

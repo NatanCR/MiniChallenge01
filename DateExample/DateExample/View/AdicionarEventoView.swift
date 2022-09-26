@@ -55,9 +55,9 @@ struct AdicionarEventoView: View {
                             HStack {
                                 Spacer()
                                     DatePicker("", selection: $dataLembrete,
+                                               in: Date()...Date.distantFuture,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
-//                                        .fixedSize()
                                         .id(dataLembrete)
                                 Spacer()
                             }
@@ -80,9 +80,6 @@ struct AdicionarEventoView: View {
                 .onAppear {
                   UITableView.appearance().backgroundColor = .clear
                 }
-                 // Segunda cor
-//                                 (red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00)) Primeira cor
-//                                  UIColor(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00) Terceira cor
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
@@ -119,6 +116,7 @@ struct AdicionarEventoView: View {
                     
                 } label: {
                     Text("Salvar")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
                 }
             }
         }

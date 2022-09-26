@@ -10,7 +10,7 @@ import SwiftUI
 struct DetalhesView: View {
     
     @EnvironmentObject var lista: EventoViewModel
-    @Binding var agenda: Dados
+    @State var agenda: Dados
     
     var resultado: DateComponents {
         return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: agenda.dataFinal)

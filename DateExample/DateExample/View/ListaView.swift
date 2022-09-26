@@ -9,7 +9,7 @@ struct ListaView: View {
     
     private var eventosFiltrados: [Dados] {
         if procuraTexto.isEmpty {
-            return evento.eventos
+            return evento.eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
         } else {
             return evento.eventos.filter {
                 $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
@@ -27,12 +27,12 @@ struct ListaView: View {
                 VStack {
                     
                     List {
-                        ForEach($evento.eventos, id: \.id) { $anotacao in
+                        ForEach(eventosFiltrados, id: \.id) { anotacao in
                             NavigationLink {
-                                DetalhesView(agenda: $anotacao)//
+                                DetalhesView(agenda: anotacao)//
                                     .environmentObject(evento)
                             } label: {
-                                CelulaLista(dados: $anotacao)
+                                CelulaLista(dados: anotacao)
                             }
                         }
                         .onDelete(perform: evento.remover)
