@@ -12,7 +12,7 @@ struct DateExampleApp: App {
     @ObservedObject var dados = EventoViewModel()
     var body: some Scene {
         WindowGroup {
-            MainView()
+            LaunchScreen()
                 .environmentObject(dados)
         }
     }

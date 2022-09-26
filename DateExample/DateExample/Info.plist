@@ -4,10 +4,6 @@
 <dict>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIColorName</key>
-		<string>backgroundColor</string>
-		<key>UIImageName</key>
-		<string>logo_dias_ate1</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
 		<true/>
 		<key>UILaunchScreen</key>

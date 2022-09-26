@@ -56,6 +56,7 @@ struct EdicaoView: View {
                             HStack {
                                 Spacer()
                                 DatePicker("", selection: $dataLembrete,
+                                           in: Date()...Date.distantFuture,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
 //                                        .fixedSize()
