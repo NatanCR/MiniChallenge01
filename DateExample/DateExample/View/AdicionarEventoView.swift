@@ -87,16 +87,17 @@ struct AdicionarEventoView: View {
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
-                
-                return Alert(title: Text("Atenção"), message: Text("Insira um título ao evento para salvar"), dismissButton: .default(Text("Ok")))
+                return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
+            } else if resultado.day == 0{
+                return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Você tem menos de um dia para seu evento."), dismissButton: .default(Text("Ok")))
             }else{
-                return Alert(title: Text("Atenção"), message: Text("A data de notificação não pode ser superior a data do evento"), dismissButton: .default(Text("Ok")))
+                return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
-                    if titulo == "" || dataLembrete > dataFinalSalvar{
+                    if titulo == "" || dataLembrete > dataFinalSalvar || resultado.day == 0 {
                         self.mostrarAlerta.toggle()
                     } else {
                         model.adicionarNovo(tituloSalvo: titulo,

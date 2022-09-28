@@ -49,6 +49,7 @@ class EventoViewModel: ObservableObject{
                     Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: CalcularDatas.dateToString(indice: 0, date: dataFinalSalvar))
                     if let valoresCodificados = try? JSONEncoder().encode(eventos) {
                         UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+                        fetch()
                     }
                 }
             } else {
@@ -60,27 +61,33 @@ class EventoViewModel: ObservableObject{
                     eventos[i].dataLembrete = nil
                     if let valoresCodificados = try? JSONEncoder().encode(eventos) {
                         UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+                        fetch()
                     }
                 }
             }
         }
-        fetch()
+        
     }
     
     func remover(at offsets: IndexSet) {
-        eventos.remove(atOffsets: offsets)
+        var listaOrdenada = eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
+        listaOrdenada.remove(atOffsets: offsets)
+        eventos = listaOrdenada
         if let valoresCodificados = try? JSONEncoder().encode(eventos) {
             UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
             fetch()
             return
         }
     }
+   
     
     func fetch() {
-        if let anotacoesCodificadas = UserDefaults.standard.data(forKey: "listaEventos") {
+        if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {
             let decoder = JSONDecoder()
             if let anotacoesDecodificadas = try? decoder.decode([Dados].self, from: anotacoesCodificadas){
-                self.eventos = anotacoesDecodificadas
+                DispatchQueue.main.async {
+                    self.eventos = anotacoesDecodificadas
+                }
             }
         }
     }

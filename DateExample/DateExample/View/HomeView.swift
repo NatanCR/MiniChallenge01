@@ -13,6 +13,7 @@ struct HomeView: View {
     
     @State private var dataInicio = Date()
     @State private var dataFinal = Date()
+    @State private var mostrarAlerta = false
     
     private var resultado: DateComponents {
         Calendar.current.dateComponents([.day,.hour,.minute,.second],
@@ -118,6 +119,9 @@ struct HomeView: View {
                 .background(Color.init(red: 0.77, green: 0.84, blue: 0.90, opacity: 1.00))
                 .navigationBarTitle("Contador")
                 .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                .alert(isPresented: $mostrarAlerta) {
+                        return Alert(title: Text("Atenção"), message: Text("Você tem menos de um dia para seu evento."), dismissButton: .default(Text("Ok")))
+                }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: AdicionarEventoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {

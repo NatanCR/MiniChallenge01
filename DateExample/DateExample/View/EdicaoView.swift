@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EdicaoView: View {
     
-    
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var evento: EventoViewModel
     @Binding var lista: Dados
@@ -59,7 +58,6 @@ struct EdicaoView: View {
                                            in: Date()...Date.distantFuture,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
-//                                        .fixedSize()
                                         .id(dataLembrete)
                                 Spacer()
                             }
@@ -90,7 +88,6 @@ struct EdicaoView: View {
                 return Alert(title: Text("Atenção"), message: Text("A data de notificação não pode ser superior a data do evento"), dismissButton: .default(Text("Ok")))
             }
         }
-        
         
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
