@@ -75,6 +75,8 @@ struct EdicaoView: View {
                     UITableView.appearance().backgroundColor = .clear
 
                 }
+            }.onTapGesture{
+                evento.esconderTeclado()
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))

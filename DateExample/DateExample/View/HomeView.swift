@@ -25,6 +25,11 @@ struct HomeView: View {
         GridItem(.adaptive(minimum: 150))
     ]
     
+    var periodo: ClosedRange<Date>{
+        let max = Calendar.current.date(byAdding: .year, value: 15, to: Date())!
+        return Date()...max
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -63,7 +68,7 @@ struct HomeView: View {
                                                   design: .default))
                                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                                 DatePicker("", selection: $dataFinal,
-                                           in: dataInicio...Date.distantFuture,
+                                           in: periodo,
                                            displayedComponents: [.date])
                                     .labelsHidden()
                                     .id(dataFinal)

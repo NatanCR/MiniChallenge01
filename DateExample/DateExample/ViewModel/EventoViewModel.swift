@@ -80,6 +80,10 @@ class EventoViewModel: ObservableObject{
         }
     }
    
+    func esconderTeclado() {
+            let resposta = #selector(UIResponder.resignFirstResponder)
+            UIApplication.shared.sendAction(resposta, to: nil, from: nil, for: nil)
+        }
     
     func fetch() {
         if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {

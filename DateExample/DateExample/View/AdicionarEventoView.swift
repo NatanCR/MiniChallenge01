@@ -80,6 +80,8 @@ struct AdicionarEventoView: View {
                 .onAppear {
                   UITableView.appearance().backgroundColor = .clear
                 }
+            }.onTapGesture{
+                model.esconderTeclado()
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
@@ -97,6 +99,7 @@ struct AdicionarEventoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
+                    titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)
                     if titulo == "" || dataLembrete > dataFinalSalvar || resultado.day == 0 {
                         self.mostrarAlerta.toggle()
                     } else {
