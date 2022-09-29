@@ -9,22 +9,12 @@ import SwiftUI
 
 @main
 struct DateExampleApp: App {
-<<<<<<< Updated upstream
-    
-=======
->>>>>>> Stashed changes
+    @ObservedObject var dados = EventoViewModel()
+
     var body: some Scene {
-        
-        let dados = Model()
-        
         WindowGroup {
-<<<<<<< Updated upstream
-            MainView()
-                .environmentObject(dados)
-=======
             LaunchScreen()
-//                .environmentObject(dados)
->>>>>>> Stashed changes
+                .environmentObject(dados)
         }
     }
 }

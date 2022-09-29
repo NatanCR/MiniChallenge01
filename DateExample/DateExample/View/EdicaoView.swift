@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EdicaoView: View {
     
-    
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var evento: EventoViewModel
     @Binding var lista: Dados
@@ -76,6 +75,8 @@ struct EdicaoView: View {
                     UITableView.appearance().backgroundColor = .clear
 
                 }
+            }.onTapGesture{
+                evento.esconderTeclado()
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
@@ -90,7 +91,6 @@ struct EdicaoView: View {
             }
         }
         
-        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
@@ -98,13 +98,12 @@ struct EdicaoView: View {
                         self.mostrarAlerta.toggle()
                     } else {
                     evento.editarDados(titulo: titulo,
-                                       anotacao: self.anotacao,
+                                       anotacao: anotacao,
                                        id: lista.id,
                                        dataFinalSalvar: dataFinalSalvar,
                                        idLembrete: idLembrete,
-                                       dataLembrete: self.dataLembrete,
+                                       dataLembrete: dataLembrete,
                                        ativaLembrete: ativaLembrete)
-                        evento.fetch()
                 dismiss()
                 }
                 } label: {
