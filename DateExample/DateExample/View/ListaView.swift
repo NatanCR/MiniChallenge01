@@ -43,9 +43,11 @@ struct ListaView: View {
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
                     .padding(.top, 1)
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
-                }.onTapGesture{
-                    evento.esconderTeclado()
                 }
+//                .onTapGesture{
+//                    evento.esconderTeclado()
+//                }
+                //tava deixando o toque na celula lento 
                 .navigationTitle("Seus eventos")
             }
         }

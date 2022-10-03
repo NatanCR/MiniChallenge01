@@ -58,9 +58,10 @@ struct AdicionarEventoView: View {
                                                in: Date()...Date.distantFuture,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
-                                        .id(dataLembrete)
+                                        .datePickerStyle(.wheel)
                                 Spacer()
                             }
+                            .id(dataLembrete)
                         }
                     }
                     if !modoEditar{
@@ -75,12 +76,16 @@ struct AdicionarEventoView: View {
                                 .foregroundColor(Color.gray)){
                         TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
+                            .onReceive(anotacao.publisher.collect()) {
+                                    anotacao = String($0.prefix(100))
+                            }
                     }
                 }
                 .onAppear {
                   UITableView.appearance().backgroundColor = .clear
                 }
-            }.onTapGesture{
+            }
+            .onTapGesture{
                 model.esconderTeclado()
             }
         }

@@ -18,6 +18,7 @@ struct DetalhesView: View {
     private let grid = [GridItem(.adaptive(minimum: 150))]
     
     var body: some View {
+        ScrollView {
         VStack {
             Text(CalcularDatas.conversorDataString(dataParaConversao: agenda.dataFinal))
                 .font(.system(size: 17, weight: .regular, design: .rounded))
@@ -93,6 +94,8 @@ struct DetalhesView: View {
             }
             Spacer()
         }
+    }
+        //.frame(minWidth: 5, idealWidth: 15, maxWidth: 30, minHeight: 5, idealHeight: 15, maxHeight: 30, alignment: .center)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         Spacer()
         
