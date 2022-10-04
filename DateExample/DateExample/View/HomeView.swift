@@ -38,14 +38,12 @@ struct HomeView: View {
                         .font(.system(size: 20,
                                       weight: .bold,
                                       design: .rounded))
-                        
                         .padding(.top, 40)
                     Text("falta para o seu evento?")
                         .font(.system(size: 20,
                                       weight: .bold,
                                       design: .rounded))
                     ZStack{
-                        
                         RoundedRectangle(cornerRadius: 50)
                             .frame(width: 250, height: 200)
                             .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
@@ -76,11 +74,10 @@ struct HomeView: View {
                             .onAppear {
                                 dataInicio = Date()
                                 dataFinal = Date()
+                                Avaliacao.pedidoAvaliacao()
                             }
                         }
                     }
-                    
-                    
                     LazyVGrid(columns: grid, spacing: 30) {
                         ZStack {
                             VStack{
