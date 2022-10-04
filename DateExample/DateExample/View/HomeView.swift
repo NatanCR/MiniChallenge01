@@ -13,7 +13,6 @@ struct HomeView: View {
     
     @State private var dataInicio = Date()
     @State private var dataFinal = Date()
-    @State private var mostrarAlerta = false
     
     private var resultado: DateComponents {
         Calendar.current.dateComponents([.day,.hour,.minute,.second],
@@ -22,7 +21,7 @@ struct HomeView: View {
     }
     
     private let grid = [
-        GridItem(.adaptive(minimum: 150))
+        GridItem(.adaptive(minimum: 120))
     ]
     
     var periodo: ClosedRange<Date>{
@@ -133,6 +132,7 @@ struct HomeView: View {
                                     }else{
                                         Text("Finais de Semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .multilineTextAlignment(.center)  
                                     }
                                 }
                             }
@@ -142,15 +142,12 @@ struct HomeView: View {
                     }
                     .navigationBarTitle("Contador")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                    .alert(isPresented: $mostrarAlerta) {
-                        return Alert(title: Text("Atenção"), message: Text("Você tem menos de um dia para seu evento."), dismissButton: .default(Text("Ok")))
-                    }
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             NavigationLink(destination: AdicionarEventoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {
                                 Text("Adicionar")
                                     .font(.system(size: 17, weight: .semibold, design: .rounded))
-                            })
+                            }).disabled(resultado.day == 0)
                         }
                     }
                 }

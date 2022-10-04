@@ -79,6 +79,7 @@ struct DetalhesView: View {
                     }
                 }
                 .padding(.vertical, 30)
+                .padding(.horizontal, 8)
                 VStack{
                     Text("Notificação")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))

@@ -5,8 +5,6 @@ struct ListaView: View {
     @EnvironmentObject var evento: EventoViewModel
     @State var procuraTexto = ""
     @State var segmentSelection: Dados.ID? = nil
-    @State var condicao = false
-    @State var mostrarInfos = false
     
     private var eventosFiltrados: [Dados] {
         if procuraTexto.isEmpty {
@@ -41,13 +39,10 @@ struct ListaView: View {
                         UITableView.appearance().backgroundColor = .clear
                     }
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
+                   
                     .padding(.top, 1)
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
-//                .onTapGesture{
-//                    evento.esconderTeclado()
-//                }
-                //tava deixando o toque na celula lento 
                 .navigationTitle("Seus eventos")
             }
         }
