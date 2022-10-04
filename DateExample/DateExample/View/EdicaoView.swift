@@ -58,17 +58,20 @@ struct EdicaoView: View {
                                            in: Date()...Date.distantFuture,
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
-                                        .id(dataLembrete)
+                                        .datePickerStyle(.automatic)
                                 Spacer()
                             }
                         }
-                    }
+                    }.id(dataLembrete)
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .foregroundColor(Color.gray)){
                                     TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
+                            .onReceive(anotacao.publisher.collect()) {
+                                    anotacao = String($0.prefix(100))
+                            }
                     }
                 }
                 .onAppear {
@@ -80,11 +83,10 @@ struct EdicaoView: View {
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
-        .navigationBarTitle("Editar Evento")
+        .navigationBarTitle("Editar evento")
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
-                
                 return Alert(title: Text("Atenção"), message: Text("Insira um título ao evento para salvar"), dismissButton: .default(Text("Ok")))
             }else{
                 return Alert(title: Text("Atenção"), message: Text("A data de notificação não pode ser superior a data do evento"), dismissButton: .default(Text("Ok")))
@@ -108,6 +110,7 @@ struct EdicaoView: View {
                 }
                 } label: {
                     Text("Salvar")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
                 }
             }
         }

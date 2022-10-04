@@ -45,7 +45,7 @@ struct AdicionarEventoView: View {
                         TextField("Título", text: $titulo)
                             .font(.system(size: 19, weight: .regular, design: .rounded))
                             .onReceive(titulo.publisher.collect()) {
-                                    titulo = String($0.prefix(20))
+                                titulo = String($0.prefix(20))
                             }
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
@@ -54,20 +54,21 @@ struct AdicionarEventoView: View {
                         if ativaLembrete == true {
                             HStack {
                                 Spacer()
-                                    DatePicker("", selection: $dataLembrete,
-                                               in: Date()...Date.distantFuture,
-                                               displayedComponents: [.date, .hourAndMinute])
-                                        .labelsHidden()
-                                        .id(dataLembrete)
+                                DatePicker("", selection: $dataLembrete,
+                                           in: Date()...Date.distantFuture,
+                                           displayedComponents: [.date, .hourAndMinute])
+                                    .labelsHidden()
+                                    .datePickerStyle(.automatic)
                                 Spacer()
                             }
+                            
                         }
-                    }
+                    }.id(dataLembrete)
                     if !modoEditar{
-                            Toggle(isOn: $ativaCalendario) {
-                                Text("Adicionar ao Calendario")
-                                    .font(.system(size: 19, weight: .semibold, design: .rounded))
-                            }
+                        Toggle(isOn: $ativaCalendario) {
+                            Text("Adicionar ao Calendario")
+                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        }
                     }
                     
                     Section(header: Text("Notas")
@@ -75,12 +76,16 @@ struct AdicionarEventoView: View {
                                 .foregroundColor(Color.gray)){
                         TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
+                            .onReceive(anotacao.publisher.collect()) {
+                                anotacao = String($0.prefix(100))
+                            }
                     }
                 }
                 .onAppear {
-                  UITableView.appearance().backgroundColor = .clear
+                    UITableView.appearance().backgroundColor = .clear
                 }
-            }.onTapGesture{
+            }
+            .onTapGesture{
                 model.esconderTeclado()
             }
         }
@@ -90,8 +95,6 @@ struct AdicionarEventoView: View {
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
-            } else if resultado.day == 0{
-                return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Você tem menos de um dia para seu evento."), dismissButton: .default(Text("Ok")))
             }else{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
@@ -104,20 +107,19 @@ struct AdicionarEventoView: View {
                         self.mostrarAlerta.toggle()
                     } else {
                         model.adicionarNovo(tituloSalvo: titulo,
-                                     anotacoesSalvo: anotacao,
-                                     dataFinalSalvo: dataFinalSalvar,
-                                     dataLembrete: dataLembrete,
-                                     ativaLembrete: ativaLembrete,
-                                     idLembrete: UUID())
+                                            anotacoesSalvo: anotacao,
+                                            dataFinalSalvo: dataFinalSalvar,
+                                            dataLembrete: dataLembrete,
+                                            ativaLembrete: ativaLembrete,
+                                            idLembrete: UUID())
                         if ativaCalendario{
                             Calendario.adicionarEvento(dataFinalSalvar: resultado.day!,
-                                                                    anotacao: anotacao,
-                                                                    titulo: titulo)
+                                                       anotacao: anotacao,
+                                                       titulo: titulo)
                         }
                         Notificacoes.permissao()
                         dismiss()
-                }
-                    
+                    }
                 } label: {
                     Text("Salvar")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
