@@ -31,53 +31,52 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                VStack(alignment: .center) {
-                    Text("Quanto tempo")
-                        .font(.system(size: 20,
-                                      weight: .bold,
-                                      design: .rounded))
-                        .padding(.top, 40)
-                    Text("falta para o seu evento?")
-                        .font(.system(size: 20,
-                                      weight: .bold,
-                                      design: .rounded))
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 50)
-                            .frame(width: 250, height: 200)
-                            .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
-                        
-                        VStack{
-                            VStack {
-                                Text("Data Inicial")
-                                    .font(.system(size: 20,
-                                                  weight: .semibold,
-                                                  design: .default))
-                                    .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                                
-                                Text(CalcularDatas.conversorDataString(dataParaConversao: Date(), recebeData: "dataHome"))
-                            }
-                            .padding()
-                            VStack {
-                                Text("Data Final")
-                                    .font(.system(size: 20,
-                                                  weight: .semibold,
-                                                  design: .default))
-                                    .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                                DatePicker("", selection: $dataFinal,
-                                           in: periodo,
-                                           displayedComponents: [.date])
-                                    .labelsHidden()
-                                    .id(dataFinal)
-                            }
-                            .onAppear {
-                                dataInicio = Date()
-                                dataFinal = Date()
-                                Avaliacao.pedidoAvaliacao()
+            ScrollView {
+                ZStack {
+                    VStack(alignment: .center) {
+                        Text("Quanto tempo")
+                            .font(.system(size: 20,
+                                          weight: .bold,
+                                          design: .rounded))
+                            .padding(.top, 40)
+                        Text("falta para o seu evento?")
+                            .font(.system(size: 20,
+                                          weight: .bold,
+                                          design: .rounded))
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 50)
+                                .frame(width: 250, height: 200)
+                                .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
+                            VStack{
+                                VStack {
+                                    Text("Data Inicial")
+                                        .font(.system(size: 20,
+                                                      weight: .semibold,
+                                                      design: .default))
+                                        .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                    
+                                    Text(CalcularDatas.conversorDataString(dataParaConversao: Date(), recebeData: "dataHome"))
+                                }
+                                .padding()
+                                VStack {
+                                    Text("Data Final")
+                                        .font(.system(size: 20,
+                                                      weight: .semibold,
+                                                      design: .default))
+                                        .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                    DatePicker("", selection: $dataFinal,
+                                               in: periodo,
+                                               displayedComponents: [.date])
+                                        .labelsHidden()
+                                        .id(dataFinal)
+                                }
+                                .onAppear {
+                                    dataInicio = Date()
+                                    dataFinal = Date()
+                                    Avaliacao.pedidoAvaliacao()
+                                }
                             }
                         }
-                        
-                        
                         LazyVGrid(columns: grid, spacing: 30) {
                             ZStack {
                                 VStack{
@@ -129,7 +128,7 @@ struct HomeView: View {
                                     }else{
                                         Text("Finais de Semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
-                                            .multilineTextAlignment(.center)  
+                                            .multilineTextAlignment(.center)
                                     }
                                 }
                             }
