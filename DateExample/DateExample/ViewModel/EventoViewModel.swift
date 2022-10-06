@@ -20,7 +20,7 @@ class EventoViewModel: ObservableObject{
             self.eventos.append(Dados(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
             for i in 0..<eventos.count{
                 if idLembrete == eventos[i].idLembrete{
-                    Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: CalcularDatas.dateToString(indice: 0, date: dataFinalSalvo), id: idLembrete)
+                    Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: CalcularDatas.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
                     if let valoresCodificados = try? JSONEncoder().encode(eventos) {
                         UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
                         fetch()
@@ -46,7 +46,7 @@ class EventoViewModel: ObservableObject{
                     eventos[i].dataFinal = dataFinalSalvar
                     eventos[i].dataLembrete = dataLembrete
                     eventos[i].ativaLembrete = true
-                    Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: CalcularDatas.dateToString(indice: 0, date: dataFinalSalvar))
+                    Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: CalcularDatas.dataNotificacao(indice: 0, date: dataFinalSalvar))
                     if let valoresCodificados = try? JSONEncoder().encode(eventos) {
                         UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
                         fetch()

@@ -58,7 +58,7 @@ struct DetalhesView: View {
                     VStack {
                         Text("\(CalcularDatas.calcularFinaisSemana(totalDias: resultado.day ?? 0, diaInicio: Date()))")
                             .font(.system(size: 30, weight: .semibold, design: .rounded))
-                        Text("Finais de Semana")
+                        Text("Finais de semana")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                     }
                 }
@@ -84,7 +84,7 @@ struct DetalhesView: View {
                     Text("Notificação")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))
                     if agenda.dataLembrete != nil{
-                        Text("Me lembrar \(converterDataDetalhes(date: agenda.dataLembrete))")
+                        Text("Lembrar-me \(converterDataDetalhes(date: agenda.dataLembrete))")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.center)
                     }else{
@@ -96,7 +96,6 @@ struct DetalhesView: View {
             Spacer()
         }
     }
-        //.frame(minWidth: 5, idealWidth: 15, maxWidth: 30, minHeight: 5, idealHeight: 15, maxHeight: 30, alignment: .center)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         Spacer()
         

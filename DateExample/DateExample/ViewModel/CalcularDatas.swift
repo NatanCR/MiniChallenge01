@@ -8,6 +8,13 @@ class CalcularDatas: ObservableObject{
         return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: dataInicio, to: dataFim)
     }
     
+    static func dataNotificacao (indice: Int, date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "pt_BR")
+        dateFormatter.dateFormat = "EEEE, d MMMM yyyy"
+        return dateFormatter.string(from: date.advanced(by: dia * Double(indice)))
+    }
+    
     static func dateToString (indice: Int, date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "pt_BR")

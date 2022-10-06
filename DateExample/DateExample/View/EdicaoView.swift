@@ -20,6 +20,7 @@ struct EdicaoView: View {
     @State var dataLembrete: Date
     @State var ativaLembrete: Bool
     @State var mostrarAlerta = false
+    @State private var contadorCaracter = 0
 
     
     private let altura = UIScreen.main.bounds.size.height
@@ -72,6 +73,11 @@ struct EdicaoView: View {
                             .onReceive(anotacao.publisher.collect()) {
                                     anotacao = String($0.prefix(100))
                             }
+                            .onChange(of: anotacao) { newValue in
+                                contadorCaracter = newValue.count
+                            }
+                        Text("\(contadorCaracter)/100")
+                            .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     }
                 }
                 .onAppear {
@@ -87,9 +93,9 @@ struct EdicaoView: View {
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
-                return Alert(title: Text("Atenção"), message: Text("Insira um título ao evento para salvar"), dismissButton: .default(Text("Ok")))
+                return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
             }else{
-                return Alert(title: Text("Atenção"), message: Text("A data de notificação não pode ser superior a data do evento"), dismissButton: .default(Text("Ok")))
+                return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
         }
         

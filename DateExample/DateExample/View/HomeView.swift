@@ -49,7 +49,7 @@ struct HomeView: View {
                                 .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
                             VStack{
                                 VStack {
-                                    Text("Data Inicial")
+                                    Text("Data inicial")
                                         .font(.system(size: 20,
                                                       weight: .semibold,
                                                       design: .default))
@@ -59,7 +59,7 @@ struct HomeView: View {
                                 }
                                 .padding()
                                 VStack {
-                                    Text("Data Final")
+                                    Text("Data final")
                                         .font(.system(size: 20,
                                                       weight: .semibold,
                                                       design: .default))
@@ -83,10 +83,10 @@ struct HomeView: View {
                                     Text("\(CalcularDatas.calcularDiasCorridos(totalDias: resultado.day ?? 0))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
                                     if ("\(CalcularDatas.calcularDiasCorridos(totalDias: resultado.day ?? 0))") == "1" {
-                                        Text("Dia Corrido")
+                                        Text("Dia corrido")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     }else {
-                                        Text("Dias Corridos")
+                                        Text("Dias corridos")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     }
                                 }
@@ -110,10 +110,10 @@ struct HomeView: View {
                                     Text("\(CalcularDatas.calcularDiasUteis(totalDias: resultado.day ?? 0, dataInicio: dataInicio))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
                                     if ("\(CalcularDatas.calcularDiasUteis(totalDias: resultado.day ?? 0, dataInicio: dataInicio))") == "1" {
-                                        Text("Dia de Semana")
+                                        Text("Dia de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     } else {
-                                        Text("Dias de Semana")
+                                        Text("Dias de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     }
                                 }
@@ -123,10 +123,10 @@ struct HomeView: View {
                                     Text("\(CalcularDatas.calcularFinaisSemana(totalDias: resultado.day ?? 0, diaInicio: dataInicio))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
                                     if ("\(CalcularDatas.calcularFinaisSemana(totalDias: resultado.day ?? 0, diaInicio: dataInicio))") == "1" {
-                                        Text("Final de Semana")
+                                        Text("Final de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     }else{
-                                        Text("Finais de Semana")
+                                        Text("Finais de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                             .multilineTextAlignment(.center)
                                     }
