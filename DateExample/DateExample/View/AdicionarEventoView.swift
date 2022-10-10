@@ -60,6 +60,7 @@ struct AdicionarEventoView: View {
                                            displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
                                     .datePickerStyle(.automatic)
+                                    .environment(\.locale, Locale.init(identifier: "pt-br"))
                                 Spacer()
                             }
                             
@@ -95,6 +96,7 @@ struct AdicionarEventoView: View {
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Adicionar evento")
+        .navigationBarBackButtonHidden(true)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
@@ -104,10 +106,21 @@ struct AdicionarEventoView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        Text("Contador")
+                    }
+                })
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
                     titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if titulo == "" || dataLembrete > dataFinalSalvar || resultado.day == 0 {
+                    if titulo == "" || dataLembrete > dataFinalSalvar {
                         self.mostrarAlerta.toggle()
                     } else {
                         model.adicionarNovo(tituloSalvo: titulo,

@@ -68,8 +68,10 @@ struct HomeView: View {
                                                in: periodo,
                                                displayedComponents: [.date])
                                         .labelsHidden()
-                                        .id(dataFinal)
+                                        .environment(\.locale, Locale.init(identifier: "pt-br"))
+                                        
                                 }
+                                .id(dataFinal)
                                 .onAppear {
                                     dataInicio = Date()
                                     dataFinal = Date()
