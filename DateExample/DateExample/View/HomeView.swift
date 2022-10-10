@@ -139,6 +139,7 @@ struct HomeView: View {
                     .navigationBarTitle("Contador")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     .toolbar {
+                        
                         ToolbarItem(placement: .navigationBarTrailing) {
                             NavigationLink(destination: AdicionarEventoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {
                                 Text("Adicionar")

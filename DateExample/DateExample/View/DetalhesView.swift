@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetalhesView: View {
     
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var lista: EventoViewModel
     @State var agenda: Dados
     
@@ -98,9 +99,20 @@ struct DetalhesView: View {
     }
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         Spacer()
-        
+        .navigationBarBackButtonHidden(true)
         .navigationTitle(agenda.titulo)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        Text("Seus eventos")
+                    }
+                })
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
                     EdicaoView(lista: $agenda,

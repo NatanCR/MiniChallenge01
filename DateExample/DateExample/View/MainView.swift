@@ -19,7 +19,7 @@ struct MainView: View {
             HomeView()
                 .environmentObject(eventos)
                 .tabItem {
-                    Image(systemName: "calendar.circle")
+                    Image(systemName: "calendar")
                 }
             
             ListaView()
