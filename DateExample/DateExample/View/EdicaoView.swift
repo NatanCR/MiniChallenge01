@@ -10,8 +10,8 @@ import SwiftUI
 struct EdicaoView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var evento: EventoViewModel
-    @Binding var lista: Dados
+    @StateObject var eventoModel: EventoViewModel
+    @Binding var listaEvento: Evento
     @State var dataFinalSalvar: Date
     @State var titulo: String
     @State var anotacao: String
@@ -21,23 +21,17 @@ struct EdicaoView: View {
     @State var ativaLembrete: Bool
     @State var mostrarAlerta = false
     @State private var contadorCaracter = 0
+    let calendario = Calendar(identifier: .gregorian)
 
     
     private let altura = UIScreen.main.bounds.size.height
     
-    private var resultado: DateComponents {
-        return Calendar.current.dateComponents([.day,.hour,.minute,.second],
-                                               from: Date(),
-                                               to: lista.dataFinal)
-    }
-    
-    
     var body: some View {
         VStack {
             VStack {
-                Text("\(lista.dataFinal.formatted(.dateTime.day().month().year()))")
+                Text("\(listaEvento.dataFinal.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
-                Text("\(resultado.day ?? 0) dias")
+                Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
             }
             VStack {
@@ -45,8 +39,8 @@ struct EdicaoView: View {
                     Section(){
                         TextField("Título", text: $titulo)
                             .font(.system(size: 19, weight: .regular, design: .rounded))
-                            .onReceive(lista.titulo.publisher.collect()) {
-                                lista.titulo = String($0.prefix(20))
+                            .onReceive(listaEvento.titulo.publisher.collect()) {
+                                listaEvento.titulo = String($0.prefix(20))
                             }
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
@@ -60,6 +54,7 @@ struct EdicaoView: View {
                                                displayedComponents: [.date, .hourAndMinute])
                                         .labelsHidden()
                                         .datePickerStyle(.automatic)
+                                        .environment(\.locale, Locale.init(identifier: "pt_BR"))
                                 Spacer()
                             }
                         }
@@ -85,7 +80,7 @@ struct EdicaoView: View {
 
                 }
             }.onTapGesture{
-                evento.esconderTeclado()
+                eventoModel.esconderTeclado()
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
@@ -105,9 +100,9 @@ struct EdicaoView: View {
                     if titulo == "" || dataLembrete > dataFinalSalvar{
                         self.mostrarAlerta.toggle()
                     } else {
-                    evento.editarDados(titulo: titulo,
+                    eventoModel.editarDados(titulo: titulo,
                                        anotacao: anotacao,
-                                       id: lista.id,
+                                       id: listaEvento.id,
                                        dataFinalSalvar: dataFinalSalvar,
                                        idLembrete: idLembrete,
                                        dataLembrete: dataLembrete,

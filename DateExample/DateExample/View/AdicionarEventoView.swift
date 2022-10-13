@@ -10,8 +10,7 @@ import SwiftUI
 
 struct AdicionarEventoView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var model: EventoViewModel
+    @StateObject var eventoModel: EventoViewModel
     @State var dataFinalSalvar = Date()
     @State private var alertasIndex = 0
     @State var titulo: String = ""
@@ -23,20 +22,18 @@ struct AdicionarEventoView: View {
     @State var ativaCalendario = false
     @State var mostrarAlerta = false
     @State private var contadorCaracter = 0
+    @Environment(\.currentTab) var tab
+    @Binding var mostrarTela: Bool
+    let calendario = Calendar(identifier: .gregorian)
     
     private let altura = UIScreen.main.bounds.size.height
-    private var resultado: DateComponents {
-        return Calendar.current.dateComponents([.day,.hour,.minute,.second],
-                                               from: Date(),
-                                               to: dataFinalSalvar)
-    }
     
     var body: some View {
         VStack {
             VStack {
                 Text("\(dataFinalSalvar.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
-                Text("\(resultado.day ?? 0) dias")
+                Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
             }
             .padding()
@@ -60,12 +57,12 @@ struct AdicionarEventoView: View {
                                            displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
                                     .datePickerStyle(.automatic)
-                                    .environment(\.locale, Locale.init(identifier: "pt-br"))
+                                    .environment(\.locale, Locale.init(identifier: "pt_BR"))
                                 Spacer()
                             }
-                            
                         }
-                    }.id(dataLembrete)
+                    }
+                    .id(dataLembrete)
                         Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
@@ -91,7 +88,7 @@ struct AdicionarEventoView: View {
                 }
             }
             .onTapGesture{
-                model.esconderTeclado()
+                eventoModel.esconderTeclado()
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
@@ -108,7 +105,7 @@ struct AdicionarEventoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    dismiss()
+                    mostrarTela = false
                 }, label: {
                     HStack {
                         Image(systemName: "chevron.left")
@@ -118,24 +115,25 @@ struct AdicionarEventoView: View {
                 })
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button  {
+                Button {
                     titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)
                     if titulo == "" || dataLembrete > dataFinalSalvar {
                         self.mostrarAlerta.toggle()
                     } else {
-                        model.adicionarNovo(tituloSalvo: titulo,
+                        eventoModel.adicionarNovo(tituloSalvo: titulo,
                                             anotacoesSalvo: anotacao,
                                             dataFinalSalvo: dataFinalSalvar,
                                             dataLembrete: dataLembrete,
                                             ativaLembrete: ativaLembrete,
                                             idLembrete: UUID())
-                        if ativaCalendario{
-                            Calendario.adicionarEvento(dataFinalSalvar: resultado.day!,
+                        if ativaCalendario {
+                            Calendario.adicionarEvento(dataFinalSalvar: calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos"),
                                                        anotacao: anotacao,
                                                        titulo: titulo)
                         }
                         Notificacoes.permissao()
-                        dismiss()
+                        mostrarTela = false
+                        tab.wrappedValue = .lista
                     }
                 } label: {
                     Text("Salvar")

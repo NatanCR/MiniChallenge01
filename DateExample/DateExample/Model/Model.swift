@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Dados: Codable, Identifiable{
+class Evento: Codable, Identifiable{
     var id = UUID()
     var titulo: String
     var anotacoes: String

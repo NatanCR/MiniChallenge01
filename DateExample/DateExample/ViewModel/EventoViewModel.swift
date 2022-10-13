@@ -9,64 +9,53 @@ import SwiftUI
 
 class EventoViewModel: ObservableObject{
     
-    @Published var eventos: [Dados] = []
+    @Published var eventos = [Evento]()
+//    var eventosAux = [Dados]()
         
     init(){
         fetch()
     }
-    
+        
     func adicionarNovo(tituloSalvo: String, anotacoesSalvo: String, dataFinalSalvo: Date, dataLembrete: Date?, ativaLembrete: Bool, idLembrete: UUID) {
         if ativaLembrete == true {
-            self.eventos.append(Dados(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
-            for i in 0..<eventos.count{
-                if idLembrete == eventos[i].idLembrete{
-                    Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: CalcularDatas.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
-                    if let valoresCodificados = try? JSONEncoder().encode(eventos) {
-                        UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-                        fetch()
-                    }
-                }
-            }
-            
+                self.eventos.append(Evento(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
+                Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
         } else {
-            self.eventos.append(Dados(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: nil, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
-            if let valoresCodificados = try? JSONEncoder().encode(eventos) {
-                UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-                fetch()
-            }
+            self.eventos.append(Evento(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: nil, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
+        }
+        if let valoresCodificados = try? JSONEncoder().encode(eventos) {
+            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
         }
     }
     
     func editarDados(titulo: String, anotacao: String, id: UUID, dataFinalSalvar: Date, idLembrete: UUID, dataLembrete: Date?, ativaLembrete: Bool){
-        for i in 0..<self.eventos.count{
-            if ativaLembrete == true {
-                if idLembrete == eventos[i].idLembrete {
-                    eventos[i].titulo = titulo
-                    eventos[i].anotacoes = anotacao
-                    eventos[i].dataFinal = dataFinalSalvar
-                    eventos[i].dataLembrete = dataLembrete
-                    eventos[i].ativaLembrete = true
-                    Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: CalcularDatas.dataNotificacao(indice: 0, date: dataFinalSalvar))
-                    if let valoresCodificados = try? JSONEncoder().encode(eventos) {
-                        UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-                        fetch()
-                    }
-                }
-            } else {
-                if id == eventos[i].id{
-                    eventos[i].titulo = titulo
-                    eventos[i].anotacoes = anotacao
-                    eventos[i].dataFinal = dataFinalSalvar
-                    eventos[i].ativaLembrete = false
-                    eventos[i].dataLembrete = nil
-                    if let valoresCodificados = try? JSONEncoder().encode(eventos) {
-                        UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-                        fetch()
-                    }
-                }
-            }
-        }
+        @State var eventosAux = eventos
         
+        for i in 0..<eventosAux.count {
+                if id == eventosAux[i].id {
+                    eventosAux[i].titulo = titulo
+                    eventosAux[i].anotacoes = anotacao
+                    eventosAux[i].dataFinal = dataFinalSalvar
+                    if ativaLembrete == true {
+                        eventosAux[i].dataLembrete = dataLembrete
+                        eventosAux[i].ativaLembrete = true
+                        Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvar))
+                    } else {
+                        eventosAux[i].ativaLembrete = false
+                        eventosAux[i].dataLembrete = nil
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.eventos = eventosAux
+                        if let valoresCodificados = try? JSONEncoder().encode(self.eventos) {
+                            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+                            self.fetch()
+                        }
+                    }
+                    
+                    
+                }
+        }
     }
     
     func remover(at offsets: IndexSet) {
@@ -75,7 +64,7 @@ class EventoViewModel: ObservableObject{
         eventos = listaOrdenada
         if let valoresCodificados = try? JSONEncoder().encode(eventos) {
             UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-            fetch()
+//            fetch()
             return
         }
     }
@@ -87,12 +76,15 @@ class EventoViewModel: ObservableObject{
     
     func fetch() {
         if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {
-            let decoder = JSONDecoder()
-            if let anotacoesDecodificadas = try? decoder.decode([Dados].self, from: anotacoesCodificadas){
+            if let anotacoesDecodificadas = try? JSONDecoder().decode([Evento].self, from: anotacoesCodificadas){
                 DispatchQueue.main.async {
                     self.eventos = anotacoesDecodificadas
                 }
             }
         }
     }
+    
+//    func recarregarLista() async {
+//        self.eventos = self.eventosAux
+//    }
 }
