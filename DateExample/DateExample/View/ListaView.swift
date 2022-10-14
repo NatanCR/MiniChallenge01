@@ -45,8 +45,8 @@ struct ListaView: View {
                 .navigationTitle("Seus eventos")
             }
         }
-//        .refreshable {
-//            await evento.recarregarLista()
-//        }
+        .refreshable {
+            eventoModel.fetch()
+        }
     }
 }

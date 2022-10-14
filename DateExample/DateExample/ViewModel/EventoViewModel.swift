@@ -10,16 +10,16 @@ import SwiftUI
 class EventoViewModel: ObservableObject{
     
     @Published var eventos = [Evento]()
-//    var eventosAux = [Dados]()
-        
+    //    var eventosAux = [Dados]()
+    
     init(){
         fetch()
     }
-        
+    
     func adicionarNovo(tituloSalvo: String, anotacoesSalvo: String, dataFinalSalvo: Date, dataLembrete: Date?, ativaLembrete: Bool, idLembrete: UUID) {
         if ativaLembrete == true {
-                self.eventos.append(Evento(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
-                Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
+            self.eventos.append(Evento(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
+            Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
         } else {
             self.eventos.append(Evento(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: nil, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
         }
@@ -32,29 +32,27 @@ class EventoViewModel: ObservableObject{
         @State var eventosAux = eventos
         
         for i in 0..<eventosAux.count {
-                if id == eventosAux[i].id {
-                    eventosAux[i].titulo = titulo
-                    eventosAux[i].anotacoes = anotacao
-                    eventosAux[i].dataFinal = dataFinalSalvar
-                    if ativaLembrete == true {
-                        eventosAux[i].dataLembrete = dataLembrete
-                        eventosAux[i].ativaLembrete = true
-                        Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvar))
-                    } else {
-                        eventosAux[i].ativaLembrete = false
-                        eventosAux[i].dataLembrete = nil
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.eventos = eventosAux
-                        if let valoresCodificados = try? JSONEncoder().encode(self.eventos) {
-                            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-                            self.fetch()
-                        }
-                    }
-                    
-                    
+            if id == eventosAux[i].id {
+                eventosAux[i].titulo = titulo
+                eventosAux[i].anotacoes = anotacao
+                eventosAux[i].dataFinal = dataFinalSalvar
+                if ativaLembrete == true {
+                    eventosAux[i].dataLembrete = dataLembrete
+                    eventosAux[i].ativaLembrete = true
+                    Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvar))
+                } else {
+                    eventosAux[i].ativaLembrete = false
+                    eventosAux[i].dataLembrete = nil
                 }
+                
+                DispatchQueue.main.async {
+                    self.eventos = eventosAux
+                    if let valoresCodificados = try? JSONEncoder().encode(self.eventos) {
+                        UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+//                        self.fetch()
+                    }
+                }
+            }
         }
     }
     
@@ -64,15 +62,14 @@ class EventoViewModel: ObservableObject{
         eventos = listaOrdenada
         if let valoresCodificados = try? JSONEncoder().encode(eventos) {
             UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-//            fetch()
             return
         }
     }
-   
+    
     func esconderTeclado() {
-            let resposta = #selector(UIResponder.resignFirstResponder)
-            UIApplication.shared.sendAction(resposta, to: nil, from: nil, for: nil)
-        }
+        let resposta = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resposta, to: nil, from: nil, for: nil)
+    }
     
     func fetch() {
         if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {
@@ -84,7 +81,7 @@ class EventoViewModel: ObservableObject{
         }
     }
     
-//    func recarregarLista() async {
-//        self.eventos = self.eventosAux
-//    }
+    //    func recarregarLista() async {
+    //        self.eventos = self.eventosAux
+    //    }
 }

@@ -146,7 +146,7 @@ struct HomeView: View {
                             NavigationLink(destination: AdicionarEventoView(eventoModel: eventoModel, dataFinalSalvar: dataFinal, dataLembrete: Date(), mostrarTela: $mostrarTela), isActive: $mostrarTela) {
                                 Text("Adicionar")
                                     .font(.system(size: 17, weight: .semibold, design: .rounded))
-                            }.disabled(resultado.day == 0)
+                            }.disabled(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos") == 0)
                         }
                     }
                 }

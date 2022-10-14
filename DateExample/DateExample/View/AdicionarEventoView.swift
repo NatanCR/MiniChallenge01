@@ -63,7 +63,7 @@ struct AdicionarEventoView: View {
                         }
                     }
                     .id(dataLembrete)
-                        Toggle(isOn: $ativaCalendario) {
+                    Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
                         }
