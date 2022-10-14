@@ -10,7 +10,7 @@ import SwiftUI
 class EventoViewModel: ObservableObject{
     
     @Published var eventos = [Evento]()
-    //    var eventosAux = [Dados]()
+    let calendario = Calendar(identifier: .gregorian)
     
     init(){
         fetch()
@@ -29,27 +29,25 @@ class EventoViewModel: ObservableObject{
     }
     
     func editarDados(titulo: String, anotacao: String, id: UUID, dataFinalSalvar: Date, idLembrete: UUID, dataLembrete: Date?, ativaLembrete: Bool){
-        @State var eventosAux = eventos
         
-        for i in 0..<eventosAux.count {
-            if id == eventosAux[i].id {
-                eventosAux[i].titulo = titulo
-                eventosAux[i].anotacoes = anotacao
-                eventosAux[i].dataFinal = dataFinalSalvar
+        for i in 0..<eventos.count {
+            if id == eventos[i].id {
+                eventos[i].titulo = titulo
+                eventos[i].anotacoes = anotacao
+                eventos[i].dataFinal = dataFinalSalvar
                 if ativaLembrete == true {
-                    eventosAux[i].dataLembrete = dataLembrete
-                    eventosAux[i].ativaLembrete = true
-                    Notificacoes.editarLembrete(id: id, date: dataLembrete!, titulo: titulo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvar))
+                    eventos[i].dataLembrete = dataLembrete
+                    eventos[i].ativaLembrete = true
+                    Notificacoes.editarLembrete(id: idLembrete, date: dataLembrete!, titulo: titulo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvar))
                 } else {
-                    eventosAux[i].ativaLembrete = false
-                    eventosAux[i].dataLembrete = nil
+                    eventos[i].ativaLembrete = false
+                    eventos[i].dataLembrete = nil
                 }
                 
                 DispatchQueue.main.async {
-                    self.eventos = eventosAux
                     if let valoresCodificados = try? JSONEncoder().encode(self.eventos) {
                         UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-//                        self.fetch()
+                        self.fetch()
                     }
                 }
             }
@@ -80,8 +78,4 @@ class EventoViewModel: ObservableObject{
             }
         }
     }
-    
-    //    func recarregarLista() async {
-    //        self.eventos = self.eventosAux
-    //    }
 }
