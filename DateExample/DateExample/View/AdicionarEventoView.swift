@@ -125,7 +125,7 @@ struct AdicionarEventoView: View {
                                             dataFinalSalvo: dataFinalSalvar,
                                             dataLembrete: dataLembrete,
                                             ativaLembrete: ativaLembrete,
-                                            idLembrete: UUID(), idCalendario: nil, adicionarCalendario: false)
+                                            idLembrete: UUID())
                         if ativaCalendario {
                             Calendario.adicionarEvento(dataFinalSalvar: calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos"),
                                                        anotacao: anotacao,

@@ -11,7 +11,7 @@ struct EdicaoView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject var eventoModel: EventoViewModel
-    @Binding var listaEvento: EventoAtualizado
+    @Binding var listaEvento: Evento
     @State var dataFinalSalvar: Date
     @State var titulo: String
     @State var anotacao: String

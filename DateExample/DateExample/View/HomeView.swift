@@ -16,6 +16,12 @@ struct HomeView: View {
     let calendario = Calendar(identifier: .gregorian)
     @State private var mostrarTela = false
     
+//    private var resultado: DateComponents {
+//        Calendar.current.dateComponents([.day, .hour],
+//                                        from: dataInicio,
+//                                        to: dataFinal)
+//    }
+    
     private let grid = [
         GridItem(.adaptive(minimum: 120, maximum: 200))
     ]

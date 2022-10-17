@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CelulaLista: View {
-    var dados: EventoAtualizado
+    var dados: Evento
     
     var body: some View {
         HStack {

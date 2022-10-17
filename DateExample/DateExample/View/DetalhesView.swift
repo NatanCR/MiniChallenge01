@@ -11,7 +11,7 @@ struct DetalhesView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var eventoModel: EventoViewModel
-    @State var agenda: EventoAtualizado
+    @State var agenda: Evento
     let calendario = Calendar(identifier: .gregorian)
     
     var resultado: DateComponents {
