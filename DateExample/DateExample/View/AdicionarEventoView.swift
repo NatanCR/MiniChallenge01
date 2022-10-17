@@ -10,8 +10,7 @@ import SwiftUI
 
 struct AdicionarEventoView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject var model: EventoViewModel
+    @StateObject var eventoModel: EventoViewModel
     @State var dataFinalSalvar = Date()
     @State private var alertasIndex = 0
     @State var titulo: String = ""
@@ -22,20 +21,19 @@ struct AdicionarEventoView: View {
     @State var ativaLembrete = false
     @State var ativaCalendario = false
     @State var mostrarAlerta = false
+    @State private var contadorCaracter = 0
+    @Environment(\.currentTab) var tab
+    @Binding var mostrarTela: Bool
+    let calendario = Calendar(identifier: .gregorian)
     
     private let altura = UIScreen.main.bounds.size.height
-    private var resultado: DateComponents {
-        return Calendar.current.dateComponents([.day,.hour,.minute,.second],
-                                               from: Date(),
-                                               to: dataFinalSalvar)
-    }
     
     var body: some View {
         VStack {
             VStack {
                 Text("\(dataFinalSalvar.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
-                Text("\(resultado.day ?? 0) dias")
+                Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
             }
             .padding()
@@ -59,17 +57,16 @@ struct AdicionarEventoView: View {
                                            displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
                                     .datePickerStyle(.automatic)
+                                    .environment(\.locale, Locale.init(identifier: "pt_BR"))
                                 Spacer()
                             }
-                            
                         }
-                    }.id(dataLembrete)
-                    if !modoEditar{
-                        Toggle(isOn: $ativaCalendario) {
+                    }
+                    .id(dataLembrete)
+                    Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
                         }
-                    }
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -79,6 +76,11 @@ struct AdicionarEventoView: View {
                             .onReceive(anotacao.publisher.collect()) {
                                 anotacao = String($0.prefix(100))
                             }
+                            .onChange(of: anotacao) { newValue in
+                                contadorCaracter = newValue.count
+                            }
+                        Text("\(contadorCaracter)/100")
+                            .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     }
                 }
                 .onAppear {
@@ -86,11 +88,12 @@ struct AdicionarEventoView: View {
                 }
             }
             .onTapGesture{
-                model.esconderTeclado()
+                eventoModel.esconderTeclado()
             }
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
-        .navigationBarTitle("Adicionar Evento")
+        .navigationBarTitle("Adicionar evento")
+        .navigationBarBackButtonHidden(true)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
@@ -100,25 +103,37 @@ struct AdicionarEventoView: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    mostrarTela = false
+                }, label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        Text("Contador")
+                    }
+                })
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button  {
+                Button {
                     titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if titulo == "" || dataLembrete > dataFinalSalvar || resultado.day == 0 {
+                    if titulo == "" || dataLembrete > dataFinalSalvar {
                         self.mostrarAlerta.toggle()
                     } else {
-                        model.adicionarNovo(tituloSalvo: titulo,
+                        eventoModel.adicionarNovo(tituloSalvo: titulo,
                                             anotacoesSalvo: anotacao,
                                             dataFinalSalvo: dataFinalSalvar,
                                             dataLembrete: dataLembrete,
                                             ativaLembrete: ativaLembrete,
-                                            idLembrete: UUID())
-                        if ativaCalendario{
-                            Calendario.adicionarEvento(dataFinalSalvar: resultado.day!,
+                                            idLembrete: UUID(), idCalendario: nil, adicionarCalendario: false)
+                        if ativaCalendario {
+                            Calendario.adicionarEvento(dataFinalSalvar: calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos"),
                                                        anotacao: anotacao,
                                                        titulo: titulo)
                         }
                         Notificacoes.permissao()
-                        dismiss()
+                        mostrarTela = false
+                        tab.wrappedValue = .lista
                     }
                 } label: {
                     Text("Salvar")

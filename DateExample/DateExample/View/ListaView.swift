@@ -2,9 +2,9 @@ import SwiftUI
 
 struct ListaView: View {
     
-    @EnvironmentObject var evento: EventoViewModel
+    @StateObject var eventoModel: EventoViewModel
     @State var procuraTexto = ""
-    @State var segmentSelection: Dados.ID? = nil
+    @State var segmentSelection: Evento.ID? = nil
     
     var eventosPassados: [Dados] {
         evento.criaListaPassada()
@@ -28,20 +28,18 @@ struct ListaView: View {
     
     var body: some View {
         NavigationView {
-            if evento.eventos.count == 0{
+            if eventoModel.eventosAtualizados.count == 0{
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
             }else{
                 VStack {
                     List {
-                        Section{
-                            ForEach(eventosFiltrados, id: \.id) { anotacao in
-                                NavigationLink {
-                                    DetalhesView(agenda: anotacao)
-                                        .environmentObject(evento)
-                                } label: {
-                                    CelulaLista(dados: anotacao)
-                                }
+                        ForEach(eventosFiltrados, id: \.id) { anotacao in
+                            NavigationLink {
+                                DetalhesView(eventoModel: eventoModel, agenda: anotacao)
+                                    .environmentObject(eventoModel)
+                            } label: {
+                                CelulaLista(dados: anotacao)
                             }
                             .onDelete(perform: evento.remover)
                         } header: {
@@ -64,7 +62,9 @@ struct ListaView: View {
                     .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
+                        eventoModel.atualizarEstrutura(eventos: eventoModel.eventos)
                     }
+                    
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
                     .padding(.top, 1)
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
