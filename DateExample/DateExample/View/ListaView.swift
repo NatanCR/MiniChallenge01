@@ -6,11 +6,11 @@ struct ListaView: View {
     @State var procuraTexto = ""
     @State var segmentSelection: Evento.ID? = nil
     
-    private var eventosFiltrados: [Evento] {
+    private var eventosFiltrados: [EventoAtualizado] {
         if procuraTexto.isEmpty {
-            return eventoModel.eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
+            return eventoModel.eventosAtualizados.sorted(by: {$0.dataFinal < $1.dataFinal})
         } else {
-            return eventoModel.eventos.filter {
+            return eventoModel.eventosAtualizados.filter {
             $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
         }
@@ -18,7 +18,7 @@ struct ListaView: View {
     
     var body: some View {
         NavigationView {
-            if eventoModel.eventos.count == 0{
+            if eventoModel.eventosAtualizados.count == 0{
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
             }else{
@@ -36,6 +36,7 @@ struct ListaView: View {
                     }
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
+                        eventoModel.atualizarEstrutura(eventos: eventoModel.eventos)
                     }
                     
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
