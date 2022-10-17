@@ -6,12 +6,19 @@ struct ListaView: View {
     @State var procuraTexto = ""
     @State var segmentSelection: Evento.ID? = nil
     
+    var eventosPassados: [Evento] {
+        eventoModel.criaListaPassada()
+    }
+    var eventosAtuais: [Evento] {
+        eventoModel.criaListaAtual()
+    }
+    
     private var eventosFiltrados: [Evento] {
         if procuraTexto.isEmpty {
             return eventoModel.eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
         } else {
             return eventoModel.eventos.filter {
-            $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
+                $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
         }
     }
@@ -24,16 +31,34 @@ struct ListaView: View {
             }else{
                 VStack {
                     List {
-                        ForEach(eventosFiltrados, id: \.id) { anotacao in
-                            NavigationLink {
-                                DetalhesView(eventoModel: eventoModel, agenda: anotacao)
-                                    .environmentObject(eventoModel)
-                            } label: {
-                                CelulaLista(dados: anotacao)
+                        Section{
+                            ForEach(eventosFiltrados, id: \.id) { anotacao in
+                                NavigationLink {
+                                    DetalhesView(eventoModel: eventoModel, agenda: anotacao)
+                                        .environmentObject(eventoModel)
+                                } label: {
+                                    CelulaLista(dados: anotacao)
+                                }
                             }
+                            .onDelete(perform: eventoModel.remover)
+                        } header: {
+                            Text("Pendentes")
                         }
-                        .onDelete(perform: eventoModel.remover)
+                        Section{
+                            ForEach(eventosPassados, id: \.id) { passado in
+                                NavigationLink {
+                                    DetalhesView(eventoModel: eventoModel, agenda: passado)
+                                        .environmentObject(eventoModel)
+                                } label: {
+                                    CelulaLista(dados: passado)
+                                }
+                            }
+                            .onDelete(perform: eventoModel.remover)
+                        } header: {
+                            Text("Passados")
+                        }
                     }
+                    .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
                     }
