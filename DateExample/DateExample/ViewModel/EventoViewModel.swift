@@ -69,6 +69,41 @@ class EventoViewModel: ObservableObject{
         
     }
     
+    public func criaListaPassada() -> [Dados]{
+        var eventosPassados: [Dados] = []
+        var indexCancelar: [Int] = []
+        let listaTemp: [Dados] = eventos
+        
+        for i in 0..<listaTemp.count{
+            if Calendar.current.dateComponents([.day],
+                                                           from: Date(),
+                                               to: eventos[i].dataFinal).day! < 0{
+                eventosPassados.append(eventos[i])
+                indexCancelar.append(i)
+            }
+            
+        }
+        return eventosPassados
+    }
+    
+    
+    public func criaListaAtual() -> [Dados]{
+        var eventosPassados: [Dados] = []
+        var indexCancelar: [Int] = []
+        let listaTemp: [Dados] = eventos
+        
+        for i in 0..<listaTemp.count{
+            if Calendar.current.dateComponents([.day],
+                                                           from: Date(),
+                                               to: eventos[i].dataFinal).day! >= 0{
+                eventosPassados.append(eventos[i])
+                indexCancelar.append(i)
+            }
+            
+        }
+        return eventosPassados
+    }
+    
     func remover(at offsets: IndexSet) {
         var listaOrdenada = eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
         listaOrdenada.remove(atOffsets: offsets)

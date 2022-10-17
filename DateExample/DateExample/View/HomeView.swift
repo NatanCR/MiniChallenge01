@@ -143,7 +143,8 @@ struct HomeView: View {
                             NavigationLink(destination: AdicionarEventoView(dataFinalSalvar: dataFinal, dataLembrete: Date()), label: {
                                 Text("Adicionar")
                                     .font(.system(size: 17, weight: .semibold, design: .rounded))
-                            }).disabled(resultado.day == 0)
+                            })
+                            .disabled(resultado.day == 0)
                         }
                     }
                 }

@@ -6,15 +6,25 @@ struct ListaView: View {
     @State var procuraTexto = ""
     @State var segmentSelection: Dados.ID? = nil
     
+    var eventosPassados: [Dados] {
+        evento.criaListaPassada()
+    }
+    var eventosAtuais: [Dados] {
+        evento.criaListaAtual()
+    }
+    
     private var eventosFiltrados: [Dados] {
         if procuraTexto.isEmpty {
-            return evento.eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
+            return eventosAtuais.sorted(by: {$0.dataFinal < $1.dataFinal})
         } else {
-            return evento.eventos.filter {
-            $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
+            return eventosAtuais.filter {
+                $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
         }
+        
     }
+    
+    
     
     var body: some View {
         NavigationView {
@@ -24,22 +34,38 @@ struct ListaView: View {
             }else{
                 VStack {
                     List {
-                        ForEach(eventosFiltrados, id: \.id) { anotacao in
-                            NavigationLink {
-                                DetalhesView(agenda: anotacao)
-                                    .environmentObject(evento)
-                            } label: {
-                                CelulaLista(dados: anotacao)
+                        Section{
+                            ForEach(eventosFiltrados, id: \.id) { anotacao in
+                                NavigationLink {
+                                    DetalhesView(agenda: anotacao)
+                                        .environmentObject(evento)
+                                } label: {
+                                    CelulaLista(dados: anotacao)
+                                }
                             }
+                            .onDelete(perform: evento.remover)
+                        } header: {
+                            Text("Pendentes")
                         }
-                        .onDelete(perform: evento.remover)
+                        Section{
+                            ForEach(eventosPassados, id: \.id) { passado in
+                                NavigationLink {
+                                    DetalhesView(agenda: passado)
+                                        .environmentObject(evento)
+                                } label: {
+                                    CelulaLista(dados: passado)
+                                }
+                            }
+                            .onDelete(perform: evento.remover)
+                        } header: {
+                            Text("Passados")
+                        }
                     }
-                    
+                    .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
                     }
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
-                   
                     .padding(.top, 1)
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
