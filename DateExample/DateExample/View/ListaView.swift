@@ -6,14 +6,14 @@ struct ListaView: View {
     @State var procuraTexto = ""
     @State var segmentSelection: Evento.ID? = nil
     
-    var eventosPassados: [Dados] {
-        evento.criaListaPassada()
+    var eventosPassados: [EventoAtualizado] {
+        eventoModel.criaListaPassada()
     }
-    var eventosAtuais: [Dados] {
-        evento.criaListaAtual()
+    var eventosAtuais: [EventoAtualizado] {
+        eventoModel.criaListaAtual()
     }
     
-    private var eventosFiltrados: [Dados] {
+    private var eventosFiltrados: [EventoAtualizado] {
         if procuraTexto.isEmpty {
             return eventosAtuais.sorted(by: {$0.dataFinal < $1.dataFinal})
         } else {
@@ -34,33 +34,36 @@ struct ListaView: View {
             }else{
                 VStack {
                     List {
-                        ForEach(eventosFiltrados, id: \.id) { anotacao in
-                            NavigationLink {
-                                DetalhesView(eventoModel: eventoModel, agenda: anotacao)
-                                    .environmentObject(eventoModel)
-                            } label: {
-                                CelulaLista(dados: anotacao)
+                        Section{
+                            ForEach(eventosFiltrados, id: \.id) { anotacao in
+                                NavigationLink {
+                                    DetalhesView(eventoModel: eventoModel, agenda: anotacao)
+                                        .environmentObject(eventoModel)
+                                } label: {
+                                    CelulaLista(dados: anotacao)
+                                }
                             }
-                            .onDelete(perform: evento.remover)
+                            .onDelete(perform: eventoModel.remover)
                         } header: {
                             Text("Pendentes")
                         }
                         Section{
                             ForEach(eventosPassados, id: \.id) { passado in
                                 NavigationLink {
-                                    DetalhesView(agenda: passado)
-                                        .environmentObject(evento)
+                                    DetalhesView(eventoModel: eventoModel, agenda: passado)
+                                        .environmentObject(eventoModel)
                                 } label: {
                                     CelulaLista(dados: passado)
                                 }
                             }
-                            .onDelete(perform: evento.remover)
+                            .onDelete(perform: eventoModel.remover)
                         } header: {
                             Text("Passados")
                         }
                     }
                     .listStyle(.insetGrouped)
                     .onAppear {
+                        print(eventoModel.eventos)
                         UITableView.appearance().backgroundColor = .clear
                         eventoModel.atualizarEstrutura(eventos: eventoModel.eventos)
                     }

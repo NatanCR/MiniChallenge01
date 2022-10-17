@@ -28,10 +28,10 @@ class EventoViewModel: ObservableObject{
             return
         }
         
-        self.eventos.removeAll()
-        if let valoresCodificados = try? JSONEncoder().encode(eventos) {
-            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-        }
+//        self.eventos.removeAll()
+//        if let valoresCodificados = try? JSONEncoder().encode(eventos) {
+//            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+//        }
         
         print("ESTOU AQUIIIII \(eventosAtualizados)")
         
@@ -78,16 +78,16 @@ class EventoViewModel: ObservableObject{
         }
     }
     
-    public func criaListaPassada() -> [Dados]{
-        var eventosPassados: [Dados] = []
+    public func criaListaPassada() -> [EventoAtualizado]{
+        var eventosPassados: [EventoAtualizado] = []
         var indexCancelar: [Int] = []
-        let listaTemp: [Dados] = eventos
+        let listaTemp: [EventoAtualizado] = eventosAtualizados
         
         for i in 0..<listaTemp.count{
             if Calendar.current.dateComponents([.day],
                                                            from: Date(),
-                                               to: eventos[i].dataFinal).day! < 0{
-                eventosPassados.append(eventos[i])
+                                               to: eventosAtualizados[i].dataFinal).day! < 0{
+                eventosPassados.append(eventosAtualizados[i])
                 indexCancelar.append(i)
             }
             
@@ -96,16 +96,16 @@ class EventoViewModel: ObservableObject{
     }
     
     
-    public func criaListaAtual() -> [Dados]{
-        var eventosPassados: [Dados] = []
+    public func criaListaAtual() -> [EventoAtualizado]{
+        var eventosPassados: [EventoAtualizado] = []
         var indexCancelar: [Int] = []
-        let listaTemp: [Dados] = eventos
+        let listaTemp: [EventoAtualizado] = eventosAtualizados
         
         for i in 0..<listaTemp.count{
             if Calendar.current.dateComponents([.day],
                                                            from: Date(),
-                                               to: eventos[i].dataFinal).day! >= 0{
-                eventosPassados.append(eventos[i])
+                                               to: eventosAtualizados[i].dataFinal).day! >= 0{
+                eventosPassados.append(eventosAtualizados[i])
                 indexCancelar.append(i)
             }
             
@@ -114,9 +114,9 @@ class EventoViewModel: ObservableObject{
     }
     
     func remover(at offsets: IndexSet) {
-        var listaOrdenada = eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
+        var listaOrdenada = eventosAtualizados.sorted(by: {$0.dataFinal < $1.dataFinal})
         listaOrdenada.remove(atOffsets: offsets)
-        eventos = listaOrdenada
+        eventosAtualizados = listaOrdenada
         if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
             UserDefaults.standard.set(valoresCodificados, forKey: chave)
             return
