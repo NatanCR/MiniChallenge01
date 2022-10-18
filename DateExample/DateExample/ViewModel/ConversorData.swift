@@ -81,13 +81,13 @@ extension Calendar {
         }
     }
     
-//    func calculoDiasCorridos(dataFinal: Date) -> Int {
-//        let diaInicio = startOfDay(for: Date())
-//        let diaFinal = startOfDay(for: dataFinal)
-//        let diasCorridos = dateComponents([.day], from: diaInicio, to: diaFinal)
-//
-//        return diasCorridos.day!
-//    }
+    func calculoDiasCorridos(dataFinal: Date) -> Int {
+        let diaInicio = startOfDay(for: Date())
+        let diaFinal = startOfDay(for: dataFinal)
+        let diasCorridos = dateComponents([.day], from: diaInicio, to: diaFinal)
+
+        return diasCorridos.day!
+    }
 //
 //    func calculoDiasUteis(dataFinal: Date) -> Int {
 //        let diaInicio = startOfDay(for: Date())

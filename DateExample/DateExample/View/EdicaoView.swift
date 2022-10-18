@@ -34,6 +34,7 @@ struct EdicaoView: View {
                 Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
             }
+            .padding()
             VStack {
                 Form {
                     Section(){
@@ -71,8 +72,12 @@ struct EdicaoView: View {
                             .onChange(of: anotacao) { newValue in
                                 contadorCaracter = newValue.count
                             }
-                        Text("\(contadorCaracter)/100")
-                            .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                        HStack {
+                            Text("Limite de caractéres: ")
+                            Spacer()
+                            Text("\(contadorCaracter)/100")
+                                    .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                        }
                     }
                 }
                 .onAppear {

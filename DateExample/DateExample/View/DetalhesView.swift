@@ -12,7 +12,6 @@ struct DetalhesView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var eventoModel: EventoViewModel
     @State var agenda: Evento
-    let calendario = Calendar(identifier: .gregorian)
     
     var resultado: DateComponents {
         return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: agenda.dataFinal)
@@ -33,9 +32,9 @@ struct DetalhesView: View {
             LazyVGrid(columns: grid, spacing: 30) {
                 ZStack {
                     VStack {
-                        Text("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "corridos"))")
+                        Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "corridos"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
-                        if ("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "corridos"))") == "1" {
+                        if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "corridos"))") == "1" {
                             Text("Dia corrido")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                         }else {
@@ -46,9 +45,9 @@ struct DetalhesView: View {
                 }
                 ZStack {
                     VStack {
-                        Text("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "semanas"))")
+                        Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "semanas"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
-                        if ("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "semanas"))") == "1" {
+                        if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "semanas"))") == "1" {
                             Text("Semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                         } else{
@@ -60,9 +59,9 @@ struct DetalhesView: View {
                 
                 ZStack {
                     VStack {
-                        Text("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))")
+                        Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
-                        if ("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))") == "1" {
+                        if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))") == "1" {
                             Text("Dia de semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                         } else {
@@ -73,9 +72,9 @@ struct DetalhesView: View {
                 }
                 ZStack {
                     VStack {
-                        Text("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "finais"))")
+                        Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "finais"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
-                        if ("\(calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "finais"))") == "1" {
+                        if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "finais"))") == "1" {
                             Text("Final de semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                         }else{
@@ -149,7 +148,7 @@ struct DetalhesView: View {
                 } label: {
                     Text("Editar")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
-                }
+                }.disabled(eventoModel.calendario.calculoDiasCorridos(dataFinal: agenda.dataFinal) < 0)
             }
         }
     }

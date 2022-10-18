@@ -13,14 +13,7 @@ struct HomeView: View {
     
     @State private var dataInicio = Date()
     @State private var dataFinal = Date()
-    let calendario = Calendar(identifier: .gregorian)
     @State private var mostrarTela = false
-    
-//    private var resultado: DateComponents {
-//        Calendar.current.dateComponents([.day, .hour],
-//                                        from: dataInicio,
-//                                        to: dataFinal)
-//    }
     
     private let grid = [
         GridItem(.adaptive(minimum: 120, maximum: 200))
@@ -36,12 +29,12 @@ struct HomeView: View {
             ScrollView {
                 ZStack {
                     VStack(alignment: .center) {
-                        Text("Quanto tempo")
+                        Text("Calcule quanto tempo")
                             .font(.system(size: 20,
                                           weight: .bold,
                                           design: .rounded))
                             .padding(.top, 40)
-                        Text("falta para o seu evento?")
+                        Text("falta para o seu evento!")
                             .font(.system(size: 20,
                                           weight: .bold,
                                           design: .rounded))
@@ -84,9 +77,9 @@ struct HomeView: View {
                         LazyVGrid(columns: grid, spacing: 30) {
                             ZStack {
                                 VStack{
-                                    Text("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos"))")
+                                    Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
-                                    if ("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos"))") == "1" {
+                                    if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos"))") == "1" {
                                         Text("Dia corrido")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     }else {
@@ -97,9 +90,9 @@ struct HomeView: View {
                             }
                             ZStack{
                                 VStack{
-                                    Text("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "semanas"))")
+                                    Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "semanas"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
-                                    if ("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "semanas"))") == "1" {
+                                    if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "semanas"))") == "1" {
                                         Text("Semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     } else{
@@ -110,9 +103,9 @@ struct HomeView: View {
                             }
                             ZStack{
                                 VStack{
-                                    Text("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))")
+                                    Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
-                                    if ("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))") == "1" {
+                                    if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))") == "1" {
                                         Text("Dia de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     } else {
@@ -123,9 +116,9 @@ struct HomeView: View {
                             }
                             ZStack{
                                 VStack{
-                                    Text("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "finais"))")
+                                    Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "finais"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
-                                    if ("\(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "finais"))") == "1" {
+                                    if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "finais"))") == "1" {
                                         Text("Final de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                     }else{
@@ -146,7 +139,8 @@ struct HomeView: View {
                             NavigationLink(destination: AdicionarEventoView(eventoModel: eventoModel, dataFinalSalvar: dataFinal, dataLembrete: Date(), mostrarTela: $mostrarTela), isActive: $mostrarTela) {
                                 Text("Adicionar")
                                     .font(.system(size: 17, weight: .semibold, design: .rounded))
-                            }.disabled(calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos") == 0)
+                            }
+                            .disabled(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos") == 0)
                         }
                     }
                 }

@@ -24,7 +24,6 @@ struct AdicionarEventoView: View {
     @State private var contadorCaracter = 0
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
-    let calendario = Calendar(identifier: .gregorian)
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -33,7 +32,7 @@ struct AdicionarEventoView: View {
             VStack {
                 Text("\(dataFinalSalvar.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
-                Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
+                Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
             }
             .padding()
@@ -79,8 +78,12 @@ struct AdicionarEventoView: View {
                             .onChange(of: anotacao) { newValue in
                                 contadorCaracter = newValue.count
                             }
-                        Text("\(contadorCaracter)/100")
-                            .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                        HStack {
+                            Text("Limite de caractéres: ")
+                            Spacer()
+                            Text("\(contadorCaracter)/100")
+                                    .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                        }
                     }
                 }
                 .onAppear {
@@ -127,7 +130,7 @@ struct AdicionarEventoView: View {
                                             ativaLembrete: ativaLembrete,
                                             idLembrete: UUID())
                         if ativaCalendario {
-                            Calendario.adicionarEvento(dataFinalSalvar: calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos"),
+                            Calendario.adicionarEvento(dataFinalSalvar: eventoModel.calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos"),
                                                        anotacao: anotacao,
                                                        titulo: titulo)
                         }

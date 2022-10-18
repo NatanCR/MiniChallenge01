@@ -60,41 +60,64 @@ class EventoViewModel: ObservableObject{
             let listaTemp: [Evento] = eventos
             
             for i in 0..<listaTemp.count{
-                if Calendar.current.dateComponents([.day],
-                                                               from: Date(),
-                                                   to: eventos[i].dataFinal).day! < 0{
+                if calendario.calculoDiasCorridos(dataFinal: eventos[i].dataFinal) < 0{
                     eventosPassados.append(eventos[i])
                     indexCancelar.append(i)
                 }
                 
             }
-            return eventosPassados
+        return eventosPassados.sorted(by: {$0.dataFinal < $1.dataFinal})
         }
         
         public func criaListaAtual() -> [Evento]{
-            var eventosPassados: [Evento] = []
+            var eventosAtuais: [Evento] = []
             var indexCancelar: [Int] = []
             let listaTemp: [Evento] = eventos
             
             for i in 0..<listaTemp.count{
-                if Calendar.current.dateComponents([.day],
-                                                               from: Date(),
-                                                   to: eventos[i].dataFinal).day! >= 0{
-                    eventosPassados.append(eventos[i])
+                if calendario.calculoDiasCorridos(dataFinal: eventos[i].dataFinal) >= 0{
+                    eventosAtuais.append(eventos[i])
                     indexCancelar.append(i)
                 }
                 
             }
-            return eventosPassados
+            return eventosAtuais.sorted(by: {$0.dataFinal < $1.dataFinal})
         }
     
-    func remover(at offsets: IndexSet) {
-        var listaOrdenada = eventos.sorted(by: {$0.dataFinal < $1.dataFinal})
-        listaOrdenada.remove(atOffsets: offsets)
-        eventos = listaOrdenada
+    func removerPassados(at offsets: IndexSet) {
+        let listaPassada = criaListaPassada()
+        let listaModel = eventos
+        var index = 0
+        for i in offsets {
+            index = i
+        }
+        
+        for i in 0 ..< listaModel.count {
+            if listaModel[i].id == listaPassada[index].id{
+                eventos.remove(at: i)
+            }
+        }
         if let valoresCodificados = try? JSONEncoder().encode(eventos) {
             UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
-            return
+        }
+    }
+    
+    func removerAtuais(at offsets: IndexSet) {
+        let listaAtual = criaListaAtual()
+        let listaModel = eventos
+        var index = 0
+        for i in offsets{
+            index = i
+        }
+        
+        for i in 0 ..< listaModel.count{
+            if listaModel[i].id == listaAtual[index].id{
+                eventos.remove(at: i)
+            }
+        }
+
+        if let valoresCodificados = try? JSONEncoder().encode(eventos) {
+            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
         }
     }
     
