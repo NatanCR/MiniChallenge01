@@ -32,14 +32,18 @@ struct AdicionarEventoView: View {
             VStack {
                 Text("\(dataFinalSalvar.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
+                    .accessibilityRemoveTraits(.isStaticText)
                 Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
+                    .accessibilityRemoveTraits(.isStaticText)
             }
             .padding()
             VStack {
                 Form {
                     Section(){
                         TextField("Título", text: $titulo)
+                            .accessibilityRemoveTraits(.isStaticText)
+                            .accessibility(hint: Text("Titulo do seu evento"))
                             .font(.system(size: 19, weight: .regular, design: .rounded))
                             .onReceive(titulo.publisher.collect()) {
                                 titulo = String($0.prefix(20))
@@ -47,7 +51,8 @@ struct AdicionarEventoView: View {
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }
+                                
+                        }.accessibilityHint(Text("Ative para receber notificação do seu evento"))
                         if ativaLembrete == true {
                             HStack {
                                 Spacer()
@@ -57,20 +62,24 @@ struct AdicionarEventoView: View {
                                     .labelsHidden()
                                     .datePickerStyle(.automatic)
                                     .environment(\.locale, Locale.init(identifier: "pt_BR"))
+                                    .accessibilityHint(Text("Escolha a data para receber a notificacao"))
                                 Spacer()
                             }
                         }
                     }
                     .id(dataLembrete)
                     Toggle(isOn: $ativaCalendario) {
-                            Text("Adicionar ao Calendario")
+                            Text("Adicionar ao Calendário")
+                           
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }
+                        }.accessibilityHint(Text("Evento será adicionado no calendário"))
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                                 .foregroundColor(Color.gray)){
                         TextEditor(text: $anotacao)
+                            .accessibilityHint(Text("Adicione uma nota ao seu evento"))
                             .frame(height: altura * 0.2)
                             .onReceive(anotacao.publisher.collect()) {
                                 anotacao = String($0.prefix(100))
@@ -80,9 +89,11 @@ struct AdicionarEventoView: View {
                             }
                         HStack {
                             Text("Limite de caractéres: ")
+                                .accessibilityRemoveTraits(.isStaticText)
                             Spacer()
                             Text("\(contadorCaracter)/100")
                                     .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                    .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                 }
@@ -96,15 +107,20 @@ struct AdicionarEventoView: View {
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Adicionar evento")
+       
         .navigationBarBackButtonHidden(true)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
+                  
+                    
             }else{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
         }
+        .accessibilityRemoveTraits(.isStaticText)
+        .accessibilityRemoveTraits(.isHeader)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -117,6 +133,7 @@ struct AdicionarEventoView: View {
                     }
                 })
             }
+          
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)

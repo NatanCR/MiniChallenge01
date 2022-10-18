@@ -34,10 +34,12 @@ struct HomeView: View {
                                           weight: .bold,
                                           design: .rounded))
                             .padding(.top, 40)
+                            .accessibilityRemoveTraits(.isStaticText)
                         Text("falta para o seu evento!")
                             .font(.system(size: 20,
                                           weight: .bold,
                                           design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                         ZStack{
                             RoundedRectangle(cornerRadius: 50)
                                 .frame(width: 250, height: 200)
@@ -48,9 +50,13 @@ struct HomeView: View {
                                         .font(.system(size: 20,
                                                       weight: .semibold,
                                                       design: .default))
+                                        
                                         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                        .accessibilityRemoveTraits(.isStaticText)
+                                        
                                     
                                     Text(ConversorData.conversorDataString(dataParaConversao: Date(), recebeData: "dataHome"))
+                                        .accessibilityRemoveTraits(.isStaticText)
                                 }
                                 .padding()
                                 VStack {
@@ -59,6 +65,7 @@ struct HomeView: View {
                                                       weight: .semibold,
                                                       design: .default))
                                         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                        .accessibilityRemoveTraits(.isStaticText)
                                     DatePicker("", selection: $dataFinal,
                                                in: periodo,
                                                displayedComponents: [.date])
@@ -78,13 +85,16 @@ struct HomeView: View {
                             ZStack {
                                 VStack{
                                     Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos"))")
+                                        .accessibilityRemoveTraits(.isStaticText)
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
                                     if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos"))") == "1" {
                                         Text("Dia corrido")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     }else {
                                         Text("Dias corridos")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     }
                                 }
                             }
@@ -92,12 +102,15 @@ struct HomeView: View {
                                 VStack{
                                     Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "semanas"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
+                                        .accessibilityRemoveTraits(.isStaticText)
                                     if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "semanas"))") == "1" {
                                         Text("Semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     } else{
                                         Text("Semanas")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     }
                                 }
                             }
@@ -105,12 +118,15 @@ struct HomeView: View {
                                 VStack{
                                     Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
+                                        .accessibilityRemoveTraits(.isStaticText)
                                     if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))") == "1" {
                                         Text("Dia de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     } else {
                                         Text("Dias de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     }
                                 }
                             }
@@ -118,13 +134,16 @@ struct HomeView: View {
                                 VStack{
                                     Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "finais"))")
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
+                                        .accessibilityRemoveTraits(.isStaticText)
                                     if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "finais"))") == "1" {
                                         Text("Final de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     }else{
                                         Text("Finais de semana")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                             .multilineTextAlignment(.center)
+                                            .accessibilityRemoveTraits(.isStaticText)
                                     }
                                 }
                             }
@@ -139,6 +158,7 @@ struct HomeView: View {
                             NavigationLink(destination: AdicionarEventoView(eventoModel: eventoModel, dataFinalSalvar: dataFinal, dataLembrete: Date(), mostrarTela: $mostrarTela), isActive: $mostrarTela) {
                                 Text("Adicionar")
                                     .font(.system(size: 17, weight: .semibold, design: .rounded))
+                                    
                             }
                             .disabled(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos") == 0)
                         }

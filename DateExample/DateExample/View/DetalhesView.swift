@@ -24,22 +24,28 @@ struct DetalhesView: View {
             Text(ConversorData.conversorDataString(dataParaConversao: agenda.dataFinal))
                 .font(.system(size: 17, weight: .regular, design: .rounded))
                 .padding(.vertical, 30)
+                .accessibilityRemoveTraits(.isStaticText)
             Text("Tempo restante")
                 .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .accessibilityRemoveTraits(.isStaticText)
             Text("para seu evento")
                 .font(.system(size: 17, weight: .semibold, design: .rounded))
+                .accessibilityRemoveTraits(.isStaticText)
             
             LazyVGrid(columns: grid, spacing: 30) {
                 ZStack {
                     VStack {
                         Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "corridos"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                         if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "corridos"))") == "1" {
                             Text("Dia corrido")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         }else {
                             Text("Dias corridos")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                 }
@@ -47,12 +53,15 @@ struct DetalhesView: View {
                     VStack {
                         Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "semanas"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                         if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "semanas"))") == "1" {
                             Text("Semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         } else{
                             Text("Semanas")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                 }
@@ -61,12 +70,15 @@ struct DetalhesView: View {
                     VStack {
                         Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                         if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))") == "1" {
                             Text("Dia de semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         } else {
                             Text("Dias de semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                 }
@@ -74,13 +86,16 @@ struct DetalhesView: View {
                     VStack {
                         Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "finais"))")
                             .font(.system(size: 30, weight: .regular, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                         if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "finais"))") == "1" {
                             Text("Final de semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                         }else{
                             Text("Finais de semana")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                                 .multilineTextAlignment(.center)
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                 }
@@ -91,13 +106,16 @@ struct DetalhesView: View {
                 VStack {
                     Text("Notas")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        .accessibilityRemoveTraits(.isStaticText)
                     if agenda.anotacoes != "" {
                         Text(agenda.anotacoes)
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.center)
+                            .accessibilityRemoveTraits(.isStaticText)
                     }else{
                         Text("Nenhuma nota")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                     }
                 }
                 .padding(.vertical, 30)
@@ -105,13 +123,16 @@ struct DetalhesView: View {
                 VStack{
                     Text("Notificação")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        .accessibilityRemoveTraits(.isStaticText)
                     if agenda.dataLembrete != nil{
                         Text("Lembrar-me \(converterDataDetalhes(date: agenda.dataLembrete))")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.center)
+                            .accessibilityRemoveTraits(.isStaticText)
                     }else{
                         Text("Nenhuma")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
                     }
                 }
             }
@@ -122,6 +143,9 @@ struct DetalhesView: View {
         Spacer()
         .navigationBarBackButtonHidden(true)
         .navigationTitle(agenda.titulo)
+        .accessibilityRemoveTraits(.isStaticText)
+       
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -148,6 +172,7 @@ struct DetalhesView: View {
                 } label: {
                     Text("Editar")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .accessibilityRemoveTraits(.isStaticText)
                 }.disabled(eventoModel.calendario.calculoDiasCorridos(dataFinal: agenda.dataFinal) < 0)
             }
         }

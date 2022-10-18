@@ -46,6 +46,7 @@ struct ListaView: View {
             if eventoModel.eventos.count == 0{
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                    .accessibilityRemoveTraits(.isStaticText)
             }else{
                 VStack {
                     List {
@@ -60,7 +61,10 @@ struct ListaView: View {
                             }
                             .onDelete(perform: eventoModel.removerAtuais)
                         } header: {
-                            Text("Pendentes")
+                            Text("Futuros")
+                                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .accessibilityRemoveTraits(.isHeader)
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                         Section{
                             ForEach(buscarEventosPassados, id: \.id) { passado in
@@ -74,6 +78,9 @@ struct ListaView: View {
                             .onDelete(perform: eventoModel.removerPassados)
                         } header: {
                             Text("Passados")
+                                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .accessibilityRemoveTraits(.isHeader)
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                     .listStyle(.insetGrouped)
@@ -85,6 +92,7 @@ struct ListaView: View {
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
                 .navigationTitle("Meus eventos")
+                .accessibilityRemoveTraits(.isHeader)
             }
         }
     }

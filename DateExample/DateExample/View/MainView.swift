@@ -26,6 +26,7 @@ struct MainView: View {
             HomeView(eventoModel: eventoModel)
                 .tabItem {
                     Image(systemName: "calendar")
+                        .accessibilityLabel(Text( "Contador de dias"))
                 }
                 .tag(Tab.contador)
                 .environment(\.currentTab, $selecaoTab)
@@ -33,6 +34,7 @@ struct MainView: View {
             ListaView(eventoModel: eventoModel)
                 .tabItem {
                     Image(systemName: "rectangle.grid.1x2")
+                        .accessibilityLabel(Text("Lista de eventos"))
                 }
                 .tag(Tab.lista)
                 .environment(\.currentTab, $selecaoTab)

@@ -31,22 +31,25 @@ struct EdicaoView: View {
             VStack {
                 Text("\(listaEvento.dataFinal.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
+                    .accessibilityRemoveTraits(.isStaticText)
                 Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
+                    .accessibilityRemoveTraits(.isStaticText)
             }
             .padding()
             VStack {
                 Form {
                     Section(){
                         TextField("Título", text: $titulo)
+                            .accessibilityHint(Text("Título do seu evento"))
                             .font(.system(size: 19, weight: .regular, design: .rounded))
                             .onReceive(listaEvento.titulo.publisher.collect()) {
                                 listaEvento.titulo = String($0.prefix(20))
-                            }
+                            }.accessibilityRemoveTraits(.isStaticText)
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }
+                        }.accessibilityHint(Text("Ative para receber notificação do seu evento"))
                         if ativaLembrete{
                             HStack {
                                 Spacer()
@@ -56,6 +59,7 @@ struct EdicaoView: View {
                                         .labelsHidden()
                                         .datePickerStyle(.automatic)
                                         .environment(\.locale, Locale.init(identifier: "pt_BR"))
+                                        .accessibilityHint(Text("Escolha a data para receber a notificacao"))
                                 Spacer()
                             }
                         }
@@ -63,9 +67,11 @@ struct EdicaoView: View {
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
                                 .foregroundColor(Color.gray)){
                                     TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
+                            .accessibilityHint(Text("Adicione uma nota ao seu evento"))
                             .onReceive(anotacao.publisher.collect()) {
                                     anotacao = String($0.prefix(100))
                             }
@@ -74,9 +80,11 @@ struct EdicaoView: View {
                             }
                         HStack {
                             Text("Limite de caractéres: ")
+                                .accessibilityRemoveTraits(.isStaticText)
                             Spacer()
                             Text("\(contadorCaracter)/100")
                                     .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                    .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
                 }
@@ -90,6 +98,7 @@ struct EdicaoView: View {
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Editar evento")
+        .accessibilityRemoveTraits(.isStaticText)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
@@ -117,6 +126,7 @@ struct EdicaoView: View {
                 } label: {
                     Text("Salvar")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .accessibilityRemoveTraits(.isStaticText)
                 }
             }
         }
