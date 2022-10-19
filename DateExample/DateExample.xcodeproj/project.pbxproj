@@ -28,6 +28,19 @@
 		88C189AC28D9F42B004A9F8E /* Calendario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C189AB28D9F42B004A9F8E /* Calendario.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BA7EB4452900693600A10481 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4E16F64D28DB718A00A91EA2 /* AparenciaTituloNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AparenciaTituloNav.swift; sourceTree = "<group>"; };
 		4E2A352E28D8DBCA008E5C15 /* Notificacoes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notificacoes.swift; sourceTree = "<group>"; };
@@ -50,6 +63,8 @@
 		8888CACC28DC13B200662B92 /* EventoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventoViewModel.swift; sourceTree = "<group>"; };
 		88B86F2928DC94C700C607B5 /* EdicaoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdicaoView.swift; sourceTree = "<group>"; };
 		88C189AB28D9F42B004A9F8E /* Calendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendario.swift; sourceTree = "<group>"; };
+		BA7EB4382900693300A10481 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BA7EB43A2900693300A10481 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +83,7 @@
 			children = (
 				5180C35028FF389300617DE7 /* Localizable.strings */,
 				4E79E18828BD2E190015CD43 /* DateExample */,
+				BA7EB4372900693300A10481 /* Frameworks */,
 				4E79E18728BD2E190015CD43 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -146,6 +162,15 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
+		BA7EB4372900693300A10481 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA7EB4382900693300A10481 /* WidgetKit.framework */,
+				BA7EB43A2900693300A10481 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,6 +181,7 @@
 				4E79E18228BD2E190015CD43 /* Sources */,
 				4E79E18328BD2E190015CD43 /* Frameworks */,
 				4E79E18428BD2E190015CD43 /* Resources */,
+				BA7EB4452900693600A10481 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
