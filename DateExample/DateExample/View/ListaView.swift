@@ -6,14 +6,14 @@ struct ListaView: View {
     @State var procuraTexto = ""
     @State var segmentSelection: Evento.ID? = nil
     
-    var eventosPassados: [Evento] {
+    var eventosPassados: [EventoAtualizado] {
         eventoModel.criaListaPassada()
     }
-    var eventosAtuais: [Evento] {
+    var eventosAtuais: [EventoAtualizado] {
         eventoModel.criaListaAtual()
     }
     
-    private var buscarEventosFuturos: [Evento] {
+    private var buscarEventosFuturos: [EventoAtualizado] {
         if procuraTexto.isEmpty {
             return eventosAtuais
         } else {
@@ -23,7 +23,7 @@ struct ListaView: View {
         }
     }
     
-    private var buscarEventosPassados: [Evento] {
+    private var buscarEventosPassados: [EventoAtualizado] {
         if procuraTexto.isEmpty {
             return eventosPassados
         } else {
@@ -79,6 +79,7 @@ struct ListaView: View {
                     .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
+                        eventoModel.mudarEstrutura(vmEventos: eventoModel)
                     }
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
                     .padding(.top, 1)

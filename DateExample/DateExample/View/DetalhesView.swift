@@ -11,7 +11,7 @@ struct DetalhesView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var eventoModel: EventoViewModel
-    @State var agenda: Evento
+    @State var agenda: EventoAtualizado
     
     var resultado: DateComponents {
         return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: agenda.dataFinal)

@@ -10,11 +10,26 @@ import SwiftUI
 class EventoViewModel: ObservableObject{
     
     @Published var eventos = [Evento]()
+    @Published var eventosAtualizados = [EventoAtualizado]()
+    var trocarEstrutura = true
     let calendario = Calendar(identifier: .gregorian)
     
     init(){
         fetch()
     }
+    
+    func mudarEstrutura(vmEventos: EventoViewModel){
+        if trocarEstrutura{
+            print("entrei aqui", eventos.count)
+            for i in 0 ..< eventos.count{
+                eventosAtualizados.append(EventoAtualizado(titulo: eventos[i].titulo, anotacoes: eventos[i].anotacoes, datafinal: eventos[i].dataFinal, dataLembrete: eventos[i].dataLembrete, ativaLembrete: eventos[i].ativaLembrete, idLembrete: eventos[i].idLembrete, idCalendario: nil, adicionarCalendario: false))
+                print(eventos[i])
+            }
+            trocarEstrutura = false
+        }
+        print(eventosAtualizados)
+    }
+    
     
     func adicionarNovo(tituloSalvo: String, anotacoesSalvo: String, dataFinalSalvo: Date, dataLembrete: Date?, ativaLembrete: Bool, idLembrete: UUID) {
         if ativaLembrete == true {
@@ -54,14 +69,14 @@ class EventoViewModel: ObservableObject{
         }
     }
     
-    public func criaListaPassada() -> [Evento]{
-            var eventosPassados: [Evento] = []
+    public func criaListaPassada() -> [EventoAtualizado]{
+            var eventosPassados: [EventoAtualizado] = []
             var indexCancelar: [Int] = []
-            let listaTemp: [Evento] = eventos
+            let listaTemp = eventosAtualizados
             
             for i in 0..<listaTemp.count{
-                if calendario.calculoDiasCorridos(dataFinal: eventos[i].dataFinal) < 0{
-                    eventosPassados.append(eventos[i])
+                if calendario.calculoDiasCorridos(dataFinal: eventosAtualizados[i].dataFinal) < 0{
+                    eventosPassados.append(eventosAtualizados[i])
                     indexCancelar.append(i)
                 }
                 
@@ -69,14 +84,14 @@ class EventoViewModel: ObservableObject{
         return eventosPassados.sorted(by: {$0.dataFinal < $1.dataFinal})
         }
         
-        public func criaListaAtual() -> [Evento]{
-            var eventosAtuais: [Evento] = []
+        public func criaListaAtual() -> [EventoAtualizado]{
+            var eventosAtuais: [EventoAtualizado] = []
             var indexCancelar: [Int] = []
-            let listaTemp: [Evento] = eventos
+            let listaTemp = eventosAtualizados
             
             for i in 0..<listaTemp.count{
-                if calendario.calculoDiasCorridos(dataFinal: eventos[i].dataFinal) >= 0{
-                    eventosAtuais.append(eventos[i])
+                if calendario.calculoDiasCorridos(dataFinal: eventosAtualizados[i].dataFinal) >= 0{
+                    eventosAtuais.append(eventosAtualizados[i])
                     indexCancelar.append(i)
                 }
                 
