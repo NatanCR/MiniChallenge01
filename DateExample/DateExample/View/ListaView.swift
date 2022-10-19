@@ -38,7 +38,7 @@ struct ListaView: View {
     
     var body: some View {
         NavigationView {
-            if eventoModel.eventos.count == 0{
+            if eventoModel.eventosAtualizados.count == 0{
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     .accessibilityRemoveTraits(.isStaticText)
