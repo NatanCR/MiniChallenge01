@@ -24,6 +24,18 @@ class ConversorData: ObservableObject{
             return data
         }
     }
+    
+    static func converterDataLista (date: Date?) -> String {
+        if date != nil{
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "pt_BR")
+            dateFormatter.dateFormat = "EEEE, d MMMM yyyy"
+            return dateFormatter.string(from: date!)
+        }
+        return "Sem data marcada"
+    }
+    
+    
 }
 
 extension Calendar {

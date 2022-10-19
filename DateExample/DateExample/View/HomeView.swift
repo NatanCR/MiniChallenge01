@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @StateObject var eventoModel: EventoViewModel
     
     @State private var dataInicio = Date()
@@ -78,6 +77,7 @@ struct HomeView: View {
                                     dataInicio = Date()
                                     dataFinal = Date()
                                     Avaliacao.pedidoAvaliacao()
+                                    eventoModel.checarPermissaoCalendario()
                                 }
                             }
                         }
@@ -139,7 +139,6 @@ struct HomeView: View {
                         .padding([.top, .leading, .trailing],30)
                         Spacer()
                     }
-                    .navigationBarTitle("Contador")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
@@ -151,8 +150,10 @@ struct HomeView: View {
                     }
                 }
             }
+            .navigationTitle("Contador")
             .background(Color.init(red: 0.77, green: 0.84, blue: 0.90, opacity: 1.00))
             .navigationAppearance(backgroundColor: UIColor.init(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00), foregroundColor: UIColor.init(red: 0.00, green: 0.16, blue: 0.35, alpha: 1.00), tintColor: UIColor.init(red: 0.00, green: 0.16, blue: 0.35, alpha: 1.00), hideSeparator: true)
         }
+        .navigationViewStyle(.stack)
     }
 }

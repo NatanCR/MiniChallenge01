@@ -10,21 +10,25 @@ import SwiftUI
 
 struct AdicionarEventoView: View {
     
+//    @Environment(\.dismiss) private var dismiss
     @StateObject var eventoModel: EventoViewModel
+    @State var selecionarCalendario = 1
     @State var dataFinalSalvar = Date()
-    @State private var alertasIndex = 0
     @State var titulo: String = ""
     @State var anotacao: String = ""
     @State var id: UUID?
-    @State var modoEditar = false
+    @State var idCalendario: String?
     @State var dataLembrete: Date
     @State var ativaLembrete = false
     @State var ativaCalendario = false
     @State var mostrarAlerta = false
+    @State var modoEditar = false
+    @State private var alertasIndex = 0
     @State private var contadorCaracter = 0
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
     let calendario = Calendar(identifier: .gregorian)
+    let mvCalendario = Calendario()
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -67,6 +71,15 @@ struct AdicionarEventoView: View {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
                         }
+                    if ativaCalendario{
+                        // levar para outra view para selecionar qual calendario sera adicionado o evento
+                        Picker("Calendário",selection: $selecionarCalendario) {
+                            ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+                                Text(eventoModel.listaCalendario[evento].title).tag(evento)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                    }
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -121,18 +134,16 @@ struct AdicionarEventoView: View {
                         self.mostrarAlerta.toggle()
                     } else {
                         eventoModel.adicionarNovo(tituloSalvo: titulo,
-                                            anotacoesSalvo: anotacao,
-                                            dataFinalSalvo: dataFinalSalvar,
-                                            dataLembrete: dataLembrete,
-                                            ativaLembrete: ativaLembrete,
-                                            idLembrete: UUID())
-                        if ativaCalendario {
-                            Calendario.adicionarEvento(dataFinalSalvar: calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos"),
-                                                       anotacao: anotacao,
-                                                       titulo: titulo)
-                        }
+                                                  anotacoesSalvo: anotacao,
+                                                  dataFinalSalvo: dataFinalSalvar,
+                                                  dataLembrete: dataLembrete,
+                                                  ativaLembrete: ativaLembrete,
+                                                  idLembrete: UUID(),
+                                                  adicionarCalendario: ativaCalendario,
+                                                  calendarioAdicionar: selecionarCalendario)
                         Notificacoes.permissao()
                         mostrarTela = false
+//                        dismiss()
                         tab.wrappedValue = .lista
                     }
                 } label: {

@@ -19,10 +19,31 @@ struct EdicaoView: View {
     @State var idLembrete: UUID
     @State var dataLembrete: Date
     @State var ativaLembrete: Bool
+    @State var ativaCalendario: Bool
+    @State var idCalendario: String?
+    @State var selecionarCalendario = 1
     @State var mostrarAlerta = false
     @State private var contadorCaracter = 0
+    let teste = ["um", "dois", "tres", "quatro", "cinco", "seis"]
     let calendario = Calendar(identifier: .gregorian)
 
+    var customLabel: some View {
+        HStack {
+            Text("Calendário")
+            Spacer()
+            Picker("Calendário",selection: $selecionarCalendario) {
+                ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+                    Text(eventoModel.listaCalendario[evento].title)
+
+                }
+            }
+            .pickerStyle(.menu)
+            Image(systemName: "chevron.up.chevron.down")
+                .offset(x: -5)
+        }
+    }
+    
+    
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -58,6 +79,34 @@ struct EdicaoView: View {
                                 Spacer()
                             }
                         }
+                        Toggle(isOn: $ativaCalendario) {
+                                Text("Adicionar ao Calendario")
+                                    .font(.system(size: 19, weight: .semibold, design: .rounded))
+                            }
+                        if ativaCalendario{
+//                  levar para outra view para selecionar qual calendario sera adicionado o evento
+//                            Picker("Calendário",selection: $selecionarCalendario) {
+//                                ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+//                                    Text(eventoModel.listaCalendario[evento].title)
+//                                }
+//                            }
+//                            .pickerStyle(.menu)
+//                            Picker(selection: $selecionarCalendario) {
+//                                ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+//                                    Text(eventoModel.listaCalendario[evento].title)
+//                                }
+//                            } label: {
+//                                Text("Calendario")
+//                            }
+
+                            
+                            
+                            customLabel
+                                
+                        }
+                        
+                        
+                        
                     }.id(dataLembrete)
                     
                     Section(header: Text("Notas")
@@ -101,12 +150,14 @@ struct EdicaoView: View {
                         self.mostrarAlerta.toggle()
                     } else {
                     eventoModel.editarDados(titulo: titulo,
-                                       anotacao: anotacao,
-                                       id: listaEvento.id,
-                                       dataFinalSalvar: dataFinalSalvar,
-                                       idLembrete: idLembrete,
-                                       dataLembrete: dataLembrete,
-                                       ativaLembrete: ativaLembrete)
+                                            anotacao: anotacao, id: id,
+                                            dataFinalSalvar: dataFinalSalvar,
+                                            idLembrete: idLembrete,
+                                            dataLembrete: dataLembrete,
+                                            ativaLembrete: ativaLembrete,
+                                            eventoCalendario: ativaCalendario,
+                                            idCalendario: idCalendario,
+                                            calendario: eventoModel.listaCalendario[selecionarCalendario].calendarIdentifier)
                 dismiss()
                 }
                 } label: {

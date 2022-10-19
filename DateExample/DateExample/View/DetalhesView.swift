@@ -144,7 +144,9 @@ struct DetalhesView: View {
                                id: agenda.id,
                                idLembrete: agenda.idLembrete,
                                dataLembrete: agenda.dataLembrete ?? Date(),
-                               ativaLembrete: agenda.ativaLembrete)
+                               ativaLembrete: agenda.ativaLembrete,
+                               ativaCalendario: agenda.adicionarCalendario,
+                               idCalendario: agenda.idCalendario)
                     .environmentObject(eventoModel)
                 } label: {
                     Text("Editar")

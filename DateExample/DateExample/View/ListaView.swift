@@ -21,6 +21,7 @@ struct ListaView: View {
             if eventoModel.eventos.count == 0{
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                    .navigationTitle("Seus eventos")
             }else{
                 VStack {
                     List {
@@ -29,7 +30,17 @@ struct ListaView: View {
                                 DetalhesView(eventoModel: eventoModel, agenda: anotacao)
                                     .environmentObject(eventoModel)
                             } label: {
-                                CelulaLista(dados: anotacao)
+                                HStack {
+                                    VStack(alignment: .leading){
+                                        Text(anotacao.titulo)
+                                            .font(.system(size: 19, weight: .bold, design: .rounded))
+                                            .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                        Text(ConversorData.converterDataLista(date: anotacao.dataFinal))
+                                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                                            .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                    }
+                                }
+                                
                             }
                         }
                         .onDelete(perform: eventoModel.remover)
@@ -45,8 +56,7 @@ struct ListaView: View {
                 .navigationTitle("Seus eventos")
             }
         }
-        .refreshable {
-            eventoModel.fetch()
-        }
+        .navigationViewStyle(.stack)
     }
+    
 }
