@@ -37,13 +37,10 @@ struct EdicaoView: View {
 
                 }
             }
-            .pickerStyle(.menu)
             Image(systemName: "chevron.up.chevron.down")
                 .offset(x: -5)
         }
     }
-    
-    
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -99,10 +96,30 @@ struct EdicaoView: View {
 //                                Text("Calendario")
 //                            }
 
-                            
-                            
-                            customLabel
-                                
+//                            Menu(selecionarCalendario ?? "Select Language") {
+//                              ForEach(eventoModel.listaCalendario, id: \.self) { menuOption in
+//                                Button {
+//                                    selecionarCalendario = menuOption
+//                                } label: {
+//                                  Text(menuOption)
+//                                }
+//                              }
+//                            }
+//                            .menuStyle(.customMenu)
+                            Menu("Calendário"){
+                                HStack {
+                                    Spacer()
+                                    Picker("Calendário",selection: $selecionarCalendario) {
+                                        ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+                                            Text(eventoModel.listaCalendario[evento].title)
+
+                                        }
+                                    }
+                                    Image(systemName: "chevron.up.chevron.down")
+                                        .offset(x: -5)
+                                }
+                            }
+                            .menuStyle(.customMenu)
                         }
                         
                         
@@ -168,3 +185,5 @@ struct EdicaoView: View {
         }
     }
 }
+
+
