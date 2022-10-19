@@ -154,7 +154,7 @@ struct DetalhesView: View {
                     HStack {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 16, weight: .semibold, design: .rounded))
-                        Text("Seus eventos")
+                        Text("Meus eventos")
                     }
                 })
             }

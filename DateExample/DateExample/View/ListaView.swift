@@ -21,14 +21,6 @@ struct ListaView: View {
                 $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
         }
-        
-//        if procuraTexto.isEmpty {
-//            return eventosAtuais.sorted(by: {$0.dataFinal < $1.dataFinal})
-//        } else {
-//            return eventosAtuais.filter {
-//                $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
-//            }
-//        }
     }
     
     private var buscarEventosPassados: [Evento] {
@@ -47,6 +39,7 @@ struct ListaView: View {
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     .accessibilityRemoveTraits(.isStaticText)
+                    .navigationTitle("Meus eventos")
             }else{
                 VStack {
                     List {
@@ -95,5 +88,6 @@ struct ListaView: View {
                 .accessibilityRemoveTraits(.isHeader)
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
