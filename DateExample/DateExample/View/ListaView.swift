@@ -15,12 +15,14 @@ struct ListaView: View {
     
     private var buscarEventosFuturos: [EventoAtualizado] {
         if procuraTexto.isEmpty {
+            print(eventosAtuais)
             return eventosAtuais
         } else {
             return eventosAtuais.filter {
                 $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
             }
         }
+        
     }
     
     private var buscarEventosPassados: [EventoAtualizado] {
@@ -31,6 +33,7 @@ struct ListaView: View {
             $0.titulo.localizedCaseInsensitiveContains(procuraTexto)
         }
     }
+        
 }
     
     var body: some View {
