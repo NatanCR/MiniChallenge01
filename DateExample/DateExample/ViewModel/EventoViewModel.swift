@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import EventKit
 
 class EventoViewModel: ObservableObject{
     
+    @Published var listaCalendario: [EKEvent] = []
     @Published var eventos = [Evento]()
     @Published var eventosAtualizados = [EventoAtualizado]()
     var trocarEstrutura = true
@@ -31,7 +33,12 @@ class EventoViewModel: ObservableObject{
     }
     
     
-    func adicionarNovo(tituloSalvo: String, anotacoesSalvo: String, dataFinalSalvo: Date, dataLembrete: Date?, ativaLembrete: Bool, idLembrete: UUID) {
+    func adicionarNovo(tituloSalvo: String, anotacoesSalvo: String, dataFinalSalvo: Date, dataLembrete: Date?, ativaLembrete: Bool, idLembrete: UUID, adicionarCalendario: Bool, selecionarCalendario: Int) {
+        var idCalendario: String?
+        if adicionarCalendario{
+            idCalendario = Calendario().adicionarEvento(dataFinal: dataFinalSalvo, anotacao: anotacoesSalvo, titulo: tituloSalvo, calendario: <#T##String#>)
+        }
+        
         if ativaLembrete == true {
             self.eventos.append(Evento(titulo: tituloSalvo, anotacoes: anotacoesSalvo, datafinal: dataFinalSalvo, dataLembrete: dataLembrete, ativaLembrete: ativaLembrete, idLembrete: idLembrete))
             Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
