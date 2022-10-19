@@ -42,6 +42,7 @@ struct ListaView: View {
 }
     
     var body: some View {
+      
         NavigationView {
             if eventoModel.eventos.count == 0{
                 Text ("Você não possui nenhum registro")
@@ -59,6 +60,7 @@ struct ListaView: View {
                                     CelulaLista(dados: anotacao)
                                 }
                             }
+                            
                             .onDelete(perform: eventoModel.removerAtuais)
                         } header: {
                             Text("Futuros")
@@ -83,6 +85,7 @@ struct ListaView: View {
                                 .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
+                  
                     .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
@@ -91,9 +94,13 @@ struct ListaView: View {
                     .padding(.top, 1)
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
+                .toolbar {
+                    EditButton()
+                }
                 .navigationTitle("Meus eventos")
                 .accessibilityRemoveTraits(.isHeader)
             }
         }
+        }
     }
-}
+
