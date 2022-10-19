@@ -5,6 +5,7 @@ struct ListaView: View {
     @StateObject var eventoModel: EventoViewModel
     @State var procuraTexto = ""
     @State var segmentSelection: Evento.ID? = nil
+   
     
     var eventosPassados: [Evento] {
         eventoModel.criaListaPassada()
@@ -68,7 +69,13 @@ struct ListaView: View {
                                 .accessibilityRemoveTraits(.isHeader)
                                 .accessibilityRemoveTraits(.isStaticText)
                         }
+                        
+                        if eventosPassados.isEmpty{
+                         
+                            
+                        } else{
                         Section{
+                            
                             ForEach(buscarEventosPassados, id: \.id) { passado in
                                 NavigationLink {
                                     DetalhesView(eventoModel: eventoModel, agenda: passado)
@@ -78,14 +85,15 @@ struct ListaView: View {
                                 }
                             }
                             .onDelete(perform: eventoModel.removerPassados)
-                        } header: {
+                        }
+                         header: {
                             Text("Passados")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .accessibilityRemoveTraits(.isHeader)
                                 .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
-                  
+                    }
                     .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
