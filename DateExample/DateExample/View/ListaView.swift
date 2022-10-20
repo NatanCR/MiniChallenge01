@@ -4,7 +4,7 @@ struct ListaView: View {
     
     @StateObject var eventoModel: EventoViewModel
     @State var procuraTexto = ""
-    @State var segmentSelection: Evento.ID? = nil
+    @State var segmentSelection: EventoAtualizado.ID? = nil
     
     var eventosPassados: [EventoAtualizado] {
         eventoModel.criaListaPassada()
@@ -15,7 +15,6 @@ struct ListaView: View {
     
     private var buscarEventosFuturos: [EventoAtualizado] {
         if procuraTexto.isEmpty {
-            print(eventosAtuais)
             return eventosAtuais
         } else {
             return eventosAtuais.filter {
@@ -38,7 +37,7 @@ struct ListaView: View {
     
     var body: some View {
         NavigationView {
-            if eventoModel.eventos.count == 0{
+            if eventoModel.eventosAtualizados.count == 0{
                 Text ("Você não possui nenhum registro")
                     .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                     .accessibilityRemoveTraits(.isStaticText)

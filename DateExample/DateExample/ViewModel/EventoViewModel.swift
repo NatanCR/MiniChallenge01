@@ -14,15 +14,19 @@ class EventoViewModel: ObservableObject{
     @Published var listaCalendario: [EKCalendar] = []
     @Published var eventos = [Evento]()
     @Published var eventosAtualizados = [EventoAtualizado]()
+    let vmCalendario = Calendario()
+    let calendarioEventos = EKEventStore()
+    let calendario = Calendar(identifier: .gregorian)
+    var forkeyUserDefaults = "listaEventosAtualizado"
     var trocarEstrutura = true
     var cancelavel = Set<AnyCancellable>()
-    let vmCalendario = Calendario()
-    let calendario = Calendar(identifier: .gregorian)
-    var calendarioEventos = EKEventStore()
-    
+
     init(){
         listaCalendario = vmCalendario.listarCalendarios()
-        fetch()
+        
+        // esse é novo
+        trocarEstrutura = UserDefaults.standard.bool(forKey: "AtualizarLista")
+        verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
                 self.atualizarListas()
@@ -33,10 +37,12 @@ class EventoViewModel: ObservableObject{
         if trocarEstrutura{
             print("entrei aqui", eventos.count)
             for i in 0 ..< eventos.count{
+                print(eventos[i].titulo)
                 eventosAtualizados.append(EventoAtualizado(titulo: eventos[i].titulo, anotacoes: eventos[i].anotacoes, datafinal: eventos[i].dataFinal, dataLembrete: eventos[i].dataLembrete, ativaLembrete: eventos[i].ativaLembrete, idLembrete: eventos[i].idLembrete, idCalendario: nil, adicionarCalendario: false))
                 print(eventos[i])
             }
             trocarEstrutura = false
+            UserDefaults.standard.set(trocarEstrutura, forKey: "AtualizarLista")
         }
         print(eventosAtualizados)
     }
@@ -53,7 +59,7 @@ class EventoViewModel: ObservableObject{
             Notificacoes.criarLembrete(date: dataLembrete!, titulo: tituloSalvo, dataEvento: ConversorData.dataNotificacao(indice: 0, date: dataFinalSalvo), id: idLembrete)
         }
         if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
-            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
         }
     }
     
@@ -76,7 +82,7 @@ class EventoViewModel: ObservableObject{
                     DispatchQueue.main.async {
                         self.eventosAtualizados = eventosAux
                         if let valoresCodificados = try? JSONEncoder().encode(self.eventosAtualizados) {
-                            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+                            UserDefaults.standard.set(valoresCodificados, forKey: self.forkeyUserDefaults)
                         }
                     }
                 }
@@ -124,7 +130,7 @@ class EventoViewModel: ObservableObject{
             }
         }
         if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
-            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
         }
     }
     
@@ -144,7 +150,7 @@ class EventoViewModel: ObservableObject{
         }
 
         if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
-            UserDefaults.standard.set(valoresCodificados, forKey: "listaEventos")
+            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
         }
     }
     
@@ -154,7 +160,7 @@ class EventoViewModel: ObservableObject{
     }
     
     func fetch() {
-        if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {
+        if let anotacoesCodificadas = UserDefaults.standard.object(forKey: forkeyUserDefaults) as? Data {
             if let anotacoesDecodificadas = try? JSONDecoder().decode([EventoAtualizado].self, from: anotacoesCodificadas){
                 DispatchQueue.main.async {
                     self.eventosAtualizados = anotacoesDecodificadas
@@ -162,6 +168,26 @@ class EventoViewModel: ObservableObject{
             }
         }
     }
+    
+    func fetchListaAntiga() {
+        if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {
+            if let anotacoesDecodificadas = try? JSONDecoder().decode([Evento].self, from: anotacoesCodificadas){
+                DispatchQueue.main.async {
+                    self.eventos = anotacoesDecodificadas
+                }
+            }
+        }
+    }
+    
+    func verificarAtualizacaoLista(){
+        if trocarEstrutura{
+            fetchListaAntiga()
+            fetch()
+        }else{
+            fetch()
+        }
+    }
+    
 }
 
 extension EventoViewModel{
