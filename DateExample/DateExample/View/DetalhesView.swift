@@ -114,7 +114,7 @@ struct DetalhesView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }else{
-                        Text("Nenhuma")
+                        Text("Sem notificação")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)

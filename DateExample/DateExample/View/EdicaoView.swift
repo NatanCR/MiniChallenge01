@@ -43,9 +43,10 @@ struct EdicaoView: View {
                         TextField("Título", text: $titulo)
                             .accessibilityHint(Text("Título do seu evento"))
                             .font(.system(size: 19, weight: .regular, design: .rounded))
-                            .onReceive(listaEvento.titulo.publisher.collect()) {
-                                listaEvento.titulo = String($0.prefix(20))
-                            }.accessibilityRemoveTraits(.isStaticText)
+                            .onReceive(titulo.publisher.collect()) {
+                                titulo = String($0.prefix(20))
+                            }
+                            .accessibilityRemoveTraits(.isStaticText)
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
@@ -72,20 +73,6 @@ struct EdicaoView: View {
                         TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
                             .accessibilityHint(Text("Adicione uma nota ao seu evento"))
-                            .onReceive(anotacao.publisher.collect()) {
-                                anotacao = String($0.prefix(100))
-                            }
-                            .onChange(of: anotacao) { newValue in
-                                contadorCaracter = newValue.count
-                            }
-                        HStack {
-                            Text("Limite de caractéres: ")
-                                .accessibilityRemoveTraits(.isStaticText)
-                            Spacer()
-                            Text("\(contadorCaracter)/100")
-                                .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                                .accessibilityRemoveTraits(.isStaticText)
-                        }
                     }
                     Button(role: .destructive) {
                         print("apagando")

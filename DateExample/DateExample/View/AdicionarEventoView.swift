@@ -21,7 +21,6 @@ struct AdicionarEventoView: View {
     @State var ativaLembrete = false
     @State var ativaCalendario = false
     @State var mostrarAlerta = false
-    @State private var contadorCaracter = 0
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
     
@@ -81,20 +80,6 @@ struct AdicionarEventoView: View {
                         TextEditor(text: $anotacao)
                             .accessibilityHint(Text("Adicione uma nota ao seu evento"))
                             .frame(height: altura * 0.2)
-                            .onReceive(anotacao.publisher.collect()) {
-                                anotacao = String($0.prefix(100))
-                            }
-                            .onChange(of: anotacao) { newValue in
-                                contadorCaracter = newValue.count
-                            }
-                        HStack {
-                            Text("Limite de caractéres: ")
-                                .accessibilityRemoveTraits(.isStaticText)
-                            Spacer()
-                            Text("\(contadorCaracter)/100")
-                                    .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                                    .accessibilityRemoveTraits(.isStaticText)
-                        }
                     }
                 }
                 .onAppear {
