@@ -18,14 +18,16 @@ class EventoViewModel: ObservableObject{
     let calendarioEventos = EKEventStore()
     let calendario = Calendar(identifier: .gregorian)
     var forkeyUserDefaults = "listaEventosAtualizado"
-    var trocarEstrutura = true
+    var trocarEstrutura: Bool {
+        !UserDefaults.standard.bool(forKey: "atualizarEstrutura")
+    }
     var cancelavel = Set<AnyCancellable>()
 
     init(){
         listaCalendario = vmCalendario.listarCalendarios()
         
         // esse é novo
-        trocarEstrutura = UserDefaults.standard.bool(forKey: "AtualizarLista")
+//        trocarEstrutura = UserDefaults.standard.bool(forKey: "teste25")
         verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
@@ -35,14 +37,12 @@ class EventoViewModel: ObservableObject{
     
     func mudarEstrutura(vmEventos: EventoViewModel){
         if trocarEstrutura{
-            print("entrei aqui", eventos.count)
             for i in 0 ..< eventos.count{
                 print(eventos[i].titulo)
                 eventosAtualizados.append(EventoAtualizado(titulo: eventos[i].titulo, anotacoes: eventos[i].anotacoes, datafinal: eventos[i].dataFinal, dataLembrete: eventos[i].dataLembrete, ativaLembrete: eventos[i].ativaLembrete, idLembrete: eventos[i].idLembrete, idCalendario: nil, adicionarCalendario: false))
                 print(eventos[i])
             }
-            trocarEstrutura = false
-            UserDefaults.standard.set(trocarEstrutura, forKey: "AtualizarLista")
+            UserDefaults.standard.set(true, forKey: "atualizarEstrutura")
         }
         print(eventosAtualizados)
     }
@@ -178,6 +178,10 @@ class EventoViewModel: ObservableObject{
             }
         }
     }
+    
+//    func atualizarEstrutura() -> Bool{
+//        return UserDefaults.standard.set(true, forKey: "Atualizar")
+//    }
     
     func verificarAtualizacaoLista(){
         if trocarEstrutura{

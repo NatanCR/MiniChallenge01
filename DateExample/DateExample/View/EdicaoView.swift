@@ -62,8 +62,8 @@ struct EdicaoView: View {
                         TextField("Título", text: $titulo)
                             .accessibilityHint(Text("Título do seu evento"))
                             .font(.system(size: 19, weight: .regular, design: .rounded))
-                            .onReceive(listaEvento.titulo.publisher.collect()) {
-                                listaEvento.titulo = String($0.prefix(20))
+                            .onReceive(titulo.publisher.collect()) {
+                                titulo = String($0.prefix(20))
                             }.accessibilityRemoveTraits(.isStaticText)
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
