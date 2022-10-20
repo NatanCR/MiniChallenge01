@@ -29,13 +29,13 @@ struct HomeView: View {
             ScrollView {
                 ZStack {
                     VStack(alignment: .center) {
-                        Text("Calcule quanto tempo")
+                        Text("Calcule os dias")
                             .font(.system(size: 20,
                                           weight: .bold,
                                           design: .rounded))
                             .padding(.top, 40)
                             .accessibilityRemoveTraits(.isStaticText)
-                        Text("falta para o seu evento!")
+                        Text("até seu evento")
                             .font(.system(size: 20,
                                           weight: .bold,
                                           design: .rounded))

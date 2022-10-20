@@ -22,7 +22,7 @@ struct EdicaoView: View {
     @State var mostrarAlerta = false
     @State private var contadorCaracter = 0
     let calendario = Calendar(identifier: .gregorian)
-
+    
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -55,11 +55,11 @@ struct EdicaoView: View {
                                 Spacer()
                                 DatePicker("", selection: $dataLembrete,
                                            in: Date()...Date.distantFuture,
-                                               displayedComponents: [.date, .hourAndMinute])
-                                        .labelsHidden()
-                                        .datePickerStyle(.automatic)
-                                        .environment(\.locale, Locale.init(identifier: "pt_BR"))
-                                        .accessibilityHint(Text("Escolha a data para receber a notificacao"))
+                                           displayedComponents: [.date, .hourAndMinute])
+                                    .labelsHidden()
+                                    .datePickerStyle(.automatic)
+                                    .environment(\.locale, Locale.init(identifier: "pt_BR"))
+                                    .accessibilityHint(Text("Escolha a data para receber a notificacao"))
                                 Spacer()
                             }
                         }
@@ -69,11 +69,11 @@ struct EdicaoView: View {
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .accessibilityRemoveTraits(.isStaticText)
                                 .foregroundColor(Color.gray)){
-                                    TextEditor(text: $anotacao)
+                        TextEditor(text: $anotacao)
                             .frame(height: altura * 0.2)
                             .accessibilityHint(Text("Adicione uma nota ao seu evento"))
                             .onReceive(anotacao.publisher.collect()) {
-                                    anotacao = String($0.prefix(100))
+                                anotacao = String($0.prefix(100))
                             }
                             .onChange(of: anotacao) { newValue in
                                 contadorCaracter = newValue.count
@@ -83,16 +83,27 @@ struct EdicaoView: View {
                                 .accessibilityRemoveTraits(.isStaticText)
                             Spacer()
                             Text("\(contadorCaracter)/100")
-                                    .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                                    .accessibilityRemoveTraits(.isStaticText)
+                                .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
+                                .accessibilityRemoveTraits(.isStaticText)
                         }
                     }
+                    Button(role: .destructive) {
+                        print("apagando")
+                    } label: {
+                        Text("Apagar evento")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.red)
+                    }
+                    .tint(.white)
+                    .buttonStyle(.borderedProminent)
+                    .frame(maxHeight: 5)
+                    .padding()
                 }
                 .onAppear {
                     UITableView.appearance().backgroundColor = .clear
-
                 }
-            }.onTapGesture{
+            }
+            .onTapGesture{
                 eventoModel.esconderTeclado()
             }
         }
@@ -107,22 +118,21 @@ struct EdicaoView: View {
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
         }
-        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button  {
                     if titulo == "" || dataLembrete > dataFinalSalvar{
                         self.mostrarAlerta.toggle()
                     } else {
-                    eventoModel.editarDados(titulo: titulo,
-                                       anotacao: anotacao,
-                                       id: listaEvento.id,
-                                       dataFinalSalvar: dataFinalSalvar,
-                                       idLembrete: idLembrete,
-                                       dataLembrete: dataLembrete,
-                                       ativaLembrete: ativaLembrete)
-                dismiss()
-                }
+                        eventoModel.editarDados(titulo: titulo,
+                                                anotacao: anotacao,
+                                                id: listaEvento.id,
+                                                dataFinalSalvar: dataFinalSalvar,
+                                                idLembrete: idLembrete,
+                                                dataLembrete: dataLembrete,
+                                                ativaLembrete: ativaLembrete)
+                        dismiss()
+                    }
                 } label: {
                     Text("Salvar")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
@@ -132,3 +142,5 @@ struct EdicaoView: View {
         }
     }
 }
+
+
