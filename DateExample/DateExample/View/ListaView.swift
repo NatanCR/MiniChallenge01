@@ -106,3 +106,4 @@ struct ListaView: View {
         }
         .navigationViewStyle(.stack)
     }
+}

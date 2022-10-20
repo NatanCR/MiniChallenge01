@@ -25,9 +25,7 @@ class EventoViewModel: ObservableObject{
 
     init(){
         listaCalendario = vmCalendario.listarCalendarios()
-        
         // esse é novo
-//        trocarEstrutura = UserDefaults.standard.bool(forKey: "teste25")
         verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
@@ -44,7 +42,10 @@ class EventoViewModel: ObservableObject{
             }
             UserDefaults.standard.set(true, forKey: "atualizarEstrutura")
         }
-        print(eventosAtualizados)
+        if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
+            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
+        }
+        fetch()
     }
     
     
