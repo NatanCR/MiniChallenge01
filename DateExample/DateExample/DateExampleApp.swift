@@ -9,7 +9,14 @@ import SwiftUI
 
 @main
 struct DateExampleApp: App {
-    @ObservedObject var dados = EventoViewModel()
+    
+    
+    @StateObject private var dados: EventoViewModel
+    
+    public init() {
+        self._dados = StateObject(wrappedValue: EventoViewModel())
+        dados.mudarEstrutura(vmEventos: self.dados)
+    }
 
     var body: some Scene {
         WindowGroup {

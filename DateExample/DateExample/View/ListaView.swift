@@ -91,7 +91,6 @@ struct ListaView: View {
                     .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
-                        eventoModel.mudarEstrutura(vmEventos: eventoModel)
                     }
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
                     .padding(.top, 1)
