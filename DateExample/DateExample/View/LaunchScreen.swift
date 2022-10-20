@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct LaunchScreen: View {
-    @State var isActive : Bool = false
+    @ObservedObject private var eventoModel: EventoViewModel
+    @State private var isActive : Bool = false
+    
+    public init(eventoModel: EventoViewModel) {
+        self.eventoModel = eventoModel
+    }
+    
     var body: some View {
         if isActive {
-            MainView()
+            MainView(eventoModel: eventoModel)
         } else {
             ZStack {
                 Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00)

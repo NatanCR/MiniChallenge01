@@ -2,10 +2,14 @@ import SwiftUI
 
 struct ListaView: View {
 
-    @StateObject var eventoModel: EventoViewModel
+    @ObservedObject var eventoModel: EventoViewModel
     @State var procuraTexto = ""
     @State var segmentSelection: EventoAtualizado.ID? = nil
 
+    public init(eventoModel: EventoViewModel) {
+        self.eventoModel = eventoModel
+    }
+    
     var eventosPassados: [EventoAtualizado] {
         eventoModel.criaListaPassada()
     }
