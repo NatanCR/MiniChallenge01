@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AdicionarEventoView: View {
-    
+
     @StateObject var eventoModel: EventoViewModel
     @State var selecionarCalendario = 1
     @State var dataFinalSalvar = Date()
@@ -22,12 +22,11 @@ struct AdicionarEventoView: View {
     @State var ativaLembrete = false
     @State var ativaCalendario = false
     @State var mostrarAlerta = false
-    @State private var contadorCaracter = 0
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
-    
+
     private let altura = UIScreen.main.bounds.size.height
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -52,7 +51,7 @@ struct AdicionarEventoView: View {
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-                            
+
                         }.accessibilityHint(Text("Ative para receber notificação do seu evento"))
                         if ativaLembrete == true {
                             HStack {
@@ -71,7 +70,7 @@ struct AdicionarEventoView: View {
                     .id(dataLembrete)
                     Toggle(isOn: $ativaCalendario) {
                         Text("Adicionar ao Calendário")
-                        
+
                             .font(.system(size: 19, weight: .semibold, design: .rounded))
                     }.accessibilityHint(Text("Evento será adicionado no calendário"))
                     if ativaCalendario{
@@ -83,29 +82,15 @@ struct AdicionarEventoView: View {
                         }
                         .pickerStyle(.menu)
                     }
-                    
+
                     Section(header: Text("Notas")
-                        .font(.system(size: 15, weight: .semibold, design: .rounded))
-                        .accessibilityRemoveTraits(.isStaticText)
-                        .foregroundColor(Color.gray)){
-                            TextEditor(text: $anotacao)
-                                .accessibilityHint(Text("Adicione uma nota ao seu evento"))
-                                .frame(height: altura * 0.2)
-                                .onReceive(anotacao.publisher.collect()) {
-                                    anotacao = String($0.prefix(100))
-                                }
-                                .onChange(of: anotacao) { newValue in
-                                    contadorCaracter = newValue.count
-                                }
-                            HStack {
-                                Text("Limite de caractéres: ")
-                                    .accessibilityRemoveTraits(.isStaticText)
-                                Spacer()
-                                Text("\(contadorCaracter)/100")
-                                    .foregroundColor(contadorCaracter == 100 ? .gray : Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
-                                    .accessibilityRemoveTraits(.isStaticText)
-                            }
-                        }
+                                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .accessibilityRemoveTraits(.isStaticText)
+                                .foregroundColor(Color.gray)){
+                        TextEditor(text: $anotacao)
+                            .accessibilityHint(Text("Adicione uma nota ao seu evento"))
+                            .frame(height: altura * 0.2)
+                    }
                 }
                 .onAppear {
                     UITableView.appearance().backgroundColor = .clear
@@ -117,14 +102,14 @@ struct AdicionarEventoView: View {
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Adicionar evento")
-        
+
         .navigationBarBackButtonHidden(true)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
-                
-                
+
+
             }else{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
@@ -143,14 +128,14 @@ struct AdicionarEventoView: View {
                     }
                 })
             }
-            
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)
                     if titulo == "" || dataLembrete > dataFinalSalvar {
                         self.mostrarAlerta.toggle()
                     } else {
-                        
+
                         eventoModel.adicionarNovo(tituloSalvo: titulo,
                                                   anotacoesSalvo: anotacao,
                                                   dataFinalSalvo: dataFinalSalvar,

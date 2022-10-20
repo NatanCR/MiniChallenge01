@@ -16,22 +16,23 @@ struct DetalhesView: View {
     var resultado: DateComponents {
         return Calendar.current.dateComponents([.day,.hour,.minute,.second], from: Date(), to: agenda.dataFinal)
     }
-    private let grid = [GridItem(.adaptive(minimum: 150))]
+    private let grid = [GridItem(.adaptive(minimum: 150, maximum: 200))]
     
     var body: some View {
         ScrollView {
         VStack {
+            Text("Tempo até seu evento")
+                .font(.system(size: 21, weight: .semibold, design: .rounded))
+                .padding(.top, 30)
+                .accessibilityRemoveTraits(.isStaticText)
             Text(ConversorData.conversorDataString(dataParaConversao: agenda.dataFinal))
-                .font(.system(size: 17, weight: .regular, design: .rounded))
-                .padding(.vertical, 30)
+                .font(.system(size: 19, weight: .regular, design: .rounded))
                 .accessibilityRemoveTraits(.isStaticText)
-            Text("Tempo restante")
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
-                .accessibilityRemoveTraits(.isStaticText)
-            Text("para seu evento")
-                .font(.system(size: 17, weight: .semibold, design: .rounded))
-                .accessibilityRemoveTraits(.isStaticText)
-            
+                .padding(.bottom, 15)
+            ZStack{
+                RoundedRectangle(cornerRadius: 25)
+                    .frame(minWidth: 250, maxWidth: 350, minHeight: 180, maxHeight: 250, alignment: .center)
+                    .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
             LazyVGrid(columns: grid, spacing: 30) {
                 ZStack {
                     VStack {
@@ -99,42 +100,47 @@ struct DetalhesView: View {
                         }
                     }
                 }
-                Spacer()
-                
+            }
             }
             VStack {
-                VStack {
-                    Text("Notas")
-                        .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        .accessibilityRemoveTraits(.isStaticText)
-                    if agenda.anotacoes != "" {
-                        Text(agenda.anotacoes)
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
-                            .multilineTextAlignment(.center)
-                            .accessibilityRemoveTraits(.isStaticText)
-                    }else{
-                        Text("Nenhuma nota")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
-                            .accessibilityRemoveTraits(.isStaticText)
-                    }
-                }
-                .padding(.vertical, 30)
-                .padding(.horizontal, 8)
                 VStack{
-                    Text("Notificação")
+                    Text("Notificação e Calendário")
                         .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityRemoveTraits(.isStaticText)
                     if agenda.dataLembrete != nil{
                         Text("Lembrar-me \(converterDataDetalhes(date: agenda.dataLembrete))")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
-                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }else{
-                        Text("Nenhuma")
+                        Text("Sem notificação")
                             .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }
                 }
+                .padding(.vertical, 20)
+                .padding(.horizontal, 15)
+                VStack {
+                    Text("Notas")
+                        .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityRemoveTraits(.isStaticText)
+                    if agenda.anotacoes != "" {
+                        Text(agenda.anotacoes)
+                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityRemoveTraits(.isStaticText)
+                    }else{
+                        Text("Nenhuma nota")
+                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityRemoveTraits(.isStaticText)
+                    }
+                }
+                .padding(.horizontal, 15)
             }
             Spacer()
         }
@@ -183,7 +189,7 @@ struct DetalhesView: View {
         if date != nil{
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "pt_BR")
-            dateFormatter.dateFormat = "EEEE\nd MMMM yyyy - HH:mm"
+            dateFormatter.dateFormat = "EEEE d MMMM yyyy - HH:mm"
             return dateFormatter.string(from: date!)
         }
         return "Sem data marcada"
