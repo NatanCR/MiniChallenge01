@@ -31,15 +31,23 @@ struct EdicaoView: View {
         HStack {
             Text("Calendário")
             Spacer()
-            Picker("Calendário",selection: $selecionarCalendario) {
+            Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                    Text(eventoModel.listaCalendario[evento].title)
-
+                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários"{
+                        Text(eventoModel.listaCalendario[evento].title)
+                    }
+                    
+                        
                 }
             }
+            .pickerStyle(.menu)
             Image(systemName: "chevron.up.chevron.down")
                 .offset(x: -5)
         }
+//        .contentShape(Rectangle())
+//        .onTapGesture {
+//
+//        }
     }
     
     private let altura = UIScreen.main.bounds.size.height
@@ -106,21 +114,23 @@ struct EdicaoView: View {
 //                              }
 //                            }
 //                            .menuStyle(.customMenu)
-                            Menu("Calendário"){
-                                HStack {
-                                    Spacer()
-                                    Picker("Calendário",selection: $selecionarCalendario) {
-                                        ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                                            Text(eventoModel.listaCalendario[evento].title)
-
-                                        }
-                                    }
-                                    Image(systemName: "chevron.up.chevron.down")
-                                        .offset(x: -5)
-                                }
-                            }
-                            .menuStyle(.customMenu)
-                        }
+//                            Menu("Calendário"){
+//                                HStack {
+//                                    Spacer()
+//                                    Picker("Calendário",selection: $selecionarCalendario) {
+//                                        ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+//                                            Text(eventoModel.listaCalendario[evento].title)
+//
+//                                        }
+//                                    }
+//                                    Image(systemName: "chevron.up.chevron.down")
+//                                        .offset(x: -5)
+//                                }
+//                                .contentShape(Rectangle())
+//                            }
+//                            .menuStyle(.customMenu)
+                            customLabel
+                    }
                         
                         
                         
