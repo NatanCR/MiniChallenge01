@@ -165,7 +165,6 @@ struct HomeView: View {
                     }
                 }
             }
-            .onAppear{eventoModel.mudarEstrutura(vmEventos: eventoModel)}
             .navigationBarTitle("Contador")
             .background(Color.init(red: 0.77, green: 0.84, blue: 0.90, opacity: 1.00))
             .navigationAppearance(backgroundColor: UIColor.init(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00), foregroundColor: UIColor.init(red: 0.00, green: 0.16, blue: 0.35, alpha: 1.00), tintColor: UIColor.init(red: 0.00, green: 0.16, blue: 0.35, alpha: 1.00), hideSeparator: true)

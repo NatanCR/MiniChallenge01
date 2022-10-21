@@ -25,9 +25,6 @@ class EventoViewModel: ObservableObject{
 
     init(){
         listaCalendario = vmCalendario.listarCalendarios()
-        
-        // esse é novo
-//        trocarEstrutura = UserDefaults.standard.bool(forKey: "teste25")
         verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
@@ -35,7 +32,7 @@ class EventoViewModel: ObservableObject{
             }.store(in: &cancelavel)
     }
     
-    func mudarEstrutura(vmEventos: EventoViewModel){
+    func mudarEstrutura(){
         if trocarEstrutura{
             for i in 0 ..< eventos.count{
                 print(eventos[i].titulo)
@@ -43,6 +40,9 @@ class EventoViewModel: ObservableObject{
                 print(eventos[i])
             }
             UserDefaults.standard.set(true, forKey: "atualizarEstrutura")
+        }
+        if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
+            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
         }
         print(eventosAtualizados)
     }
@@ -174,21 +174,17 @@ class EventoViewModel: ObservableObject{
     func fetchListaAntiga() {
         if let anotacoesCodificadas = UserDefaults.standard.object(forKey: "listaEventos") as? Data {
             if let anotacoesDecodificadas = try? JSONDecoder().decode([Evento].self, from: anotacoesCodificadas){
-                DispatchQueue.main.async {
-                    self.eventos = anotacoesDecodificadas
-                }
+                    eventos = anotacoesDecodificadas
+                
             }
         }
     }
-    
-//    func atualizarEstrutura() -> Bool{
-//        return UserDefaults.standard.set(true, forKey: "Atualizar")
-//    }
     
     func verificarAtualizacaoLista(){
         if trocarEstrutura{
             fetchListaAntiga()
             fetch()
+            mudarEstrutura()
         }else{
             fetch()
         }

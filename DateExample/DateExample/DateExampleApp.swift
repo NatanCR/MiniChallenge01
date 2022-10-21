@@ -9,12 +9,10 @@ import SwiftUI
 
 @main
 struct DateExampleApp: App {
-    @ObservedObject var dados = EventoViewModel()
 
     var body: some Scene {
         WindowGroup {
             LaunchScreen()
-                .environmentObject(dados)
         }
     }
 }
