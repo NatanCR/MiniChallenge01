@@ -24,8 +24,9 @@ struct EdicaoView: View {
     @State var ativaCalendario: Bool
     @State var idCalendario: String?
     @State var selecionarCalendario = 1
-    
     let calendario = Calendar(identifier: .gregorian)
+    @State private var confirmaAlerta = false
+    private let altura = UIScreen.main.bounds.size.height
     
     var customLabel: some View {
         HStack {
@@ -34,10 +35,10 @@ struct EdicaoView: View {
             Spacer()
             Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-//                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
-                        Text(eventoModel.listaCalendario[evento].title)
-                            .font(.system(size: 15, weight: .regular, design: .rounded))
-//                    }
+                    //                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                    Text(eventoModel.listaCalendario[evento].title)
+                        .font(.system(size: 15, weight: .regular, design: .rounded))
+                    //                    }
                 }
             }
             .pickerStyle(.menu)
@@ -46,7 +47,8 @@ struct EdicaoView: View {
         }
     }
     
-    private let altura = UIScreen.main.bounds.size.height
+    
+    
     
     var body: some View {
         VStack {
@@ -115,13 +117,19 @@ struct EdicaoView: View {
                             .accessibilityHint(Text("Adicione uma nota ao seu evento"))
                     }
                     Button(role: .destructive) {
-                        print("apagando")
+                        confirmaAlerta = true
                     } label: {
                         Text("Apagar evento")
                             .font(.system(size: 17, weight: .regular, design: .default))
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.red)
                     }
+                    .confirmationDialog("Deseja apagar seu evento?",
+                         isPresented: $confirmaAlerta) {
+                         Button("Apagar evento", role: .destructive) {
+                             eventoModel.botaoRemoverEvento(id: self.id)
+                          }
+                        }
                     .tint(.white)
                     .buttonStyle(.borderedProminent)
                     .frame(maxHeight: 5)

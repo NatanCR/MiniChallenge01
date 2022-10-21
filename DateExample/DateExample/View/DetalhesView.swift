@@ -106,37 +106,46 @@ struct DetalhesView: View {
             VStack {
                 VStack{
                     Text("Notificação e Calendário")
-                        .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        .font(.system(size: 16, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityRemoveTraits(.isStaticText)
                     if agenda.dataLembrete != nil{
                         Text("Lembrar-me \(converterDataDetalhes(date: agenda.dataLembrete))")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }else{
                         Text("Sem notificação")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
+                    }
+                    if agenda.adicionarCalendario == true {
+                        Text("Adicionado ao Calendário")
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text("Não foi adicionado ao Calendário")
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 .padding(.vertical, 20)
                 .padding(.horizontal, 15)
                 VStack {
                     Text("Notas")
-                        .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        .font(.system(size: 16, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityRemoveTraits(.isStaticText)
                     if agenda.anotacoes != "" {
                         Text(agenda.anotacoes)
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }else{
                         Text("Nenhuma nota")
-                            .font(.system(size: 17, weight: .regular, design: .rounded))
+                            .font(.system(size: 16, weight: .regular, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }

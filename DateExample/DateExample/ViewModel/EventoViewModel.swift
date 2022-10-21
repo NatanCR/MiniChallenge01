@@ -136,6 +136,17 @@ class EventoViewModel: ObservableObject{
         }
     }
     
+    func botaoRemoverEvento(id: UUID) {
+        for i in 0..<eventosAtualizados.count {
+            if id == eventosAtualizados[i].id {
+                eventosAtualizados.remove(at: i)
+            }
+        }
+        if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
+            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
+        }
+    }
+    
     func removerAtuais(at offsets: IndexSet) {
         let listaAtual = criaListaAtual()
         let listaModel = eventosAtualizados
@@ -185,8 +196,10 @@ class EventoViewModel: ObservableObject{
             fetchListaAntiga()
             fetch()
             mudarEstrutura()
+            checarPermissaoCalendario()
         }else{
             fetch()
+            checarPermissaoCalendario()
         }
     }
     
