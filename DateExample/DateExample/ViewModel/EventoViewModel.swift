@@ -35,14 +35,13 @@ class EventoViewModel: ObservableObject{
     
     func mudarEstrutura(vmEventos: EventoViewModel){
         if trocarEstrutura{
-            print(eventosAtualizados)
-            print(eventos)
             for i in 0 ..< eventos.count{
+                print(eventos[i].titulo)
                 eventosAtualizados.append(EventoAtualizado(titulo: eventos[i].titulo, anotacoes: eventos[i].anotacoes, datafinal: eventos[i].dataFinal, dataLembrete: eventos[i].dataLembrete, ativaLembrete: eventos[i].ativaLembrete, idLembrete: eventos[i].idLembrete, idCalendario: nil, adicionarCalendario: false))
+                print(eventos[i])
             }
             UserDefaults.standard.set(true, forKey: "atualizarEstrutura")
         }
-        print(eventosAtualizados)
         if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
             UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
         }
