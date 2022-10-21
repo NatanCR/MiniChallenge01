@@ -35,8 +35,10 @@ struct AdicionarEventoView: View {
             Spacer()
             Picker("",selection: $selecionaCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                    Text(eventoModel.listaCalendario[evento].title)
-                        .font(.system(size: 15, weight: .regular, design: .rounded))
+//                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                        Text(eventoModel.listaCalendario[evento].title)
+                            .font(.system(size: 15, weight: .regular, design: .rounded))
+//                    }
                 }
             }
             .pickerStyle(.menu)
