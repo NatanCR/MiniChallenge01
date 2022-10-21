@@ -35,7 +35,7 @@ class EventoViewModel: ObservableObject{
             }.store(in: &cancelavel)
     }
     
-    func mudarEstrutura(vmEventos: EventoViewModel){
+    func mudarEstrutura(){
         if trocarEstrutura{
             for i in 0 ..< eventos.count{
                 print(eventos[i].titulo)
@@ -187,6 +187,7 @@ class EventoViewModel: ObservableObject{
         if trocarEstrutura{
             fetchListaAntiga()
             fetch()
+            mudarEstrutura()
         }else{
             fetch()
         }
