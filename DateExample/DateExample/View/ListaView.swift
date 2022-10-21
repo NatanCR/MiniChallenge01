@@ -65,11 +65,9 @@ struct ListaView: View {
                         }
 
                         if eventosPassados.isEmpty{
-
-
+                            
                         } else{
                         Section{
-
                             ForEach(buscarEventosPassados, id: \.id) { passado in
                                 NavigationLink {
                                     DetalhesView(eventoModel: eventoModel, agenda: passado)
@@ -91,14 +89,13 @@ struct ListaView: View {
                     .listStyle(.insetGrouped)
                     .onAppear {
                         UITableView.appearance().backgroundColor = .clear
-                        eventoModel.mudarEstrutura(vmEventos: eventoModel)
                     }
                     .searchable(text: $procuraTexto, prompt: "Pesquisar")
                     .padding(.top, 1)
                     .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
                 .toolbar {
-                    EditButton()
+                    EditButton().font(.system(size: 17, weight: .semibold, design: .rounded))
                 }
                 .navigationTitle("Meus eventos")
                 .accessibilityRemoveTraits(.isHeader)
@@ -106,3 +103,4 @@ struct ListaView: View {
         }
         .navigationViewStyle(.stack)
     }
+}

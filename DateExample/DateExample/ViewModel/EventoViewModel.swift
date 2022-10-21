@@ -44,6 +44,9 @@ class EventoViewModel: ObservableObject{
             }
             UserDefaults.standard.set(true, forKey: "atualizarEstrutura")
         }
+//        if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
+//            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
+//        }
         print(eventosAtualizados)
     }
     
@@ -79,11 +82,13 @@ class EventoViewModel: ObservableObject{
                         eventosAux[i].ativaLembrete = false
                         eventosAux[i].dataLembrete = nil
                     }
+                    
                     DispatchQueue.main.async {
                         self.eventosAtualizados = eventosAux
                         if let valoresCodificados = try? JSONEncoder().encode(self.eventosAtualizados) {
                             UserDefaults.standard.set(valoresCodificados, forKey: self.forkeyUserDefaults)
                         }
+                        self.fetch()
                     }
                 }
             }

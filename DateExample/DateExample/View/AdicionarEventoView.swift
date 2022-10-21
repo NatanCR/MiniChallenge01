@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AdicionarEventoView: View {
-
+    
     @StateObject var eventoModel: EventoViewModel
     @State var selecionarCalendario = 1
     @State var dataFinalSalvar = Date()
@@ -24,9 +24,27 @@ struct AdicionarEventoView: View {
     @State var mostrarAlerta = false
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
-
+    @State var selecionaCalendario = 1
+    
     private let altura = UIScreen.main.bounds.size.height
-
+    
+    var customLabel: some View {
+        HStack {
+            Text("Calendário")
+                .font(.system(size: 17, weight: .regular, design: .rounded))
+            Spacer()
+            Picker("",selection: $selecionaCalendario) {
+                ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+                    Text(eventoModel.listaCalendario[evento].title)
+                        .font(.system(size: 15, weight: .regular, design: .rounded))
+                }
+            }
+            .pickerStyle(.menu)
+            Image(systemName: "chevron.up.chevron.down")
+                .offset(x: -5)
+        }
+    }
+    
     var body: some View {
         VStack {
             VStack {
@@ -48,41 +66,50 @@ struct AdicionarEventoView: View {
                             .onReceive(titulo.publisher.collect()) {
                                 titulo = String($0.prefix(20))
                             }
+                        HStack {
+                            Text("Data do evento")
+                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+                            Spacer()
+                            DatePicker("", selection: $dataFinalSalvar,
+                                       in: Date()...Date.distantFuture,
+                                       displayedComponents: [.date])
+                        }
+                    }
+                    
+                    Section() {
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-
-                        }.accessibilityHint(Text("Ative para receber notificação do seu evento"))
+                            
+                        }
+                        .accessibilityHint(Text("Ative para receber notificação do seu evento"))
                         if ativaLembrete == true {
                             HStack {
                                 Spacer()
                                 DatePicker("", selection: $dataLembrete,
                                            in: Date()...Date.distantFuture,
                                            displayedComponents: [.date, .hourAndMinute])
-                                .labelsHidden()
-                                .datePickerStyle(.automatic)
-                                .environment(\.locale, Locale.init(identifier: "pt_BR"))
-                                .accessibilityHint(Text("Escolha a data para receber a notificacao"))
+                                    .labelsHidden()
+                                    .datePickerStyle(.automatic)
+                                    .environment(\.locale, Locale.init(identifier: "pt_BR"))
+                                    .accessibilityHint(Text("Escolha a data para receber a notificacao"))
                                 Spacer()
                             }
                         }
                     }
                     .id(dataLembrete)
-                    Toggle(isOn: $ativaCalendario) {
-                        Text("Adicionar ao Calendário")
-
-                            .font(.system(size: 19, weight: .semibold, design: .rounded))
-                    }.accessibilityHint(Text("Evento será adicionado no calendário"))
-                    if ativaCalendario{
-                        // levar para outra view para selecionar qual calendario sera adicionado o evento
-                        Picker("Calendário",selection: $selecionarCalendario) {
-                            ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                                Text(eventoModel.listaCalendario[evento].title).tag(evento)
-                            }
+                    
+                    Section() {
+                        Toggle(isOn: $ativaCalendario) {
+                            Text("Adicionar ao Calendário")
+                            
+                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        }.accessibilityHint(Text("Evento será adicionado no calendário"))
+                        if ativaCalendario{
+                            customLabel
                         }
-                        .pickerStyle(.menu)
                     }
-
+                    
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .accessibilityRemoveTraits(.isStaticText)
@@ -102,14 +129,14 @@ struct AdicionarEventoView: View {
         }
         .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarTitle("Adicionar evento")
-
+        
         .navigationBarBackButtonHidden(true)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
-
-
+                
+                
             }else{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             }
@@ -128,14 +155,14 @@ struct AdicionarEventoView: View {
                     }
                 })
             }
-
+            
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     titulo = titulo.trimmingCharacters(in: .whitespacesAndNewlines)
                     if titulo == "" || dataLembrete > dataFinalSalvar {
                         self.mostrarAlerta.toggle()
                     } else {
-
+                        
                         eventoModel.adicionarNovo(tituloSalvo: titulo,
                                                   anotacoesSalvo: anotacao,
                                                   dataFinalSalvo: dataFinalSalvar,

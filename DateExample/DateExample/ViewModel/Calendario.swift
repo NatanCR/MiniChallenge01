@@ -45,7 +45,7 @@ class Calendario {
         } catch {
             print(error)
         }
-        return event.eventIdentifier
+        return event.eventIdentifier //tinha dado um erro aqui ao adicionar evento que foi alterado a data depois de calculado 
     }
     
     func editarEventoCalendario(addEventoCalendario: Bool, idCalendario: String?, dataEvento: Date, anotacao: String, titulo: String, calendario: String?) -> String?{

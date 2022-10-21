@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EdicaoView: View {
-
+    
     @Environment(\.dismiss) private var dismiss
     @StateObject var eventoModel: EventoViewModel
     @Binding var listaEvento: EventoAtualizado
@@ -24,17 +24,18 @@ struct EdicaoView: View {
     @State var ativaCalendario: Bool
     @State var idCalendario: String?
     @State var selecionarCalendario = 1
-
+    
     let calendario = Calendar(identifier: .gregorian)
-
+    
     var customLabel: some View {
         HStack {
             Text("Calendário")
+                .font(.system(size: 17, weight: .regular, design: .rounded))
             Spacer()
-            Picker("Calendário",selection: $selecionarCalendario) {
+            Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
                     Text(eventoModel.listaCalendario[evento].title)
-
+                        .font(.system(size: 15, weight: .regular, design: .rounded))
                 }
             }
             .pickerStyle(.menu)
@@ -42,13 +43,13 @@ struct EdicaoView: View {
                 .offset(x: -5)
         }
     }
-
+    
     private let altura = UIScreen.main.bounds.size.height
-
+    
     var body: some View {
         VStack {
             VStack {
-                Text("\(listaEvento.dataFinal.formatted(.dateTime.day().month().year()))")
+                Text("\(dataFinalSalvar.formatted(.dateTime.day().month().year()))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
                     .accessibilityRemoveTraits(.isStaticText)
                 Text("\(calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
@@ -65,6 +66,16 @@ struct EdicaoView: View {
                             .onReceive(titulo.publisher.collect()) {
                                 titulo = String($0.prefix(20))
                             }.accessibilityRemoveTraits(.isStaticText)
+                        HStack {
+                            Text("Data do evento")
+                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+                            Spacer()
+                            DatePicker("", selection: $dataFinalSalvar,
+                                       in: Date()...Date.distantFuture,
+                                       displayedComponents: [.date])
+                        }
+                    }
+                    Section() {
                         Toggle(isOn: $ativaLembrete) {
                             Text("Ativar notificação")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
@@ -75,13 +86,15 @@ struct EdicaoView: View {
                                 DatePicker("", selection: $dataLembrete,
                                            in: Date()...Date.distantFuture,
                                            displayedComponents: [.date, .hourAndMinute])
-                                .labelsHidden()
-                                .datePickerStyle(.automatic)
-                                .environment(\.locale, Locale.init(identifier: "pt_BR"))
-                                .accessibilityHint(Text("Escolha a data para receber a notificacao"))
+                                    .labelsHidden()
+                                    .datePickerStyle(.automatic)
+                                    .environment(\.locale, Locale.init(identifier: "pt_BR"))
+                                    .accessibilityHint(Text("Escolha a data para receber a notificacao"))
                                 Spacer()
                             }
                         }
+                    }.id(dataLembrete)
+                    Section() {
                         Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
@@ -89,9 +102,8 @@ struct EdicaoView: View {
                         if ativaCalendario{
                             customLabel
                         }
-                    }.id(dataLembrete)
-
-
+                    }
+                    
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                                 .accessibilityRemoveTraits(.isStaticText)
@@ -104,6 +116,7 @@ struct EdicaoView: View {
                         print("apagando")
                     } label: {
                         Text("Apagar evento")
+                            .font(.system(size: 17, weight: .regular, design: .default))
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.red)
                     }

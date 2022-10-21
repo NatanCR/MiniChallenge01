@@ -31,8 +31,9 @@ struct DetalhesView: View {
                 .padding(.bottom, 15)
             ZStack{
                 RoundedRectangle(cornerRadius: 25)
-                    .frame(minWidth: 250, maxWidth: 350, minHeight: 180, maxHeight: 250, alignment: .center)
+                    .frame(minWidth: 200, maxWidth: 400, minHeight: 180, maxHeight: 250, alignment: .center)
                     .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
+                    .padding(.horizontal, 15)
             LazyVGrid(columns: grid, spacing: 30) {
                 ZStack {
                     VStack {
