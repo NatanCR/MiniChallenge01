@@ -24,7 +24,6 @@ struct AdicionarEventoView: View {
     @State var mostrarAlerta = false
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
-    @State var selecionaCalendario = 1
     
     private let altura = UIScreen.main.bounds.size.height
     
@@ -33,12 +32,12 @@ struct AdicionarEventoView: View {
             Text("Calendário")
                 .font(.system(size: 17, weight: .regular, design: .rounded))
             Spacer()
-            Picker("",selection: $selecionaCalendario) {
+            Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-//                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
-                        Text(eventoModel.listaCalendario[evento].title)
+                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                        Text(eventoModel.listaCalendario[evento].title).tag(evento)
                             .font(.system(size: 15, weight: .regular, design: .rounded))
-//                    }
+                    }
                 }
             }
             .pickerStyle(.menu)
@@ -104,11 +103,29 @@ struct AdicionarEventoView: View {
                     Section() {
                         Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendário")
-                            
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
                         }.accessibilityHint(Text("Evento será adicionado no calendário"))
                         if ativaCalendario{
-                            customLabel
+//                            // levar para outra view para selecionar qual calendario sera adicionado o evento
+                            HStack {
+                                Text("Calendário")
+                                    .font(.system(size: 17, weight: .regular, design: .rounded))
+                                Spacer()
+                                Picker("",selection: $selecionarCalendario) {
+                                    ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+//                                        if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                                            Text(eventoModel.listaCalendario[evento].title).tag(evento)
+                                                .font(.system(size: 15, weight: .regular, design: .rounded))
+//                                        }
+                                        
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .offset(x: -5)
+                            }
+                            
+//                            customLabel
                         }
                     }
                     

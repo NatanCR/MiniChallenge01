@@ -45,7 +45,7 @@ class Calendario {
         } catch {
             print(error)
         }
-        return event.eventIdentifier //erro ao salvar com calendario 
+        return event.eventIdentifier ?? "" //erro ao salvar com calendario sem selecionar 
     }
     
     func editarEventoCalendario(addEventoCalendario: Bool, idCalendario: String?, dataEvento: Date, anotacao: String, titulo: String, calendario: String?) -> String?{

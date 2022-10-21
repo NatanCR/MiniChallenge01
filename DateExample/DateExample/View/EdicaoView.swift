@@ -34,10 +34,10 @@ struct EdicaoView: View {
             Spacer()
             Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+//                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
                         Text(eventoModel.listaCalendario[evento].title)
                             .font(.system(size: 15, weight: .regular, design: .rounded))
-                    }
+//                    }
                 }
             }
             .pickerStyle(.menu)

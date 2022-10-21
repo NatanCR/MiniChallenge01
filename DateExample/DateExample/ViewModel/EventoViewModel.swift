@@ -44,9 +44,6 @@ class EventoViewModel: ObservableObject{
             }
             UserDefaults.standard.set(true, forKey: "atualizarEstrutura")
         }
-//        if let valoresCodificados = try? JSONEncoder().encode(eventosAtualizados) {
-//            UserDefaults.standard.set(valoresCodificados, forKey: forkeyUserDefaults)
-//        }
         print(eventosAtualizados)
     }
     

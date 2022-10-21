@@ -46,8 +46,8 @@ struct HomeView: View {
                                 .foregroundColor(Color.init(red: 0.89, green: 0.92, blue: 0.94, opacity: 1.00))
                             VStack{
                                 VStack {
-                                    Text("Data inicial")
-                                        .font(.system(size: 20,
+                                    Text("Data de hoje")
+                                        .font(.system(size: 18,
                                                       weight: .semibold,
                                                       design: .default))
                                         
@@ -60,7 +60,7 @@ struct HomeView: View {
                                 }
                                 .padding()
                                 VStack {
-                                    Text("Data final")
+                                    Text("Data do seu evento")
                                         .font(.system(size: 20,
                                                       weight: .semibold,
                                                       design: .default))
