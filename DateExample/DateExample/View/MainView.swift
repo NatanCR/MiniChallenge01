@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var eventoModel: EventoViewModel
+    @StateObject var eventoModel = EventoViewModel()
     
-    public init(eventoModel: EventoViewModel) {
-        self.eventoModel = eventoModel
+    init() {
         UITabBar.appearance().backgroundColor = UIColor.init(red: 0.89, green: 0.92, blue: 0.94, alpha: 1.00)
     }
     

@@ -26,8 +26,6 @@ class EventoViewModel: ObservableObject{
     init(){
         listaCalendario = vmCalendario.listarCalendarios()
         // esse é novo
-        fetchListaAntiga()
-        mudarEstrutura()
         verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
@@ -35,7 +33,7 @@ class EventoViewModel: ObservableObject{
             }.store(in: &cancelavel)
     }
     
-    func mudarEstrutura(){
+    func mudarEstrutura(vmEventos: EventoViewModel){
         if trocarEstrutura{
             print(eventosAtualizados)
             print(eventos)
@@ -189,7 +187,6 @@ class EventoViewModel: ObservableObject{
     
     func verificarAtualizacaoLista(){
         if trocarEstrutura{
-            print("Entrei")
             fetchListaAntiga()
             fetch()
         }else{

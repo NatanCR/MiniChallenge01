@@ -15,11 +15,13 @@ struct DateExampleApp: App {
     
     public init() {
         self._dados = StateObject(wrappedValue: EventoViewModel())
+        dados.mudarEstrutura(vmEventos: self.dados)
     }
 
     var body: some Scene {
         WindowGroup {
-            LaunchScreen(eventoModel: dados)
+            LaunchScreen()
+                .environmentObject(dados)
         }
     }
 }
