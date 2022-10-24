@@ -49,10 +49,10 @@ struct AdicionarEventoView: View {
     var body: some View {
         VStack {
             VStack {
-                Text("\(dataFinalSalvar.formatted(.dateTime.day().month().year()))")
+                Text("\(ConversorData.conversorDataString(dataParaConversao: dataFinalSalvar, recebeData: ""))")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
                     .accessibilityRemoveTraits(.isStaticText)
-                Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias")
+                Text("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinalSalvar, calculo: "corridos")) dias corridos")
                     .font(.system(size: 19, weight: .regular, design: .rounded))
                     .accessibilityRemoveTraits(.isStaticText)
             }
