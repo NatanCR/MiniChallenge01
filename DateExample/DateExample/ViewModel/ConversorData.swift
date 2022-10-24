@@ -88,31 +88,4 @@ extension Calendar {
 
         return diasCorridos.day!
     }
-//
-//    func calculoDiasUteis(dataFinal: Date) -> Int {
-//        let diaInicio = startOfDay(for: Date())
-//        let diaFinal = startOfDay(for: dataFinal)
-//        let diasCorridos = dateComponents([.day], from: diaInicio, to: diaFinal)
-//
-//        var contador = 0
-//        for i in 0...diasCorridos.day! {
-//            let diaStr = Calendar.dataParaString(indice: i, date: Date())
-//            if diaStr != "sábado" && diaStr != "domingo"{
-//                contador += 1
-//            }
-//        }
-//        return contador - 1
-//    }
-//
-//    func calculoSemanas(dataFinal: Date) -> Int {
-//        let diaInicio = startOfDay(for: Date())
-//        let diaFinal = startOfDay(for: dataFinal)
-//        let diasCorridos = dateComponents([.day], from: diaInicio, to: diaFinal)
-//
-//        if diasCorridos.day! <= 6 {
-//            return 0
-//        }
-//        let contador = Int(diasCorridos.day!/7)
-//        return contador
-//    }
 }

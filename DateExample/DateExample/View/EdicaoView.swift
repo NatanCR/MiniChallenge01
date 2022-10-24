@@ -20,13 +20,30 @@ struct EdicaoView: View {
     @State var dataLembrete: Date
     @State var ativaLembrete: Bool
     @State var mostrarAlerta = false
-    @State private var contadorCaracter = 0
+    @State var contadorCaracter = 0
     @State var ativaCalendario: Bool
     @State var idCalendario: String?
     @State var selecionarCalendario = 1
     let calendario = Calendar(identifier: .gregorian)
     @State private var confirmaAlerta = false
     private let altura = UIScreen.main.bounds.size.height
+    
+    var indiceCalendario: Int{
+            let agenda = eventoModel.calendarioEventos.events(matching: eventoModel.periodo())
+            if idCalendario != nil{
+                for j in 0 ..< agenda.count{
+                    if agenda[j].eventIdentifier == idCalendario!{
+                        for i in 0 ..< eventoModel.listaCalendario.count{
+                            if agenda[j].calendar!.calendarIdentifier == eventoModel.listaCalendario[i].calendarIdentifier{
+                                return i
+                            }
+                        }
+                    }
+                }
+                
+            }
+            return 0
+        }
     
     var customLabel: some View {
         HStack {
@@ -102,8 +119,14 @@ struct EdicaoView: View {
                         Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }
-                        if ativaCalendario{
+                        }.disabled(!eventoModel.permissaoCalendario!)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                if !eventoModel.permissaoCalendario!{
+                                    self.mostrarAlerta.toggle()
+                                }
+                            }
+                        if ativaCalendario {
                             customLabel
                         }
                     }
@@ -137,6 +160,7 @@ struct EdicaoView: View {
                 }
                 .onAppear {
                     UITableView.appearance().backgroundColor = .clear
+                    selecionarCalendario = indiceCalendario
                 }
             }
             .onTapGesture{
@@ -150,8 +174,13 @@ struct EdicaoView: View {
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
-            }else{
+            }else if dataLembrete > dataFinalSalvar {
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
+            } else {
+                return Alert(title: Text("Permita acesso ao calendario"), message: Text("Altere as configuracoes no menu."), primaryButton: .default(Text("Ajustes"), action: {
+                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                                }),
+                                             secondaryButton: .cancel(Text("Agora não")))
             }
         }
         .toolbar {

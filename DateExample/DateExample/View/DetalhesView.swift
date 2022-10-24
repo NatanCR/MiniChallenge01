@@ -109,7 +109,7 @@ struct DetalhesView: View {
                         .font(.system(size: 16, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .accessibilityRemoveTraits(.isStaticText)
-                    if agenda.dataLembrete != nil{
+                    if agenda.ativaLembrete {
                         Text("Lembrar-me \(converterDataDetalhes(date: agenda.dataLembrete))")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)

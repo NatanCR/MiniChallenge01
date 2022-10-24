@@ -14,6 +14,7 @@ class EventoViewModel: ObservableObject{
     @Published var listaCalendario: [EKCalendar] = []
     @Published var eventos = [Evento]()
     @Published var eventosAtualizados = [EventoAtualizado]()
+    @Published var permissaoCalendario: Bool?
     let vmCalendario = Calendario()
     let calendarioEventos = EKEventStore()
     let calendario = Calendar(identifier: .gregorian)
@@ -25,9 +26,10 @@ class EventoViewModel: ObservableObject{
 
     init(){
         listaCalendario = vmCalendario.listarCalendarios()
-        verificarAtualizacaoLista()
+        permissaoCalendario = verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
+                self.permissaoCalendario = self.checarPermissaoCalendario()
                 self.atualizarListas()
             }.store(in: &cancelavel)
     }
@@ -191,15 +193,16 @@ class EventoViewModel: ObservableObject{
         }
     }
     
-    func verificarAtualizacaoLista(){
+    func verificarAtualizacaoLista() -> Bool{
         if trocarEstrutura{
             fetchListaAntiga()
             fetch()
             mudarEstrutura()
-            checarPermissaoCalendario()
+            return checarPermissaoCalendario()
         }else{
             fetch()
-            checarPermissaoCalendario()
+            listaCalendario = vmCalendario.listarCalendarios()
+            return checarPermissaoCalendario()
         }
     }
     
@@ -207,19 +210,35 @@ class EventoViewModel: ObservableObject{
 
 extension EventoViewModel{
     
-    func checarPermissaoCalendario(){
+    func periodo() -> NSPredicate {
+            let calendar = Calendar.autoupdatingCurrent
+            var dataFim = DateComponents()
+            dataFim.year = 1
+            let dataFinal = calendar.date(byAdding: dataFim, to: .now)
+            let predicate = self.calendarioEventos.predicateForEvents(withStart: .now,
+                                                               end: dataFinal!,
+                                                               calendars: nil)
+            return predicate
+        }
+    
+    func checarPermissaoCalendario() -> Bool{
         let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
         switch(status){
 
         case .notDetermined:
             acessoCalendario()
+            return false
         case .restricted, .denied:
             acessoCalendario()
+            return false
         case .authorized:
             fetch()
+            listaCalendario = vmCalendario.listarCalendarios()
+            return true
         @unknown default:
             // mostrar um alerta de erro
             print("Error")
+            return false
         }
     }
     
@@ -243,7 +262,7 @@ extension EventoViewModel{
     
     func acessoCalendario(){
         calendarioEventos.requestAccess(to: EKEntityType.event) { [self] (permitido: Bool, naoPermitido: Error?) in
-            if permitido == true{
+            if permitido{
                 fetch()
             } else {
                 // adicionar alerta para levar usuario para configuracoes
