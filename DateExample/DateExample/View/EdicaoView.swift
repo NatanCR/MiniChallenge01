@@ -195,7 +195,7 @@ struct EdicaoView: View {
                                                 dataFinalSalvar: dataFinalSalvar,
                                                 idLembrete: idLembrete,
                                                 dataLembrete: dataLembrete,
-                                                ativaLembrete: ativaLembrete, eventoCalendario: ativaCalendario, idCalendario: idCalendario, calendario: eventoModel.listaCalendario[selecionarCalendario].calendarIdentifier)
+                                                ativaLembrete: ativaLembrete, eventoCalendario: ativaCalendario, idCalendario: idCalendario, calendario: eventoModel.listaCalendario[selecionarCalendario].calendarIdentifier, indexCalendario: selecionarCalendario)
                         dismiss()
                     }
                 } label: {

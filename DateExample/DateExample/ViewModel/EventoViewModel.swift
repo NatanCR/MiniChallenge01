@@ -65,9 +65,13 @@ class EventoViewModel: ObservableObject{
         }
     }
     
-    func editarDados(titulo: String, anotacao: String, id: UUID, dataFinalSalvar: Date, idLembrete: UUID, dataLembrete: Date?, ativaLembrete: Bool, eventoCalendario: Bool, idCalendario: String?, calendario: String?){
+    func editarDados(titulo: String, anotacao: String, id: UUID, dataFinalSalvar: Date, idLembrete: UUID, dataLembrete: Date?, ativaLembrete: Bool, eventoCalendario: Bool, idCalendario: String?, calendario: String?, indexCalendario: Int){
             let eventosAux = eventosAtualizados
             for i in 0..<eventosAux.count {
+                var idCalendario: String?
+                if eventoCalendario{
+                    idCalendario = Calendario().adicionarEvento(dataFinal: dataFinalSalvar, anotacao: anotacao, titulo: titulo, calendario: listaCalendario[indexCalendario].calendarIdentifier)
+                }
                 if id == eventosAux[i].id {
                     eventosAux[i].titulo = titulo
                     eventosAux[i].anotacoes = anotacao

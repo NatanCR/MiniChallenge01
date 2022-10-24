@@ -120,7 +120,7 @@ struct DetalhesView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .accessibilityRemoveTraits(.isStaticText)
                     }
-                    if agenda.adicionarCalendario == true {
+                    if agenda.adicionarCalendario {
                         Text("Adicionado ao Calendário")
                             .font(.system(size: 16, weight: .regular, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
