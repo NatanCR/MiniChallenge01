@@ -23,7 +23,23 @@ struct EdicaoView: View {
     @State private var contadorCaracter = 0
     @State var ativaCalendario: Bool
     @State var idCalendario: String?
-    @State var selecionarCalendario = 1
+    @State var selecionarCalendario = 0
+    var indiceCalendario: Int{
+        let agenda = eventoModel.calendarioEventos.events(matching: eventoModel.periodo())
+        if idCalendario != nil{
+            for j in 0 ..< agenda.count{
+                if agenda[j].eventIdentifier == idCalendario!{
+                    for i in 0 ..< eventoModel.listaCalendario.count{
+                        if agenda[j].calendar!.calendarIdentifier == eventoModel.listaCalendario[i].calendarIdentifier{
+                            return i
+                        }
+                    }
+                }
+            }
+            
+        }
+        return 0
+    }
     
     let calendario = Calendar(identifier: .gregorian)
     
@@ -34,12 +50,13 @@ struct EdicaoView: View {
             Spacer()
             Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-//                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
                         Text(eventoModel.listaCalendario[evento].title)
                             .font(.system(size: 15, weight: .regular, design: .rounded))
-//                    }
+                    }
                 }
             }
+
             .pickerStyle(.menu)
             Image(systemName: "chevron.up.chevron.down")
                 .offset(x: -5)
@@ -100,11 +117,23 @@ struct EdicaoView: View {
                         Toggle(isOn: $ativaCalendario) {
                             Text("Adicionar ao Calendario")
                                 .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }
+                        }.disabled(!eventoModel.permissaoCalendario!)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                
+                                if !eventoModel.permissaoCalendario!{
+                                    
+                                    self.mostrarAlerta.toggle()
+                                    
+                                }
+                                
+                            }
                         if ativaCalendario{
                             customLabel
                         }
+                        
                     }
+                    
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))
@@ -129,6 +158,7 @@ struct EdicaoView: View {
                 }
                 .onAppear {
                     UITableView.appearance().backgroundColor = .clear
+                    selecionarCalendario = indiceCalendario
                 }
             }
             .onTapGesture{
@@ -142,8 +172,13 @@ struct EdicaoView: View {
         .alert(isPresented: $mostrarAlerta) {
             if titulo == ""{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira um título ao evento."), dismissButton: .default(Text("Ok")))
-            }else{
+            }else if dataLembrete > dataFinalSalvar{
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
+            } else {
+                return Alert(title: Text("Permita acesso ao calendario"), message: Text("Altere as configuracoes no menu."), primaryButton: .default(Text("Ajustes"), action: {
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                }),
+                             secondaryButton: .cancel(Text("Agora não")))
             }
         }
         .toolbar {
