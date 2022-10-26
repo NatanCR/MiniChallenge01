@@ -19,32 +19,31 @@ struct EdicaoView: View {
     @State var idLembrete: UUID
     @State var dataLembrete: Date
     @State var ativaLembrete: Bool
-    @State var mostrarAlerta = false
-    @State var contadorCaracter = 0
+    @State private var mostrarAlerta = false
+    @State private var contadorCaracter = 0
     @State var ativaCalendario: Bool
     @State var idCalendario: String?
-    @State var selecionarCalendario = 1
+    @State private var selecionarCalendario = 1
     let calendario = Calendar(identifier: .gregorian)
     @State private var confirmaAlerta = false
     private let altura = UIScreen.main.bounds.size.height
     
     var indiceCalendario: Int{
-            let agenda = eventoModel.calendarioEventos.events(matching: eventoModel.periodo())
-            if idCalendario != nil{
-                for j in 0 ..< agenda.count{
-                    if agenda[j].eventIdentifier == idCalendario!{
-                        for i in 0 ..< eventoModel.listaCalendario.count{
-                            if agenda[j].calendar!.calendarIdentifier == eventoModel.listaCalendario[i].calendarIdentifier{
-                                return i
-                            }
+        let agenda = eventoModel.calendarioEventos.events(matching: eventoModel.periodo())
+        if idCalendario != nil{
+            for j in 0 ..< agenda.count{
+                if agenda[j].eventIdentifier == idCalendario!{
+                    for i in 0 ..< eventoModel.listaCalendario.count{
+                        if agenda[j].calendar!.calendarIdentifier == eventoModel.listaCalendario[i].calendarIdentifier{
+                            return i
                         }
                     }
                 }
-                
             }
-            return 0
         }
-    
+        return 0
+    }
+
     var customLabel: some View {
         HStack {
             Text("Calendário")
@@ -52,10 +51,10 @@ struct EdicaoView: View {
             Spacer()
             Picker("",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                    //                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
-                    Text(eventoModel.listaCalendario[evento].title)
-                        .font(.system(size: 15, weight: .regular, design: .rounded))
-                    //                    }
+                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                        Text(eventoModel.listaCalendario[evento].title)
+                            .font(.system(size: 15, weight: .regular, design: .rounded))
+                    }
                 }
             }
             .pickerStyle(.menu)
@@ -63,9 +62,6 @@ struct EdicaoView: View {
                 .offset(x: -5)
         }
     }
-    
-    
-    
     
     var body: some View {
         VStack {
@@ -148,15 +144,15 @@ struct EdicaoView: View {
                             .foregroundColor(.red)
                     }
                     .confirmationDialog("Deseja apagar seu evento?",
-                         isPresented: $confirmaAlerta) {
-                         Button("Apagar evento", role: .destructive) {
-                             eventoModel.botaoRemoverEvento(id: self.id)
-                          }
+                                        isPresented: $confirmaAlerta) {
+                        Button("Apagar evento", role: .destructive) {
+                            eventoModel.botaoRemoverEvento(id: self.id)
                         }
-                    .tint(.white)
-                    .buttonStyle(.borderedProminent)
-                    .frame(maxHeight: 5)
-                    .padding()
+                    }
+                                        .tint(.white)
+                                        .buttonStyle(.borderedProminent)
+                                        .frame(maxHeight: 5)
+                                        .padding()
                 }
                 .onAppear {
                     UITableView.appearance().backgroundColor = .clear
@@ -178,9 +174,9 @@ struct EdicaoView: View {
                 return Alert(title: Text("Não foi possível salvar seu evento"), message: Text("Insira a data de notificação anterior a data do evento."), dismissButton: .default(Text("Ok")))
             } else {
                 return Alert(title: Text("Permita acesso ao calendario"), message: Text("Altere as configuracoes no menu."), primaryButton: .default(Text("Ajustes"), action: {
-                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                                }),
-                                             secondaryButton: .cancel(Text("Agora não")))
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                }),
+                             secondaryButton: .cancel(Text("Agora não")))
             }
         }
         .toolbar {

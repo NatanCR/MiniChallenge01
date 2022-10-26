@@ -11,40 +11,29 @@ import SwiftUI
 struct AdicionarEventoView: View {
     
     @StateObject var eventoModel: EventoViewModel
-    @State var selecionarCalendario = 1
+    @State private var selecionarCalendario = 1
     @State var dataFinalSalvar = Date()
     @State private var alertasIndex = 0
-    @State var titulo: String = ""
-    @State var anotacao: String = ""
+    @State private var titulo: String = ""
+    @State private var anotacao: String = ""
     @State var id: UUID?
-    @State var modoEditar = false
+    @State private var modoEditar = false
     @State var dataLembrete: Date
-    @State var ativaLembrete = false
-    @State var ativaCalendario = false
-    @State var mostrarAlerta = false
+    @State private var ativaLembrete = false
+    @State private var ativaCalendario = false
+    @State private var mostrarAlerta = false
     @Environment(\.currentTab) var tab
     @Binding var mostrarTela: Bool
-    
     private let altura = UIScreen.main.bounds.size.height
     
-    var customLabel: some View {
-        HStack {
-            Text("Calendário")
-                .font(.system(size: 17, weight: .regular, design: .rounded))
-            Spacer()
-            Picker("",selection: $selecionarCalendario) {
-                ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-                    if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
-                        Text(eventoModel.listaCalendario[evento].title).tag(evento)
-                            .font(.system(size: 15, weight: .regular, design: .rounded))
-                    }
-                }
-            }
-            .pickerStyle(.menu)
-            Image(systemName: "chevron.up.chevron.down")
-                .offset(x: -5)
-        }
+    enum MenuCalendario: String, CaseIterable, Identifiable {
+        case selecione
+        case lista
+
+        var id: String { self.rawValue }
     }
+    
+    @State private var selecionaCalendario = MenuCalendario.selecione
     
     var body: some View {
         VStack {
