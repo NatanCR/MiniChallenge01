@@ -174,7 +174,9 @@ struct AdicionarEventoView: View {
                                                   dataFinalSalvo: dataFinalSalvar,
                                                   dataLembrete: dataLembrete,
                                                   ativaLembrete: ativaLembrete,
-                                                  idLembrete: UUID(), adicionarCalendario: ativaCalendario, selecionarCalendario: selecionarCalendario)
+                                                  idLembrete: UUID(),
+                                                  adicionarCalendario: ativaCalendario,
+                                                  selecionarCalendario: selecionarCalendario)
                         Notificacoes.permissao()
                         mostrarTela = false
                         tab.wrappedValue = .lista

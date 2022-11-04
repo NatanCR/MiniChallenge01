@@ -69,6 +69,7 @@ class EventoViewModel: ObservableObject{
             let eventosAux = eventosAtualizados
             for i in 0..<eventosAux.count {
                 var idCalendario: String?
+                
                 if eventoCalendario{
                     idCalendario = Calendario().adicionarEvento(dataFinal: dataFinalSalvar, anotacao: anotacao, titulo: titulo, calendario: listaCalendario[indexCalendario].calendarIdentifier)
                 }

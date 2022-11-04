@@ -49,7 +49,7 @@ struct EdicaoView: View {
             Text("Calendário")
                 .font(.system(size: 17, weight: .regular, design: .rounded))
             Spacer()
-            Picker("",selection: $selecionarCalendario) {
+            Picker("selecionar",selection: $selecionarCalendario) {
                 ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
                     if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
                         Text(eventoModel.listaCalendario[evento].title)
@@ -143,7 +143,7 @@ struct EdicaoView: View {
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.red)
                     }
-                    .confirmationDialog("Deseja apagar seu evento?",
+                    .confirmationDialog("Deseja realmente apagar seu evento?",
                                         isPresented: $confirmaAlerta) {
                         Button("Apagar evento", role: .destructive) {
                             eventoModel.botaoRemoverEvento(id: self.id)
@@ -191,7 +191,10 @@ struct EdicaoView: View {
                                                 dataFinalSalvar: dataFinalSalvar,
                                                 idLembrete: idLembrete,
                                                 dataLembrete: dataLembrete,
-                                                ativaLembrete: ativaLembrete, eventoCalendario: ativaCalendario, idCalendario: idCalendario, calendario: eventoModel.listaCalendario[selecionarCalendario].calendarIdentifier, indexCalendario: selecionarCalendario)
+                                                ativaLembrete: ativaLembrete,
+                                                eventoCalendario: ativaCalendario,
+                                                idCalendario: idCalendario,
+                                                calendario: eventoModel.listaCalendario[selecionarCalendario].calendarIdentifier, indexCalendario: selecionarCalendario)
                         dismiss()
                     }
                 } label: {

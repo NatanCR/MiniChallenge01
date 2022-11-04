@@ -157,23 +157,23 @@ struct DetalhesView: View {
     }
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         Spacer()
-        .navigationBarBackButtonHidden(true)
+//        .navigationBarBackButtonHidden(true)
         .navigationTitle(agenda.titulo)
         .accessibilityRemoveTraits(.isStaticText)
        
         
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 16, weight: .semibold, design: .rounded))
-                        Text("Meus eventos")
-                    }
-                })
-            }
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button(action: {
+//                    dismiss()
+//                }, label: {
+//                    HStack {
+//                        Image(systemName: "chevron.left")
+//                            .font(.system(size: 16, weight: .semibold, design: .rounded))
+//                        Text("Meus eventos")
+//                    }
+//                })
+//            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
                     EdicaoView(eventoModel: eventoModel, listaEvento: $agenda,
