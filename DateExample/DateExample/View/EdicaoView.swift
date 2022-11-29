@@ -111,21 +111,21 @@ struct EdicaoView: View {
                             }
                         }
                     }.id(dataLembrete)
-                    Section() {
-                        Toggle(isOn: $ativaCalendario) {
-                            Text("Adicionar ao Calendario")
-                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }.disabled(!eventoModel.permissaoCalendario!)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if !eventoModel.permissaoCalendario!{
-                                    self.mostrarAlerta.toggle()
-                                }
-                            }
-                        if ativaCalendario {
-                            customLabel
-                        }
-                    }
+//                    Section(footer: Text("Estamos trabalhando para que você tenha uma melhor experiência! Aguarde novas atualizações.")) {
+//                        Toggle(isOn: $ativaCalendario) {
+//                            Text("Adicionar ao Calendario")
+//                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+//                        }.disabled(!eventoModel.permissaoCalendario!)
+//                            .contentShape(Rectangle())
+//                            .onTapGesture {
+//                                if !eventoModel.permissaoCalendario!{
+//                                    self.mostrarAlerta.toggle()
+//                                }
+//                            }
+//                        if ativaCalendario {
+//                            customLabel
+//                        }
+//                    }.disabled(true)
                     
                     Section(header: Text("Notas")
                                 .font(.system(size: 15, weight: .semibold, design: .rounded))

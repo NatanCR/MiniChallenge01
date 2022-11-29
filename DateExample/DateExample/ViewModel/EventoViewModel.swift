@@ -128,13 +128,16 @@ class EventoViewModel: ObservableObject{
         let listaPassada = criaListaPassada()
         let listaModel = eventosAtualizados
         var index = 0
+        
         for i in offsets {
             index = i
         }
         
         for i in 0 ..< listaModel.count {
             if listaModel[i].id == listaPassada[index].id{
+                
                 vmCalendario.removerCalendario(idCalendario: eventosAtualizados[index].idCalendario ?? nil)
+                
                 eventosAtualizados.remove(at: i)
             }
         }
