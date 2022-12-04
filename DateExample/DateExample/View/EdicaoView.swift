@@ -75,88 +75,94 @@ struct EdicaoView: View {
             }
             .padding()
             VStack {
-                Form {
-                    Section(){
-                        TextField("Título", text: $titulo)
-                            .accessibilityHint(Text("Título do seu evento"))
-                            .font(.system(size: 19, weight: .regular, design: .rounded))
-                            .onReceive(titulo.publisher.collect()) {
-                                titulo = String($0.prefix(20))
-                            }.accessibilityRemoveTraits(.isStaticText)
-                        HStack {
-                            Text("Data do evento")
-                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-                            Spacer()
-                            DatePicker("", selection: $dataFinalSalvar,
-                                       in: Date()...Date.distantFuture,
-                                       displayedComponents: [.date])
-                        }
-                    }
-                    Section() {
-                        Toggle(isOn: $ativaLembrete) {
-                            Text("Ativar notificação")
-                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-                        }.accessibilityHint(Text("Ative para receber notificação do seu evento"))
-                        if ativaLembrete{
+                if #available(iOS 16.0, *) {
+                    Form {
+                        Section(){
+                            TextField("Título", text: $titulo)
+                                .accessibilityHint(Text("Título do seu evento"))
+                                .font(.system(size: 19, weight: .regular, design: .rounded))
+                                .onReceive(titulo.publisher.collect()) {
+                                    titulo = String($0.prefix(20))
+                                }.accessibilityRemoveTraits(.isStaticText)
                             HStack {
+                                Text("Data do evento")
+                                    .font(.system(size: 19, weight: .semibold, design: .rounded))
                                 Spacer()
-                                DatePicker("", selection: $dataLembrete,
+                                DatePicker("", selection: $dataFinalSalvar,
                                            in: Date()...Date.distantFuture,
-                                           displayedComponents: [.date, .hourAndMinute])
+                                           displayedComponents: [.date])
+                            }
+                        }
+                        Section() {
+                            Toggle(isOn: $ativaLembrete) {
+                                Text("Ativar notificação")
+                                    .font(.system(size: 19, weight: .semibold, design: .rounded))
+                            }.accessibilityHint(Text("Ative para receber notificação do seu evento"))
+                            if ativaLembrete{
+                                HStack {
+                                    Spacer()
+                                    DatePicker("", selection: $dataLembrete,
+                                               in: Date()...Date.distantFuture,
+                                               displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
                                     .datePickerStyle(.automatic)
                                     .environment(\.locale, Locale.init(identifier: "pt_BR"))
                                     .accessibilityHint(Text("Escolha a data para receber a notificacao"))
-                                Spacer()
+                                    Spacer()
+                                }
+                            }
+                        }.id(dataLembrete)
+                        
+                        //                    Section(footer: Text("Estamos trabalhando para que você tenha uma melhor experiência! Aguarde novas atualizações.")) {
+                        //                        Toggle(isOn: $ativaCalendario) {
+                        //                            Text("Adicionar ao Calendario")
+                        //                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        //                        }.disabled(!eventoModel.permissaoCalendario!)
+                        //                            .contentShape(Rectangle())
+                        //                            .onTapGesture {
+                        //                                if !eventoModel.permissaoCalendario!{
+                        //                                    self.mostrarAlerta.toggle()
+                        //                                }
+                        //                            }
+                        //                        if ativaCalendario {
+                        //                            customLabel
+                        //                        }
+                        //                    }.disabled(true)
+                        
+                        Section(header: Text("Notas")
+                            .font(.system(size: 15, weight: .semibold, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
+                            .foregroundColor(Color.gray)){
+                                TextEditor(text: $anotacao)
+                                    .frame(height: altura * 0.2)
+                                    .accessibilityHint(Text("Adicione uma nota ao seu evento"))
+                            }
+                        Button(role: .destructive) {
+                            confirmaAlerta = true
+                        } label: {
+                            Text("Apagar evento")
+                                .font(.system(size: 17, weight: .regular, design: .default))
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(.red)
+                        }
+                        .confirmationDialog("Deseja realmente apagar seu evento?",
+                                            isPresented: $confirmaAlerta) {
+                            Button("Apagar evento", role: .destructive) {
+                                eventoModel.botaoRemoverEvento(id: self.id)
                             }
                         }
-                    }.id(dataLembrete)
-//                    Section(footer: Text("Estamos trabalhando para que você tenha uma melhor experiência! Aguarde novas atualizações.")) {
-//                        Toggle(isOn: $ativaCalendario) {
-//                            Text("Adicionar ao Calendario")
-//                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-//                        }.disabled(!eventoModel.permissaoCalendario!)
-//                            .contentShape(Rectangle())
-//                            .onTapGesture {
-//                                if !eventoModel.permissaoCalendario!{
-//                                    self.mostrarAlerta.toggle()
-//                                }
-//                            }
-//                        if ativaCalendario {
-//                            customLabel
-//                        }
-//                    }.disabled(true)
-                    
-                    Section(header: Text("Notas")
-                                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                                .accessibilityRemoveTraits(.isStaticText)
-                                .foregroundColor(Color.gray)){
-                        TextEditor(text: $anotacao)
-                            .frame(height: altura * 0.2)
-                            .accessibilityHint(Text("Adicione uma nota ao seu evento"))
+                                            .tint(.white)
+                                            .buttonStyle(.borderedProminent)
+                                            .frame(maxHeight: 5)
+                                            .padding()
                     }
-                    Button(role: .destructive) {
-                        confirmaAlerta = true
-                    } label: {
-                        Text("Apagar evento")
-                            .font(.system(size: 17, weight: .regular, design: .default))
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.red)
+                    .scrollContentBackground(.hidden)
+                    .onAppear {
+                        UITableView.appearance().backgroundColor = .clear
+                        selecionarCalendario = indiceCalendario
                     }
-                    .confirmationDialog("Deseja realmente apagar seu evento?",
-                                        isPresented: $confirmaAlerta) {
-                        Button("Apagar evento", role: .destructive) {
-                            eventoModel.botaoRemoverEvento(id: self.id)
-                        }
-                    }
-                                        .tint(.white)
-                                        .buttonStyle(.borderedProminent)
-                                        .frame(maxHeight: 5)
-                                        .padding()
-                }
-                .onAppear {
-                    UITableView.appearance().backgroundColor = .clear
-                    selecionarCalendario = indiceCalendario
+                } else {
+                    // Fallback on earlier versions
                 }
             }
             .onTapGesture{

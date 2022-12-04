@@ -50,10 +50,10 @@ struct HomeView: View {
                                         .font(.system(size: 18,
                                                       weight: .semibold,
                                                       design: .default))
-                                        
+                                    
                                         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
                                         .accessibilityRemoveTraits(.isStaticText)
-                                        
+                                    
                                     
                                     Text(ConversorData.conversorDataString(dataParaConversao: Date(), recebeData: "dataHome"))
                                         .accessibilityRemoveTraits(.isStaticText)
@@ -69,11 +69,11 @@ struct HomeView: View {
                                     DatePicker("", selection: $dataFinal,
                                                in: periodo,
                                                displayedComponents: [.date])
-                                        .labelsHidden()
-                                        .environment(\.locale, Locale.init(identifier: "pt_BR"))
+                                    .labelsHidden()
+                                    .environment(\.locale, Locale.init(identifier: "pt_BR"))
                                     
                                 }
-                                .id(dataFinal)
+//                                .id(dataFinal)
                                 .onAppear {
                                     dataInicio = Date()
                                     dataFinal = Date()
@@ -158,7 +158,7 @@ struct HomeView: View {
                             NavigationLink(destination: AdicionarEventoView(eventoModel: eventoModel, dataFinalSalvar: dataFinal, dataLembrete: Date(), mostrarTela: $mostrarTela), isActive: $mostrarTela) {
                                 Text("Adicionar")
                                     .font(.system(size: 17, weight: .semibold, design: .rounded))
-                                    
+                                
                             }
                             .disabled(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "corridos") == 0)
                         }

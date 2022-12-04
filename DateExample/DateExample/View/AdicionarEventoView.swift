@@ -47,95 +47,100 @@ struct AdicionarEventoView: View {
             }
             .padding()
             VStack {
-                Form {
-                    Section(){
-                        TextField("Título", text: $titulo)
-                            .accessibilityRemoveTraits(.isStaticText)
-                            .accessibility(hint: Text("Titulo do seu evento"))
-                            .font(.system(size: 19, weight: .regular, design: .rounded))
-                            .onReceive(titulo.publisher.collect()) {
-                                titulo = String($0.prefix(20))
-                            }
-                        HStack {
-                            Text("Data do evento")
-                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-                            Spacer()
-                            DatePicker("", selection: $dataFinalSalvar,
-                                       in: Date()...Date.distantFuture,
-                                       displayedComponents: [.date])
-                        }
-                    }
-                    
-                    Section() {
-                        Toggle(isOn: $ativaLembrete) {
-                            Text("Ativar notificação")
-                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-                            
-                        }
-                        .accessibilityHint(Text("Ative para receber notificação do seu evento"))
-                        if ativaLembrete == true {
+                if #available(iOS 16.0, *) {
+                    Form {
+                        Section(){
+                            TextField("Título", text: $titulo)
+                                .accessibilityRemoveTraits(.isStaticText)
+                                .accessibility(hint: Text("Titulo do seu evento"))
+                                .font(.system(size: 19, weight: .regular, design: .rounded))
+                                .onReceive(titulo.publisher.collect()) {
+                                    titulo = String($0.prefix(20))
+                                }
                             HStack {
+                                Text("Data do evento")
+                                    .font(.system(size: 19, weight: .semibold, design: .rounded))
                                 Spacer()
-                                DatePicker("", selection: $dataLembrete,
+                                DatePicker("", selection: $dataFinalSalvar,
                                            in: Date()...Date.distantFuture,
-                                           displayedComponents: [.date, .hourAndMinute])
+                                           displayedComponents: [.date])
+                            }
+                        }
+                        
+                        Section() {
+                            Toggle(isOn: $ativaLembrete) {
+                                Text("Ativar notificação")
+                                    .font(.system(size: 19, weight: .semibold, design: .rounded))
+                                
+                            }
+                            .accessibilityHint(Text("Ative para receber notificação do seu evento"))
+                            if ativaLembrete == true {
+                                HStack {
+                                    Spacer()
+                                    DatePicker("", selection: $dataLembrete,
+                                               in: Date()...Date.distantFuture,
+                                               displayedComponents: [.date, .hourAndMinute])
                                     .labelsHidden()
                                     .datePickerStyle(.automatic)
                                     .environment(\.locale, Locale.init(identifier: "pt_BR"))
                                     .accessibilityHint(Text("Escolha a data para receber a notificacao"))
-                                Spacer()
+                                    Spacer()
+                                }
                             }
                         }
+                        .id(dataLembrete)
+                        
+                        //                    Section(footer: Text("Estamos trabalhando para que você tenha uma melhor experiência! Aguarde novas atualizações.")) {
+                        //                        Toggle(isOn: $ativaCalendario) {
+                        //                            Text("Adicionar ao Calendário")
+                        //                                .font(.system(size: 19, weight: .semibold, design: .rounded))
+                        //                        }.accessibilityHint(Text("Evento será adicionado no calendário"))
+                        //                        if ativaCalendario{
+                        ////                            // levar para outra view para selecionar qual calendario sera adicionado o evento
+                        //                            HStack {
+                        //                                Text("Calendário")
+                        //                                    .font(.system(size: 17, weight: .regular, design: .rounded))
+                        //                                Spacer()
+                        //                                Picker("",selection: $selecionarCalendario) {
+                        //                                    ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
+                        //                                        if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
+                        //                                            Text(eventoModel.listaCalendario[evento].title).tag(evento)
+                        //                                                .font(.system(size: 15, weight: .regular, design: .rounded))
+                        //                                        }
+                        //
+                        //                                    }
+                        //                                }
+                        //                                .pickerStyle(.menu)
+                        //                                Image(systemName: "chevron.up.chevron.down")
+                        //                                    .offset(x: -5)
+                        //                            }
+                        //                        }
+                        //                    }.disabled(true)
+                        
+                        Section(header: Text("Notas")
+                            .font(.system(size: 15, weight: .semibold, design: .rounded))
+                            .accessibilityRemoveTraits(.isStaticText)
+                            .foregroundColor(Color.gray)){
+                                TextEditor(text: $anotacao)
+                                    .accessibilityHint(Text("Adicione uma nota ao seu evento"))
+                                    .frame(height: altura * 0.2)
+                            }
                     }
-                    .id(dataLembrete)
-//                    
-//                    Section(footer: Text("Estamos trabalhando para que você tenha uma melhor experiência! Aguarde novas atualizações.")) {
-//                        Toggle(isOn: $ativaCalendario) {
-//                            Text("Adicionar ao Calendário")
-//                                .font(.system(size: 19, weight: .semibold, design: .rounded))
-//                        }.accessibilityHint(Text("Evento será adicionado no calendário"))
-//                        if ativaCalendario{
-////                            // levar para outra view para selecionar qual calendario sera adicionado o evento
-//                            HStack {
-//                                Text("Calendário")
-//                                    .font(.system(size: 17, weight: .regular, design: .rounded))
-//                                Spacer()
-//                                Picker("",selection: $selecionarCalendario) {
-//                                    ForEach(0 ..< eventoModel.listaCalendario.count, id:\.self){ evento in
-//                                        if eventoModel.listaCalendario[evento].title != "Feriados" && eventoModel.listaCalendario[evento].title != "Sugestões da Siri" && eventoModel.listaCalendario[evento].title != "Aniversários" {
-//                                            Text(eventoModel.listaCalendario[evento].title).tag(evento)
-//                                                .font(.system(size: 15, weight: .regular, design: .rounded))
-//                                        }
-//                                        
-//                                    }
-//                                }
-//                                .pickerStyle(.menu)
-//                                Image(systemName: "chevron.up.chevron.down")
-//                                    .offset(x: -5)
-//                            }
-//                        }
-//                    }.disabled(true)
-                    
-                    Section(header: Text("Notas")
-                                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                                .accessibilityRemoveTraits(.isStaticText)
-                                .foregroundColor(Color.gray)){
-                        TextEditor(text: $anotacao)
-                            .accessibilityHint(Text("Adicione uma nota ao seu evento"))
-                            .frame(height: altura * 0.2)
+                    .scrollContentBackground(.hidden)
+                    .onAppear {
+                        UITableView.appearance().backgroundColor = .clear
                     }
-                }
-                .onAppear {
-                    UITableView.appearance().backgroundColor = .clear
+                } else {
+                    // Fallback on earlier versions
                 }
             }
             .onTapGesture{
                 eventoModel.esconderTeclado()
             }
         }
-        .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
-        .navigationBarTitle("Adicionar evento")
         
+        .navigationBarTitle("Adicionar evento")
+        .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
         .navigationBarBackButtonHidden(true)
         .foregroundColor(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00))
         .alert(isPresented: $mostrarAlerta) {

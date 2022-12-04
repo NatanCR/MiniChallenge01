@@ -45,54 +45,59 @@ struct ListaView: View {
                     .navigationTitle("Meus eventos")
             }else{
                 VStack {
-                    List {
-                        Section{
-                            ForEach(buscarEventosFuturos, id: \.id) { anotacao in
-                                NavigationLink {
-                                    DetalhesView(eventoModel: eventoModel, agenda: anotacao)
-                                        .environmentObject(eventoModel)
-                                } label: {
-                                    CelulaLista(dados: anotacao)
+                    if #available(iOS 16.0, *) {
+                        List {
+                            Section{
+                                ForEach(buscarEventosFuturos, id: \.id) { anotacao in
+                                    NavigationLink {
+                                        DetalhesView(eventoModel: eventoModel, agenda: anotacao)
+                                            .environmentObject(eventoModel)
+                                    } label: {
+                                        CelulaLista(dados: anotacao)
+                                    }
                                 }
+                                
+                                .onDelete(perform: eventoModel.removerAtuais)
+                            } header: {
+                                Text("Futuros")
+                                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                    .accessibilityRemoveTraits(.isHeader)
+                                    .accessibilityRemoveTraits(.isStaticText)
                             }
-
-                            .onDelete(perform: eventoModel.removerAtuais)
-                        } header: {
-                            Text("Futuros")
-                                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                                .accessibilityRemoveTraits(.isHeader)
-                                .accessibilityRemoveTraits(.isStaticText)
-                        }
-
-                        if eventosPassados.isEmpty{
                             
-                        } else{
-                        Section{
-                            ForEach(buscarEventosPassados, id: \.id) { passado in
-                                NavigationLink {
-                                    DetalhesView(eventoModel: eventoModel, agenda: passado)
-                                        .environmentObject(eventoModel)
-                                } label: {
-                                    CelulaLista(dados: passado)
+                            if eventosPassados.isEmpty{
+                                
+                            } else{
+                                Section{
+                                    ForEach(buscarEventosPassados, id: \.id) { passado in
+                                        NavigationLink {
+                                            DetalhesView(eventoModel: eventoModel, agenda: passado)
+                                                .environmentObject(eventoModel)
+                                        } label: {
+                                            CelulaLista(dados: passado)
+                                        }
+                                    }
+                                    .onDelete(perform: eventoModel.removerPassados)
                                 }
+                            header: {
+                                Text("Passados")
+                                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                    .accessibilityRemoveTraits(.isHeader)
+                                    .accessibilityRemoveTraits(.isStaticText)
                             }
-                            .onDelete(perform: eventoModel.removerPassados)
+                            }
                         }
-                         header: {
-                            Text("Passados")
-                                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                                .accessibilityRemoveTraits(.isHeader)
-                                .accessibilityRemoveTraits(.isStaticText)
+                        .scrollContentBackground(.hidden)
+                        .listStyle(.insetGrouped)
+                        .onAppear {
+                            UITableView.appearance().backgroundColor = .clear
                         }
+                        .searchable(text: $procuraTexto, prompt: "Pesquisar")
+                        .padding(.top, 1)
+                        .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
+                    } else {
+                        // Fallback on earlier versions
                     }
-                    }
-                    .listStyle(.insetGrouped)
-                    .onAppear {
-                        UITableView.appearance().backgroundColor = .clear
-                    }
-                    .searchable(text: $procuraTexto, prompt: "Pesquisar")
-                    .padding(.top, 1)
-                    .background(Color.init(red: 0.79, green: 0.85, blue: 0.90, opacity: 1.00))
                 }
                 .toolbar {
                     EditButton().font(.system(size: 17, weight: .semibold, design: .rounded))

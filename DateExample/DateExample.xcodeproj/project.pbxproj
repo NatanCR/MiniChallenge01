@@ -63,8 +63,6 @@
 		8888CACC28DC13B200662B92 /* EventoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventoViewModel.swift; sourceTree = "<group>"; };
 		88B86F2928DC94C700C607B5 /* EdicaoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdicaoView.swift; sourceTree = "<group>"; };
 		88C189AB28D9F42B004A9F8E /* Calendario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calendario.swift; sourceTree = "<group>"; };
-		BA7EB4382900693300A10481 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		BA7EB43A2900693300A10481 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +81,6 @@
 			children = (
 				5180C35028FF389300617DE7 /* Localizable.strings */,
 				4E79E18828BD2E190015CD43 /* DateExample */,
-				BA7EB4372900693300A10481 /* Frameworks */,
 				4E79E18728BD2E190015CD43 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -160,15 +157,6 @@
 				51AE11FB28CBBDB800F1EEED /* CelulaLista.swift */,
 			);
 			path = ViewModifiers;
-			sourceTree = "<group>";
-		};
-		BA7EB4372900693300A10481 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BA7EB4382900693300A10481 /* WidgetKit.framework */,
-				BA7EB43A2900693300A10481 /* SwiftUI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
