@@ -90,7 +90,7 @@ struct LaunchScreen: View {
                                     .easeOut(duration: 1)
                                     .delay(0.5)
                                     .repeatForever(autoreverses: false)
-                                    .speed(0.8))
+                                    .speed(0.8), value: moverCirculo)
                         
                         Circle() //circulo esquerdo
                             .stroke(Color.init(red: 0.00, green: 0.16, blue: 0.35, opacity: 1.00), lineWidth: 6)
