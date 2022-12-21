@@ -21,7 +21,7 @@ struct DetalhesView: View {
     var body: some View {
         
         VStack {
-            Text("Tempo até seu evento")
+            Text("Dias até seu evento")
                 .font(.system(size: 21, weight: .semibold, design: .rounded))
                 .padding(.top, 30)
                 .accessibilityRemoveTraits(.isStaticText)
