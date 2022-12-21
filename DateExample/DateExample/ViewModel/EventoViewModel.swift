@@ -29,7 +29,7 @@ class EventoViewModel: ObservableObject{
         permissaoCalendario = verificarAtualizacaoLista()
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .sink { (_) in
-                self.permissaoCalendario = self.checarPermissaoCalendario()
+//                self.permissaoCalendario = self.checarPermissaoCalendario()
                 self.atualizarListas()
             }.store(in: &cancelavel)
     }

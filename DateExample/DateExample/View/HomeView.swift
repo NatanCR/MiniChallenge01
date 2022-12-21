@@ -120,11 +120,11 @@ struct HomeView: View {
                                         .font(.system(size: 30, weight: .regular, design: .rounded))
                                         .accessibilityRemoveTraits(.isStaticText)
                                     if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: dataFinal, calculo: "uteis"))") == "1" {
-                                        Text("Dia de semana")
+                                        Text("Dia útil")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                             .accessibilityRemoveTraits(.isStaticText)
                                     } else {
-                                        Text("Dias de semana")
+                                        Text("Dias úteis")
                                             .font(.system(size: 17, weight: .regular, design: .rounded))
                                             .accessibilityRemoveTraits(.isStaticText)
                                     }

@@ -19,7 +19,7 @@ struct DetalhesView: View {
     private let grid = [GridItem(.adaptive(minimum: 150, maximum: 200))]
     
     var body: some View {
-        ScrollView {
+        
         VStack {
             Text("Tempo até seu evento")
                 .font(.system(size: 21, weight: .semibold, design: .rounded))
@@ -74,11 +74,11 @@ struct DetalhesView: View {
                             .font(.system(size: 30, weight: .regular, design: .rounded))
                             .accessibilityRemoveTraits(.isStaticText)
                         if ("\(eventoModel.calendario.contadorDiasAte(dataFinal: agenda.dataFinal, calculo: "uteis"))") == "1" {
-                            Text("Dia de semana")
+                            Text("Dia útil")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                                 .accessibilityRemoveTraits(.isStaticText)
                         } else {
-                            Text("Dias de semana")
+                            Text("Dias úteis")
                                 .font(.system(size: 17, weight: .regular, design: .rounded))
                                 .accessibilityRemoveTraits(.isStaticText)
                         }
@@ -103,6 +103,7 @@ struct DetalhesView: View {
                 }
             }
             }
+            ScrollView {
             VStack {
                 VStack{
                     Text("Notificação")
