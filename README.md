@@ -1,6 +1,6 @@
 # MiniChallenge01
-Nesse Mini Challenge proposto pela Apple Developer Academy, precisavamos desenvolver um aplicativo voltado para a categoria de utilidade. 
+In this Mini Challenge proposed by the Apple Developer Academy, we needed to develop an application in the utility category. 
 
-Então com base em nosso processo de construção criamos o Dias até, que tem o objetivo auxiliar pessoas a obter de forma rápida e prática o cálculo de dias até uma determinada data. 
+So, based on our construction process, we created Days Until, which aims to help people quickly and practically calculate the number of days until a certain date. 
 
 copyright © Bruno Lafayette, Cecília Fornazieri, Jamile Polycarpo, Natan Camargo, Wellinston Silva - Dias Até
